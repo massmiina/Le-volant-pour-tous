@@ -1,5 +1,5 @@
 import React from 'react';
-import Exam from '@/components/Exam';
+import ExamEngineClient from '@/components/ExamEngineClient';
 
 export const metadata = {
   title: 'Examen Blanc | Le Volant Pour Tous',
@@ -7,13 +7,5 @@ export const metadata = {
 };
 
 export default function ExamenPage() {
-  return (
-    <main className="min-h-screen bg-[#FDFCFB]">
-      <div className="pt-24 pb-12">
-        <div className="container mx-auto px-4">
-          <Exam />
-        </div>
-      </div>
-    </main>
-  );
+  return <ExamEngineClient />;
 }

@@ -21,6 +21,11 @@ Ce fichier définit mes règles de conduite, mes paramètres de réponse et les 
 - **Effets Néon** : Utiliser des dégradés intenses et des effets de lumière (`filter: drop-shadow`) pour mettre en valeur les titres.
 - **Typographie** : "Rock Salt" pour les éléments artistiques et rebelles (titres de section), avec un espacement négatif (tangled-letters) si nécessaire.
 
-## 4. Rappel Next.js 16
+## 4. Génération de Médias et Examen (Moteur de Rendu)
+- **Règle absolue** : Les visuels d'examen (ex: situations de route, panneaux, tableaux de bord) doivent être 100% réalistes, en vue subjective 8K.
+- **Zéro Hallucination** : Si l'IA n'est pas sûre ou que le rendu comporte des textes bizarres/défauts, elle doit proposer une alternative réaliste ou demander à l'utilisateur de valider le concept en premier.
+- **Validation** : Travailler "question par question" avec l'utilisateur pour valider la justesse pédagogique avant intégration dans `examData.ts`.
+
+## 5. Rappel Next.js 16
 @AGENTS.md
 *(Se référer aux règles de gestion des API et du routage spécifiques à Next.js 16 et Turbopack).*

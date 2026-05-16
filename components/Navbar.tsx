@@ -5,12 +5,14 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Language } from '@/lib/translations';
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { data: session, status } = useSession();
 
   const navLinks = [
     { name: t('nav.home'), href: '/' },
@@ -88,6 +90,31 @@ const Navbar = () => {
                     ))}
                   </div>
                 </div>
+              )}
+            </div>
+            
+            {/* Auth Button */}
+            <div className="ml-4 flex items-center">
+              {status === "loading" ? (
+                <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse"></div>
+              ) : session ? (
+                <div className="relative group">
+                  <Link href="/dashboard" className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-blue-600">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-emerald-500 text-white flex items-center justify-center font-bold">
+                      {session.user?.name?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  </Link>
+                  {/* Dropdown Logout */}
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <button onClick={() => signOut({ callbackUrl: '/' })} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
+                      {language === 'fr' ? 'Déconnexion' : 'Выйти'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors">
+                  {language === 'fr' ? 'Connexion' : 'Войти'}
+                </Link>
               )}
             </div>
           </div>

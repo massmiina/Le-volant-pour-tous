@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String         @id @default(cuid())
+  name            String?
+  email           String         @unique
+  password        String?
+  image           String?
+  favoriteSchools String?        // Stocké sous forme de string JSON
+  createdAt       DateTime       @default(now())
+  
+  progress        Progress?
+  examResults     ExamResult[]
+  gameScores      GameScore[]
+}
+
+model Progress {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completedModules String   @default("[]") // Liste JSON
+  quizScores       String   @default("{}") // Objet JSON
+  updatedAt        DateTime @updatedAt
+}
+
+model ExamResult {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score     Int
+  mistakes  String   @default("[]") // Liste JSON des erreurs
+  passed    Boolean
+  createdAt DateTime @default(now())
+}
+
+model GameScore {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameType  String
+  score     Int
+  maxCombo  Int
+  createdAt DateTime @default(now())
+}

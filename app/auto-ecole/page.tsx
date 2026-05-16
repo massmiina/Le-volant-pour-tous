@@ -5,15 +5,17 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import dynamic from 'next/dynamic';
+import { Rock_Salt } from 'next/font/google';
+import { Search, MapPin, Star, Heart, Navigation } from 'lucide-react';
+
+const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 
 const MapClient = dynamic(() => import('@/components/MapComponent'), { 
   ssr: false,
   loading: () => (
-    <div className="h-[500px] w-full bg-gray-100 animate-pulse rounded-[2rem] flex flex-col items-center justify-center border-4 border-white shadow-xl">
-      <svg className="w-12 h-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-      </svg>
-      <span className="text-gray-400 font-bold">Chargement de la carte des auto-écoles...</span>
+    <div className="h-[500px] w-full bg-neutral-900 animate-pulse rounded-[2.5rem] flex flex-col items-center justify-center border-4 border-white/5 shadow-2xl">
+      <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
+      <span className="text-gray-500 font-bold tracking-widest uppercase text-xs">Initialisation du radar...</span>
     </div>
   )
 });
@@ -75,6 +77,7 @@ export default function AutoEcole() {
   const [searchCity, setSearchCity] = useState('');
   const [results, setResults] = useState<typeof mockAutoEcoles | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [favorites, setFavorites] = useState<number[]>([]);
   const { t } = useLanguage();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -92,32 +95,44 @@ export default function AutoEcole() {
     }, 800);
   };
 
+  const toggleFavorite = (id: number) => {
+    setFavorites(prev => 
+      prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <div className="bg-gray-50 min-h-screen py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="bg-black min-h-screen py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Neon Glows */}
+      <div className="absolute top-0 -left-1/4 w-1/2 h-1/2 bg-violet-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-0 -right-1/4 w-1/2 h-1/2 bg-emerald-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <AnimatedSection>
           <header className="text-center mb-16">
-            <h1 className="text-5xl font-black text-gray-900 mb-6 tracking-tighter">
+            <h1 className={`text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-emerald-400 mb-6 ${rockSalt.className}`}>
               {t('auto_ecole.title')}
             </h1>
-            <p className="text-xl text-gray-600 font-medium">
+            <p className="text-xl text-gray-400 font-medium max-w-2xl mx-auto">
               {t('auto_ecole.subtitle')}
             </p>
           </header>
         </AnimatedSection>
 
-        {/* Search Bar - Animated */}
+        {/* Search Bar - Cyberpunk Style */}
         <AnimatedSection delay={0.1}>
-          <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 mb-16 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-2 h-full bg-blue-500 transition-all duration-500 group-focus-within:w-4"></div>
-            <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-6">
+          <div className="bg-white/5 backdrop-blur-2xl p-2 rounded-3xl border border-white/10 mb-16 shadow-2xl">
+            <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-2">
               <div className="flex-grow relative">
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-400">
+                  <Search className="w-6 h-6" />
+                </div>
                 <input
                   type="text"
                   value={searchCity}
                   onChange={(e) => setSearchCity(e.target.value)}
                   placeholder={t('auto_ecole.placeholder')}
-                  className="block w-full pl-6 pr-4 py-5 rounded-2xl border-2 border-gray-100 focus:border-blue-500 focus:ring-0 outline-none transition-all text-lg font-medium"
+                  className="block w-full pl-16 pr-6 py-6 rounded-2xl bg-white/5 border border-white/5 focus:border-emerald-500/50 focus:ring-0 outline-none transition-all text-white text-xl placeholder:text-gray-600"
                 />
               </div>
               <motion.button
@@ -125,43 +140,38 @@ export default function AutoEcole() {
                 disabled={isSearching}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-12 py-5 bg-blue-600 text-white rounded-2xl font-black text-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 disabled:opacity-50 flex items-center justify-center min-w-[200px]"
+                className="px-10 py-6 bg-emerald-500 text-black rounded-2xl font-black text-xl hover:bg-emerald-400 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] disabled:opacity-50 flex items-center justify-center min-w-[220px] uppercase tracking-tighter"
               >
                 {isSearching ? (
-                  <svg className="animate-spin h-6 w-6 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
+                  <div className="w-6 h-6 border-4 border-black/20 border-t-black rounded-full animate-spin"></div>
                 ) : t('auto_ecole.search')}
               </motion.button>
             </form>
-            <div className="mt-6 flex gap-4 overflow-x-auto pb-2">
-              <span className="text-sm text-gray-400 font-bold uppercase tracking-widest">{t('auto_ecole.suggestions')}</span>
-              {['Paris', 'Lyon', 'Marseille'].map(city => (
-                <button 
-                  key={city} 
-                  onClick={() => setSearchCity(city)} 
-                  className="text-sm text-blue-600 font-black hover:text-blue-800 transition-colors"
-                >
-                  {city}
-                </button>
-              ))}
-            </div>
           </div>
         </AnimatedSection>
 
         {/* Interactive Map Section */}
         <AnimatedSection delay={0.2}>
-          <div className="mb-16 relative z-0">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-black text-gray-900">{t('auto_ecole.map_title') || 'Écoles à proximité'}</h2>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">{t('auto_ecole.detailed_view') || "Vue détaillée"}</span>
+          <div className="mb-20">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-violet-500/20 rounded-xl flex items-center justify-center text-violet-400 border border-violet-500/30">
+                  <Navigation className="w-5 h-5" />
+                </div>
+                <h2 className="text-3xl font-bold text-white tracking-tight">{t('auto_ecole.map_title')}</h2>
+              </div>
+              <div className="hidden md:flex items-center gap-4">
+                 <div className="flex items-center gap-2">
+                   <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                   <span className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold">Signal Live</span>
+                 </div>
+              </div>
             </div>
             <MapClient />
           </div>
         </AnimatedSection>
 
-        {/* Results with AnimatePresence */}
+        {/* Results Container */}
         <div className="space-y-8 min-h-[400px]">
           <AnimatePresence mode="wait">
             {results === null ? (
@@ -170,85 +180,73 @@ export default function AutoEcole() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center py-24 bg-white rounded-[2.5rem] border-4 border-dashed border-gray-100"
+                className="text-center py-20 bg-white/5 rounded-[3rem] border-2 border-dashed border-white/5"
               >
-                 <div className="bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8">
-                   <svg className="w-12 h-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                   </svg>
+                 <div className="bg-violet-500/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 border border-violet-500/20 shadow-[0_0_30px_rgba(139,92,246,0.1)]">
+                   <Search className="w-10 h-10 text-violet-400" />
                  </div>
-                 <h3 className="text-2xl font-black text-gray-900 mb-2">{t('auto_ecole.ready_find')}</h3>
-                 <p className="text-lg text-gray-500 font-medium">{t('auto_ecole.ready_desc')}</p>
+                 <h3 className="text-2xl font-bold text-white mb-3">{t('auto_ecole.ready_find')}</h3>
+                 <p className="text-gray-500 max-w-sm mx-auto leading-relaxed">{t('auto_ecole.ready_desc')}</p>
               </motion.div>
             ) : results.length > 0 ? (
               <motion.div 
                 key="results"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="space-y-8"
+                className="grid grid-cols-1 md:grid-cols-2 gap-8"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <h2 className="text-3xl font-black text-gray-900 tracking-tight">
-                    {results.length} {t('auto_ecole.found')} <span className="text-blue-600 italic">"{searchCity}"</span>
-                  </h2>
-                   <div className="flex-grow h-1 bg-gray-100 rounded-full"></div>
-                </div>
-
                 {results.map((ae, index) => (
                   <motion.div 
                     key={ae.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.01, rotate: 0.5 }}
-                    className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8 hover:shadow-xl transition-all border-l-8 border-l-blue-500 overflow-hidden relative"
+                    whileHover={{ y: -5 }}
+                    className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white/10 hover:border-emerald-500/30 transition-all group relative overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 p-6 opacity-5">
-                       <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-                       </svg>
-                    </div>
-
-                    <div className="md:w-1/3 flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">{ae.name}</h3>
-                        <p className="text-lg text-gray-500 font-medium mb-4 flex items-center gap-2">
-                          <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          </svg>
+                    <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500/0 group-hover:bg-emerald-500/50 transition-all"></div>
+                    
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="flex-grow">
+                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">{ae.name}</h3>
+                        <p className="text-gray-400 text-sm flex items-center gap-2">
+                          <MapPin className="w-4 h-4 text-violet-400" />
                           {ae.address}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-xl inline-flex w-fit">
-                        <span className="font-black text-yellow-700 text-xl">{ae.rating}</span>
-                        <div className="flex text-yellow-500">
-                          {[1,2,3,4,5].map(s => <span key={s} className="text-xs">★</span>)}
-                        </div>
-                        <span className="text-gray-400 text-sm font-bold ml-2">({ae.reviews})</span>
-                      </div>
+                      <button 
+                        onClick={() => toggleFavorite(ae.id)}
+                        className={`p-3 rounded-2xl transition-all ${favorites.includes(ae.id) ? 'bg-rose-500/20 text-rose-500 border-rose-500/30' : 'bg-white/5 text-gray-500 border-white/10 hover:text-rose-400'} border`}
+                      >
+                        <Heart className={`w-5 h-5 ${favorites.includes(ae.id) ? 'fill-current' : ''}`} />
+                      </button>
                     </div>
 
-                    <div className="flex-grow">
-                      <div className="flex flex-wrap gap-3 mb-8">
-                        {ae.features.map(f => (
-                          <span key={f} className="px-5 py-2 bg-gray-50 text-gray-600 rounded-xl text-sm font-black uppercase tracking-widest border border-gray-100">
-                            {f}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100/50">
-                        <div>
-                          <span className="text-gray-400 text-xs font-black uppercase tracking-[0.2em]">{t('auto_ecole.price_label')}</span>
-                          <p className="text-4xl font-black text-blue-700 tracking-tighter">{ae.price}</p>
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {ae.features.map(f => (
+                        <span key={f} className="px-3 py-1 bg-white/5 text-gray-400 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-white/5">
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                          <span className="text-white font-bold">{ae.rating}</span>
+                          <span className="text-gray-600 text-xs font-medium">({ae.reviews} {t('reviews')?.toLowerCase() || 'avis'})</span>
                         </div>
-                        <motion.button 
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-8 py-4 bg-white text-blue-600 rounded-xl font-black text-lg shadow-lg shadow-blue-100 transition-all border-2 border-transparent hover:border-blue-500"
-                        >
-                          {t('auto_ecole.details')}
-                        </motion.button>
+                        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">{t('auto_ecole.price_label')}</p>
+                        <p className="text-3xl font-black text-white tracking-tighter">{ae.price}</p>
                       </div>
+                      <motion.button 
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-6 py-3 bg-white/10 hover:bg-emerald-500 hover:text-black text-white rounded-xl font-bold text-sm transition-all border border-white/10"
+                      >
+                        {t('auto_ecole.details')}
+                      </motion.button>
                     </div>
                   </motion.div>
                 ))}
@@ -258,12 +256,14 @@ export default function AutoEcole() {
                 key="notfound"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-24 bg-white rounded-[2.5rem]"
+                className="text-center py-20 bg-white/5 rounded-[3rem]"
               >
-                <p className="text-2xl text-gray-500 font-black mb-8">{t('auto_ecole.not_found')} <span className="text-red-500">"{searchCity}"</span></p>
+                <p className="text-xl text-gray-400 font-bold mb-8">
+                  {t('auto_ecole.not_found')} <span className="text-emerald-400 italic">"{searchCity}"</span>
+                </p>
                 <button 
                   onClick={() => {setSearchCity(''); setResults(null);}} 
-                  className="px-10 py-4 bg-gray-900 text-white rounded-2xl font-black text-lg hover:bg-black transition-all"
+                  className="px-10 py-4 bg-emerald-500 text-black rounded-xl font-black text-lg hover:bg-emerald-400 transition-all shadow-lg"
                 >
                   {t('auto_ecole.reset')}
                 </button>

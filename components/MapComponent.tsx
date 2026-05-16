@@ -36,31 +36,39 @@ const mockLocations: AutoEcole[] = [
 
 export default function MapComponent() {
   return (
-    <div className="h-[500px] w-full rounded-[2rem] overflow-hidden shadow-xl border-4 border-white z-0 relative">
-      <MapContainer center={[46.603354, 1.888334]} zoom={6} scrollWheelZoom={false} style={{ height: '100%', width: '100%', minHeight: '100%' }}>
+    <div className="h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.2)] border-4 border-white/5 z-0 relative">
+      <MapContainer 
+        center={[46.603354, 1.888334]} 
+        zoom={6} 
+        scrollWheelZoom={false} 
+        style={{ height: '100%', width: '100%', minHeight: '100%' }}
+      >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
         {mockLocations.map((school) => (
           <Marker key={school.id} position={[school.lat, school.lng]} icon={icon}>
-            <Popup className="rounded-xl overflow-hidden">
-              <div className="text-center font-sans p-1">
-                <h3 className="font-black text-gray-900 text-lg mb-1 leading-tight">{school.name}</h3>
-                <div className="flex items-center justify-center gap-3 mb-3">
-                  <span className="text-blue-600 font-black text-lg">{school.price}</span>
-                  <span className="text-yellow-600 font-bold flex items-center bg-yellow-50 px-2 py-1 rounded-md">
-                    {school.rating} <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+            <Popup className="cyber-popup">
+              <div className="text-center font-sans p-2 bg-neutral-900 text-white rounded-lg">
+                <h3 className="font-bold text-emerald-400 text-base mb-1 leading-tight">{school.name}</h3>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <span className="text-violet-400 font-bold">{school.price}</span>
+                  <span className="text-yellow-400 text-xs flex items-center">
+                    {school.rating} ★
                   </span>
                 </div>
-                <button className="bg-gray-900 text-white font-bold px-4 py-2 rounded-xl text-sm w-full hover:bg-black transition-colors shadow-md">
-                  Voir en détails
+                <button className="bg-emerald-500 text-black font-black px-3 py-2 rounded-lg text-[10px] w-full hover:bg-emerald-400 transition-all shadow-[0_0_10px_rgba(16,185,129,0.5)]">
+                  VOIR DÉTAILS
                 </button>
               </div>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
+      
+      {/* Overlay de grain Cyberpunk */}
+      <div className="absolute inset-0 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
     </div>
   );
 }
