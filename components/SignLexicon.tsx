@@ -15,6 +15,7 @@ import {
   Snowflake,
   Crosshair
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type SignCategory = 'danger' | 'interdiction' | 'obligation' | 'indication' | 'priorite';
 
@@ -68,7 +69,46 @@ const SIGNS: SignData[] = [
   { id: 'AB6', category: 'priorite', name: 'Route prioritaire', meaning: 'Vous avez la priorité à toutes les intersections.', content: 'losange' },
 ];
 
+const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
+  'A1a': { name: 'Опасный поворот направо', meaning: 'Снизьте скорость, опасный поворот направо через 150 м (вне населенного пункта).' },
+  'A1b': { name: 'Опасный поворот налево', meaning: 'Снизьте скорость, опасный поворот налево через 150 м.' },
+  'A2a': { name: 'Неровная дорога (бугор или впадина)', meaning: 'Деформация дорожного покрытия.' },
+  'A3': { name: 'Сужение дороги', meaning: 'Дорога сужается перед вами.' },
+  'A4': { name: 'Скользкая дорога', meaning: 'Опасность заноса.' },
+  'A14': { name: 'Прочие опасности', meaning: 'Неуказанная опасность, будьте предельно внимательны.' },
+  'A18': { name: 'Двустороннее движение', meaning: 'Внимание, двустороннее движение начинается сразу после знака.' },
+  'A21': { name: 'Боковой ветер', meaning: 'Опасность отклонения от траектории из-за сильного ветра.' },
+  
+  'B1': { name: 'Въезд запрещен (Сенс интерди)', meaning: 'Запрещается въезд в этом направлении (Одностороннее движение).' },
+  'B2a': { name: 'Поворот налево запрещен', meaning: 'На следующем перекрестке поворот налево запрещен.' },
+  'B3': { name: 'Обгон запрещен', meaning: 'Запрещается обгон всех моторных транспортных средств.' },
+  'B14_50': { name: 'Ограничение скорости 50', meaning: 'Максимально разрешенная скорость: 50 км/ч.' },
+  'B14_80': { name: 'Ограничение скорости 80', meaning: 'Максимально разрешенная скорость: 80 км/ч.' },
+  'B14_130': { name: 'Ограничение скорости 130', meaning: 'Максимально разрешенная скорость: 130 км/ч.' },
+  'B33': { name: 'Конец зоны запрещения обгона', meaning: 'Снятие ограничения на обгон.' },
+
+  'B21-1': { name: 'Обязательный поворот направо', meaning: 'На перекрестке обязателен поворот направо.' },
+  'B21-2': { name: 'Обязательный поворот налево', meaning: 'На перекрестке обязателен поворот налево.' },
+  'B21b': { name: 'Обязательный объезд препятствия', meaning: 'Обязательный объезд препятствия справа.' },
+  'B22a': { name: 'Велосипедная дорожка', meaning: 'Дорожка, предназначенная исключительно для велосипедистов.' },
+  'B25': { name: 'Ограничение минимальной скорости', meaning: 'Минимальная скорость движения 30 км/ч.' },
+
+  'C1a': { name: 'Парковка', meaning: 'Место, предназначенное для стоянки автомобилей.' },
+  'C4a': { name: 'Рекомендуемая скорость', meaning: 'Рекомендуется двигаться со скоростью 70 км/ч.' },
+  'C12': { name: 'Одностороннее движение', meaning: 'Движение по дороге с односторонним движением.' },
+  'C20a': { name: 'Пешеходный переход', meaning: 'Указывает точное расположение пешеходного перехода.' },
+  'C207': { name: 'Автомагистраль', meaning: 'Начало участка автомагистрали (автострады).' },
+
+  'AB4': { name: 'Стоп', meaning: 'Обязательная полная остановка у стоп-линии или края перекрестка.' },
+  'AB3a': { name: 'Уступите дорогу', meaning: 'Уступите дорогу транспортным средствам на пересекаемой дороге.' },
+  'AB1': { name: 'Помеха справа', meaning: 'Уступите дорогу транспортным средствам, приближающимся справа.' },
+  'AB2': { name: 'Пересечение со второстепенной дорогой', meaning: 'Вы имеете преимущество проезда на следующем перекрестке.' },
+  'AB6': { name: 'Главная дорога', meaning: 'Вы имеете преимущество на всех перекрестках этой дороги.' },
+};
+
 export default function SignLexicon() {
+  const { language } = useLanguage();
+
   const renderSignShape = (sign: SignData) => {
     switch(sign.category) {
       case 'danger':
@@ -160,18 +200,29 @@ export default function SignLexicon() {
     }
   }
 
-  const groupedSigns = SIGNS.reduce((acc, sign) => {
+  const translatedSigns = SIGNS.map(sign => {
+    if (language === 'ru' && SIGNS_RU[sign.id]) {
+      return {
+        ...sign,
+        name: SIGNS_RU[sign.id].name,
+        meaning: SIGNS_RU[sign.id].meaning
+      };
+    }
+    return sign;
+  });
+
+  const groupedSigns = translatedSigns.reduce((acc, sign) => {
     if (!acc[sign.category]) acc[sign.category] = [];
     acc[sign.category].push(sign);
     return acc;
   }, {} as Record<SignCategory, SignData[]>);
 
   const categoryTitles: Record<SignCategory, string> = {
-    danger: "Panneaux de Danger",
-    interdiction: "Panneaux de Prescription (Interdiction)",
-    obligation: "Panneaux de Prescription (Obligation)",
-    indication: "Panneaux d'Indication",
-    priorite: "Panneaux de Priorité"
+    danger: language === 'fr' ? "Panneaux de Danger" : "Предупреждающие знаки",
+    interdiction: language === 'fr' ? "Panneaux de Prescription (Interdiction)" : "Запрещающие знаки",
+    obligation: language === 'fr' ? "Panneaux de Prescription (Obligation)" : "Предписывающие знаки",
+    indication: language === 'fr' ? "Panneaux d'Indication" : "Информационные знаки",
+    priorite: language === 'fr' ? "Panneaux de Priorité" : "Знаки приоритета"
   };
 
   const categoryColors: Record<SignCategory, string> = {
@@ -184,9 +235,13 @@ export default function SignLexicon() {
 
   return (
     <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border-2 border-gray-100 relative mt-8 mb-8">
-      <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight text-center">La Bible des Panneaux</h2>
+      <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight text-center">
+        {language === 'fr' ? "La Bible des Panneaux" : "Библия дорожных знаков"}
+      </h2>
       <p className="text-xl text-gray-600 font-medium text-center mb-12 max-w-3xl mx-auto">
-        Découvrez l'intégralité des panneaux officiels à connaître pour le code de la route, classés par famille.
+        {language === 'fr' 
+          ? "Découvrez l'intégralité des panneaux officiels à connaître pour le code de la route, classés par famille." 
+          : "Откройте для себя все официальные дорожные знаки, которые необходимо знать для сдачи на права, распределенные по категориям."}
       </p>
 
       <div className="space-y-16">
