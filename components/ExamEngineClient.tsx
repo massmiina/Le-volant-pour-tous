@@ -28,8 +28,11 @@ export default function ExamEngineClient() {
   const [allAnswers, setAllAnswers] = useState<number[][]>(new Array(40).fill([]));
   const [currentSelection, setCurrentSelection] = useState<number[]>([]);
   
+  const [hasStarted, setHasStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [score, setScore] = useState<number | null>(null);
+  const [mistakes, setMistakes] = useState<any[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
   const [progress, setProgress] = useState(100);
@@ -61,15 +64,24 @@ export default function ExamEngineClient() {
 
     // Calcul du score basé sur les réponses
     let finalScore = 0;
+    const newMistakes: any[] = [];
     finalAnswers.forEach((ansArray, idx) => {
       const correctAns = examQuestions[idx].correctAnswer;
-      // Pour l'instant on a une seule bonne réponse en DB
-      if (ansArray.length === 1 && ansArray[0] === correctAns) {
+      const isCorrect = ansArray.length === 1 && ansArray[0] === correctAns;
+      if (isCorrect) {
         finalScore++;
+      } else {
+        newMistakes.push({
+          idx,
+          question: examQuestions[idx],
+          given: ansArray,
+          correct: correctAns
+        });
       }
     });
 
     setScore(finalScore);
+    setMistakes(newMistakes);
     const passed = finalScore >= 35;
 
     // Sauvegarde API Prisma
@@ -77,7 +89,7 @@ export default function ExamEngineClient() {
       await fetch('/api/exams', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score: finalScore, passed, answers: finalAnswers })
+        body: JSON.stringify({ score: finalScore, passed, mistakes: newMistakes, answers: finalAnswers })
       });
     } catch (e) {
       console.error("Erreur de sauvegarde", e);
@@ -90,7 +102,11 @@ export default function ExamEngineClient() {
 
   // 3. Validation de la question courante
   const handleValidate = useCallback(() => {
-    if (isFinished) return;
+    if (isFinished || !hasStarted) return;
+
+    if (typeof window !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(40);
+    }
     
     setAllAnswers(prev => {
       const newAnswers = [...prev];
@@ -114,9 +130,10 @@ export default function ExamEngineClient() {
       setCurrentSelection([]);
       resetTimer();
     }
-  }, [currentIdx, currentSelection, isFinished, finalizeExam]);
+  }, [currentIdx, currentSelection, isFinished, hasStarted, finalizeExam]);
 
   const resetTimer = useCallback(() => {
+    if (!hasStarted) return;
     endTimeRef.current = Date.now() + TIME_PER_QUESTION;
     setProgress(100);
     setTimeLeftStr("20s");
@@ -135,20 +152,20 @@ export default function ExamEngineClient() {
         setTimeLeftStr(`${Math.ceil(remaining / 1000)}s`);
       }
     }, 50);
-  }, [handleValidate]);
+  }, [handleValidate, hasStarted]);
 
   useEffect(() => {
-    if (!isFinished && currentIdx < 40) {
+    if (!isFinished && hasStarted && currentIdx < 40) {
       resetTimer();
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [currentIdx, isFinished, resetTimer]);
+  }, [currentIdx, isFinished, hasStarted, resetTimer]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isFinished) return;
+      if (isFinished || !hasStarted) return;
       const key = e.key.toUpperCase();
       if (key === 'A') toggleSelection(0);
       if (key === 'B') toggleSelection(1);
@@ -161,26 +178,67 @@ export default function ExamEngineClient() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFinished, handleValidate]);
+  }, [isFinished, hasStarted, handleValidate]);
 
   const toggleSelection = (index: number) => {
+    if (typeof window !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(20);
+    }
     setCurrentSelection(prev => 
       prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
     );
   };
 
+  // 0. Écran de Démarrage (Règles)
+  if (!hasStarted) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/hero-bg.jpg')] bg-cover bg-center opacity-20 pointer-events-none" />
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-10 md:p-16 text-center max-w-3xl w-full relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-emerald-500/10" />
+          <div className="relative z-10">
+             <h1 className={`text-5xl md:text-7xl font-bold mb-6 text-white ${rockSalt.className}`}>{t('exam.title')}</h1>
+             <p className="text-xl text-gray-400 mb-12 font-medium tracking-wide">{t('exam.subtitle')}</p>
+             
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left mb-12">
+                {[1, 2, 3, 4].map((num) => (
+                  <div key={num} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex items-start gap-4 hover:bg-white/10 transition-colors">
+                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 font-bold">
+                        {num}
+                     </div>
+                     <p className="text-gray-300 font-medium leading-snug">{t(`exam.rules_${num}`)}</p>
+                  </div>
+                ))}
+             </div>
+
+             <button 
+               onClick={() => setHasStarted(true)}
+               className="px-12 py-6 bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-black font-black uppercase tracking-widest rounded-2xl transition-all shadow-[0_0_40px_rgba(16,185,129,0.4)] text-xl hover:scale-105 active:scale-95"
+             >
+               {t('exam.start_btn')}
+             </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   // Écran des Résultats Finaux
   if (isFinished) {
     const passed = score !== null && score >= 35;
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 py-20 overflow-y-auto">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 text-center max-w-2xl w-full relative overflow-hidden"
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 text-center max-w-4xl w-full relative overflow-hidden"
         >
           {isSaving ? (
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center py-20">
               <div className="w-16 h-16 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-6" />
               <h2 className="text-2xl font-bold">Sauvegarde de vos résultats...</h2>
             </div>
@@ -188,33 +246,94 @@ export default function ExamEngineClient() {
             <>
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-emerald-500/10" />
               <div className="relative z-10">
-                <div className={`w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 ${passed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'} shadow-2xl`}>
-                  {passed ? <Award className="w-16 h-16" /> : <XCircle className="w-16 h-16" />}
-                </div>
-                
-                <h1 className={`text-5xl font-bold mb-4 ${passed ? 'text-emerald-400' : 'text-rose-400'} ${rockSalt.className}`}>
-                  {passed ? 'Félicitations !' : 'Entraînement Requis'}
-                </h1>
-                
-                <div className="flex items-center justify-center gap-2 mb-10 mt-8">
-                  <span className={`text-8xl font-black ${passed ? 'text-white' : 'text-rose-100'}`}>{score}</span>
-                  <span className="text-4xl text-gray-500">/ 40</span>
-                </div>
+                {!showReview ? (
+                  <>
+                    <div className={`w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-8 ${passed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'} shadow-2xl`}>
+                      {passed ? <Award className="w-16 h-16" /> : <XCircle className="w-16 h-16" />}
+                    </div>
+                    
+                    <h1 className={`text-5xl font-bold mb-4 ${passed ? 'text-emerald-400' : 'text-rose-400'} ${rockSalt.className}`}>
+                      {passed ? 'Félicitations !' : 'Entraînement Requis'}
+                    </h1>
+                    
+                    <div className="flex items-center justify-center gap-2 mb-10 mt-8">
+                      <span className={`text-8xl font-black ${passed ? 'text-white' : 'text-rose-100'}`}>{score}</span>
+                      <span className="text-4xl text-gray-500">/ 40</span>
+                    </div>
 
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <button 
-                    onClick={() => window.location.reload()}
-                    className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-colors"
-                  >
-                    <RotateCcw className="w-5 h-5" /> Refaire un test
-                  </button>
-                  <Link 
-                    href="/dashboard"
-                    className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-black font-bold uppercase tracking-widest rounded-xl flex items-center justify-center gap-3 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-                  >
-                    <Home className="w-5 h-5" /> Mon Espace
-                  </Link>
-                </div>
+                    <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                      <button 
+                        onClick={() => window.location.reload()}
+                        className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-colors"
+                      >
+                        <RotateCcw className="w-5 h-5" /> Refaire un test
+                      </button>
+                      <button 
+                        onClick={() => setShowReview(true)}
+                        className="px-8 py-4 bg-violet-600/20 border border-violet-500/50 hover:bg-violet-600/40 text-violet-300 font-bold rounded-xl flex items-center justify-center gap-3 transition-colors"
+                      >
+                        Revoir mes erreurs ({mistakes.length})
+                      </button>
+                      <Link 
+                        href="/dashboard"
+                        className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-black font-bold uppercase tracking-widest rounded-xl flex items-center justify-center gap-3 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                      >
+                        <Home className="w-5 h-5" /> Mon Espace
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-left">
+                    <button 
+                      onClick={() => setShowReview(false)}
+                      className="mb-8 flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-bold"
+                    >
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                      Retour aux résultats
+                    </button>
+                    
+                    <h2 className="text-3xl font-bold mb-8 flex items-center gap-4">
+                      <XCircle className="text-rose-500" />
+                      Analyse de vos {mistakes.length} erreurs
+                    </h2>
+
+                    <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+                      {mistakes.map((m, idx) => {
+                        const transQ = t(`exam.questions.q${m.question.id}`);
+                        return (
+                          <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                            <div className="flex flex-col md:flex-row gap-6">
+                              {m.question.image && (
+                                <div className="w-full md:w-48 aspect-video rounded-xl overflow-hidden shrink-0 border border-white/10">
+                                  <img src={m.question.image} alt="" className="w-full h-full object-cover" />
+                                </div>
+                              )}
+                              <div className="flex-1">
+                                <h3 className="text-lg font-bold text-white mb-3">{transQ.q}</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                                  <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg">
+                                    <span className="text-xs text-rose-400 uppercase font-black block mb-1">Votre réponse</span>
+                                    <span className="text-sm font-bold text-rose-100">
+                                      {m.given.length > 0 ? m.given.map((g: number) => ['A', 'B', 'C', 'D'][g]).join(', ') : 'Aucune (Temps écoulé)'}
+                                    </span>
+                                  </div>
+                                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                                    <span className="text-xs text-emerald-400 uppercase font-black block mb-1">Bonne réponse</span>
+                                    <span className="text-sm font-bold text-emerald-100">{['A', 'B', 'C', 'D'][m.correct]}</span>
+                                  </div>
+                                </div>
+                                <p className="text-sm text-gray-400 italic bg-black/30 p-4 rounded-xl border border-white/5">
+                                  <span className="font-bold text-gray-300 not-italic">Explication : </span>
+                                  {transQ.exp}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -232,7 +351,9 @@ export default function ExamEngineClient() {
     <div className="min-h-screen bg-black text-white flex flex-col font-sans selection:bg-emerald-500/30">
       <div className="w-full h-2 bg-neutral-900 relative">
         <motion.div 
-          className="h-full bg-gradient-to-r from-emerald-400 to-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]" 
+          className={`h-full shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-colors duration-500 ${
+            progress < 25 ? 'bg-gradient-to-r from-rose-500 to-red-600' : 'bg-gradient-to-r from-emerald-400 to-emerald-500'
+          }`} 
           style={{ width: `${progress}%` }} 
           initial={false}
           transition={{ ease: "linear", duration: 0.05 }}
@@ -252,7 +373,9 @@ export default function ExamEngineClient() {
              <span className="text-neutral-600 uppercase tracking-widest font-bold">Média Question {currentIdx + 1}</span>
            )}
            
-           <div className="absolute top-6 right-6 bg-black/80 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
+           <div className={`absolute top-6 right-6 backdrop-blur-md border rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg transition-colors ${
+             progress < 25 ? 'bg-red-900/80 border-red-500/50' : 'bg-black/80 border-white/10'
+           }`}>
              <span className={`w-3 h-3 rounded-full ${progress < 25 ? 'bg-red-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`} />
              <span className={`font-mono text-2xl font-bold ${progress < 25 ? 'text-red-400' : 'text-white'}`}>
                {timeLeftStr}

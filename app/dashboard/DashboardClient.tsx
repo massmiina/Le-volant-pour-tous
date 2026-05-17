@@ -67,14 +67,37 @@ export default function DashboardClient({ user, progress, examResults }: Dashboa
 
            {/* Modules Grid */}
            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className={`p-4 rounded-xl border bg-white/5 border-white/10 flex flex-col items-center justify-center aspect-square text-center transition-all hover:scale-105`}>
-                  <div className={`w-10 h-10 rounded-full mb-2 flex items-center justify-center bg-white/10 text-gray-400`}>
-                    {i + 1}
+              {[...Array(12)].map((_, i) => {
+                const moduleId = i + 1;
+                let isCompleted = false;
+                let score: number | undefined;
+                
+                try {
+                  const completedArr = progress?.completedModules ? JSON.parse(progress.completedModules) : [];
+                  const scoresObj = progress?.quizScores ? JSON.parse(progress.quizScores) : {};
+                  isCompleted = completedArr.includes(moduleId);
+                  score = scoresObj[moduleId.toString()];
+                } catch (e) {}
+
+                return (
+                  <div key={i} className={`p-4 rounded-xl border ${isCompleted ? 'bg-emerald-900/20 border-emerald-500/50' : 'bg-white/5 border-white/10'} flex flex-col items-center justify-center aspect-square text-center transition-all hover:scale-105 relative`}>
+                    {isCompleted && (
+                      <div className="absolute top-2 right-2 text-emerald-400">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                    <div className={`w-10 h-10 rounded-full mb-2 flex items-center justify-center ${isCompleted ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-gray-400'}`}>
+                      {moduleId}
+                    </div>
+                    <span className="text-xs font-medium text-gray-300">Module {moduleId}</span>
+                    {score !== undefined && (
+                      <span className="text-xs font-bold text-violet-400 mt-1">Score: {score}</span>
+                    )}
                   </div>
-                  <span className="text-xs font-medium text-gray-300">Module {i + 1}</span>
-                </div>
-              ))}
+                );
+              })}
            </div>
         </motion.div>
 

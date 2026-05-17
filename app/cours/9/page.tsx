@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ModuleQuiz } from '@/components/ModuleQuiz';
 
 export default function CoursMecanique() {
   const { t } = useLanguage();
@@ -62,6 +63,9 @@ export default function CoursMecanique() {
       bgLight: "bg-gray-50"
     }
   ];
+
+  const moduleData = (t('cours.mecanique', { returnObjects: true }) as any);
+  const quizData = moduleData.quiz_section || { title: "", intro: "", questions: [] };
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24 font-sans focus:outline-none" tabIndex={-1}>
@@ -147,6 +151,12 @@ export default function CoursMecanique() {
             </div>
           </AnimatedSection>
         ))}
+
+        {quizData.questions && quizData.questions.length > 0 && (
+          <AnimatedSection>
+             <ModuleQuiz moduleId={9} questions={quizData.questions} title={quizData.title} intro={quizData.intro} />
+          </AnimatedSection>
+        )}
 
         {/* Footer Navigation */}
         <AnimatedSection>

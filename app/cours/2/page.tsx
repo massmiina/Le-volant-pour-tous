@@ -5,134 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-interface QuizQuestion {
-  question: string;
-  options: string[];
-  answer: number;
-  explanation: string;
-}
-
-const ModuleQuiz = ({ questions, title, intro }: { questions: QuizQuestion[], title: string, intro: string }) => {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
-
-  const handleSelect = (idx: number) => {
-    if (showResult) return;
-    setSelectedIdx(idx);
-    setShowResult(true);
-    if (idx === questions[currentIdx].answer) {
-      setScore(score + 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIdx < questions.length - 1) {
-      setCurrentIdx(currentIdx + 1);
-      setSelectedIdx(null);
-      setShowResult(false);
-    }
-  };
-
-  if (!questions || questions.length === 0) return null;
-
-  const q = questions[currentIdx];
-
-  return (
-    <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border-2 border-indigo-100 mt-12 overflow-hidden relative">
-      <div className="relative z-10">
-        <h2 className="text-3xl font-black text-gray-900 mb-4">{title}</h2>
-        <p className="text-gray-600 font-medium mb-8 italic">{intro}</p>
-
-        <div className="mb-8">
-           <div className="flex justify-between items-center mb-4">
-              <span className="text-sm font-bold text-indigo-600 uppercase tracking-widest">Question {currentIdx + 1} / {questions.length}</span>
-              <span className="text-sm font-bold text-gray-400">Score: {score}</span>
-           </div>
-           <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-              <motion.div 
-                className="bg-indigo-500 h-full" 
-                initial={{ width: 0 }}
-                animate={{ width: `${((currentIdx + 1) / questions.length) * 100}%` }}
-              />
-           </div>
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={currentIdx}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
-          >
-            <h3 className="text-2xl font-bold text-gray-800 leading-tight">{q.question}</h3>
-            
-            <div className="grid grid-cols-1 gap-4">
-              {q.options.map((option, idx) => {
-                let bgColor = "bg-gray-50 border-gray-100 hover:border-indigo-300 hover:bg-indigo-50";
-                if (showResult) {
-                  if (idx === q.answer) bgColor = "bg-emerald-50 border-emerald-500 text-emerald-700";
-                  else if (idx === selectedIdx) bgColor = "bg-rose-50 border-rose-500 text-rose-700";
-                  else bgColor = "bg-gray-50 border-gray-100 opacity-50";
-                }
-
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => handleSelect(idx)}
-                    disabled={showResult}
-                    className={`w-full text-left p-6 rounded-2xl border-2 transition-all font-bold flex items-center justify-between group ${bgColor}`}
-                  >
-                    <span>{option}</span>
-                    {showResult && idx === q.answer && (
-                      <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                    {showResult && idx === selectedIdx && idx !== q.answer && (
-                      <svg className="w-6 h-6 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {showResult && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`p-6 rounded-2xl ${selectedIdx === q.answer ? 'bg-emerald-50 text-emerald-800' : 'bg-rose-50 text-rose-800'} border-2 border-current border-opacity-10`}
-              >
-                <p className="font-black mb-2 uppercase tracking-widest text-sm">
-                  {selectedIdx === q.answer ? '✅ Correct !' : '❌ Mauvaise réponse'}
-                </p>
-                <p className="font-medium leading-relaxed">{q.explanation}</p>
-                
-                {currentIdx < questions.length - 1 ? (
-                  <button 
-                    onClick={handleNext}
-                    className="mt-6 px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition-colors shadow-lg"
-                  >
-                    Question Suivante
-                  </button>
-                ) : (
-                  <div className="mt-6 pt-6 border-t border-current border-opacity-10">
-                    <p className="font-bold">Vous avez terminé le quiz ! Score final : {score}/{questions.length}</p>
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-};
+import { ModuleQuiz } from '@/components/ModuleQuiz';
 
 export default function CoursPriorites() {
   const { t } = useLanguage();
@@ -240,7 +113,7 @@ export default function CoursPriorites() {
         ))}
 
         <AnimatedSection>
-           <ModuleQuiz questions={quizData.questions} title={quizData.title} intro={quizData.intro} />
+           <ModuleQuiz moduleId={2} questions={quizData.questions} title={quizData.title} intro={quizData.intro} />
         </AnimatedSection>
 
         <AnimatedSection>

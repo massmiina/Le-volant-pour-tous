@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ModuleQuiz } from '@/components/ModuleQuiz';
 
 export default function CoursStationnement() {
   const { t } = useLanguage();
@@ -79,6 +80,9 @@ export default function CoursStationnement() {
       bgLight: "bg-rose-50"
     }
   ];
+
+  const moduleData = (t('cours.stationnement', { returnObjects: true }) as any);
+  const quizData = moduleData.quiz_section || { title: "", intro: "", questions: [] };
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24">
@@ -163,6 +167,12 @@ export default function CoursStationnement() {
             </div>
           </AnimatedSection>
         ))}
+
+        {quizData.questions && quizData.questions.length > 0 && (
+          <AnimatedSection>
+             <ModuleQuiz moduleId={5} questions={quizData.questions} title={quizData.title} intro={quizData.intro} />
+          </AnimatedSection>
+        )}
 
         <AnimatedSection>
           <div className="bg-gray-900 rounded-3xl p-10 text-center shadow-xl mt-8">

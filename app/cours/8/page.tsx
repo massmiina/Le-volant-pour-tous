@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ModuleQuiz } from '@/components/ModuleQuiz';
 
 export default function CoursAlcool() {
   const { t } = useLanguage();
@@ -62,6 +63,9 @@ export default function CoursAlcool() {
       bgLight: "bg-violet-50"
     }
   ];
+
+  const moduleData = (t('cours.alcool', { returnObjects: true }) as any);
+  const quizData = moduleData.quiz_section || { title: "", intro: "", questions: [] };
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24 font-sans">
@@ -147,6 +151,12 @@ export default function CoursAlcool() {
             </div>
           </AnimatedSection>
         ))}
+
+        {quizData.questions && quizData.questions.length > 0 && (
+          <AnimatedSection>
+             <ModuleQuiz moduleId={8} questions={quizData.questions} title={quizData.title} intro={quizData.intro} />
+          </AnimatedSection>
+        )}
 
         {/* Footer Navigation */}
         <AnimatedSection>

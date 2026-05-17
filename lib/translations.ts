@@ -538,7 +538,8 @@ export const translations: Record<Language | string, any> = {
               question: "Un panneau triangulaire indique :",
               options: ["Une obligation", "Une interdiction", "Un danger", "Une direction"],
               answer: 2,
-              explanation: "Les triangles à bord rouge indiquent toujours un danger."
+              explanation: "Les triangles à bord rouge indiquent toujours un danger.",
+              imageUrl: "/images/exam/q1.png"
             },
             {
               question: "Un panneau bleu rond signifie :",
@@ -949,67 +950,34 @@ export const translations: Record<Language | string, any> = {
         badge: "Module 3",
         label: "La Circulation",
         title: "Règles de circulation",
-        description: "Circuler correctement sur la route en respectant les règles.",
+        description: "Circuler correctement sur la route en respectant les règles fondamentales de placement et de manœuvre.",
         footer_title: "Maîtrisez la circulation",
         footer_desc: "Vous avez complété la base de la circulation. Prêt pour la suite ?",
         btn_test: "Quiz Circulation",
         sections: [
           {
-            id: "objectif",
-            title: "🎯 Objectif",
-            desc: "Circuler correctement sur la route en respectant les règles.",
+            id: "position",
+            title: "1. Position sur la chaussée",
+            desc: "En marche normale, le placement est la base de la sécurité et de la fluidité.",
             rules: [
-              { title: "Définition", text: "La position et les manœuvres définissent la fluidité du trafic." }
+              { title: "Règle Générale", text: "On doit circuler le plus près possible du bord droit de la chaussée." },
+              { title: "Virages", text: "Serrer à droite dans les virages à visibilité réduite pour éviter les chocs frontaux." },
+              { title: "Changement de file", text: "Interdit de changer de file sans raison valable (sauf pour tourner ou dépasser)." }
             ],
-            examples: ["Fluidité", "Sécurité collective"],
+            factBox: {
+              type: "warning",
+              title: "Attention aux cyclistes",
+              text: "En ville, serrez à droite mais laissez toujours un intervalle suffisant pour les usagers vulnérables."
+            },
+            examples: ["Voie de droite sur autoroute", "Placement en virage"],
             color: "border-blue-500",
             bgBadge: "bg-blue-500 text-white",
             bgLight: "bg-blue-50"
           },
           {
-            id: "position",
-            title: "1. Position sur la chaussée",
-            desc: "En marche normale.",
-            rules: [
-              { title: "Règle", text: "Rouler à droite." }
-            ],
-            examples: ["Voie de droite sur autoroute"],
-            color: "border-yellow-500",
-            bgBadge: "bg-yellow-500 text-white",
-            bgLight: "bg-yellow-50"
-          },
-          {
-            id: "changement_dir",
-            title: "2. Changement de direction",
-            desc: "Avertir avant de manœuvrer.",
-            imageUrl: "/images/cours/changement_dir.png",
-            rules: [
-              { title: "Clignotant", text: "Utiliser le clignotant." },
-              { title: "Vision", text: "Vérifier les angles morts." }
-            ],
-            examples: ["Tourner à gauche", "Changement de file"],
-            color: "border-orange-500",
-            bgBadge: "bg-orange-500 text-white",
-            bgLight: "bg-orange-50"
-          },
-          {
-            id: "depassement",
-            title: "3. Dépassement",
-            desc: "Passer un usager plus lent.",
-            imageUrl: "/images/cours/depassement.png",
-            rules: [
-              { title: "Sens", text: "Par la gauche." },
-              { title: "Condition", text: "Uniquement si autorisé." }
-            ],
-            examples: ["Dépasser un camion"],
-            color: "border-red-600",
-            bgBadge: "bg-red-600 text-white",
-            bgLight: "bg-red-50"
-          },
-          {
             id: "croisement",
-            title: "4. Croisement",
-            desc: "Usagers en sens inverse.",
+            title: "2. Le Croisement",
+            desc: "Savoir partager la route quand l'espace se réduit.",
             rules: [
               { title: "Action", text: "Serrer à droite." }
             ],
@@ -1622,6 +1590,11 @@ export const translations: Record<Language | string, any> = {
     exam: {
       title: "Examen Blanc",
       subtitle: "Conditions réelles - 30 minutes",
+      rules_title: "Règles de la simulation",
+      rules_1: "40 questions aléatoires",
+      rules_2: "20 secondes par question",
+      rules_3: "Zéro retour en arrière possible",
+      rules_4: "Score de 35/40 requis pour réussir",
       start_btn: "Commencer l'examen",
       previous_btn: "Précédent",
       timer_label: "Temps restant",
@@ -3414,6 +3387,11 @@ export const translations: Record<Language | string, any> = {
     exam: {
       title: "Экзамен Blanc",
       subtitle: "Реальные условия - 30 минут",
+      rules_title: "Правила симуляции",
+      rules_1: "40 случайных вопросов",
+      rules_2: "20 секунд на вопрос",
+      rules_3: "Возврат назад невозможен",
+      rules_4: "35/40 баллов для успеха",
       start_btn: "Начать экзамен",
       previous_btn: "Назад",
       timer_label: "Осталось времени",
