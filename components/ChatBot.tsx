@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
 
 interface Message {
   id: number;
@@ -11,19 +12,19 @@ interface Message {
 }
 
 const BOT_RESPONSES_FR = [
-  { keywords: ['bonjour', 'salut', 'coucou'], answer: "Bonjour ! Comment puis-je vous aider avec votre apprentissage de la conduite aujourd'hui ?" },
-  { keywords: ['prix', 'tarif', 'combien', 'coût'], answer: "Nos formules Permis B commencent à partir de 650€. Les stages de code intensifs sont à 250€. Souhaitez-vous voir le détail ?" },
-  { keywords: ['code', 'route', 'examen'], answer: "L'examen du code de la route comporte 40 questions. Vous devez obtenir au moins 35 bonnes réponses. Pratiquez avec nos quiz !" },
-  { keywords: ['permis', 'conduite', 'heures'], answer: "La formation pratique légale est d'au moins 20 heures de conduite sur boîte manuelle, ou 13h sur boîte automatique." },
-  { keywords: ['auto-ecole', 'ecole', 'localiser', 'où'], answer: "Nous avons plusieurs auto-écoles partenaires. Vous pouvez consulter la page 'Auto-écoles' pour trouver la plus proche de chez vous sur la carte." }
+  { keywords: ['bonjour', 'salut', 'coucou'], answerKey: 'chatbot.responses.bonjour' },
+  { keywords: ['prix', 'tarif', 'combien', 'coût'], answerKey: 'chatbot.responses.prix' },
+  { keywords: ['code', 'route', 'examen'], answerKey: 'chatbot.responses.code' },
+  { keywords: ['permis', 'conduite', 'heures'], answerKey: 'chatbot.responses.permis' },
+  { keywords: ['auto-ecole', 'ecole', 'localiser', 'où'], answerKey: 'chatbot.responses.auto_ecole' }
 ];
 
 const BOT_RESPONSES_RU = [
-  { keywords: ['привет', 'здравствуйте', 'добрый', 'здравствуй'], answer: "Здравствуйте! Как я могу помочь вам с обучением вождению сегодня?" },
-  { keywords: ['цена', 'тариф', 'стоимость', 'сколько', 'стоит'], answer: "Наши пакеты на права категории B начинаются от 650€. Интенсивные курсы теории стоят 250€. Хотите узнать подробности?" },
-  { keywords: ['теория', 'код', 'экзамен', 'пдд', 'тест'], answer: "Теоретический экзамен состоит из 40 вопросов. Для успешной сдачи нужно правильно ответить минимум на 35. Тренируйтесь на наших тестах!" },
-  { keywords: ['права', 'вождение', 'часы', 'часов', 'автомат'], answer: "Обязательное практическое обучение составляет минимум 20 часов вождения на механике или 13 часов на автомате." },
-  { keywords: ['автошкола', 'школа', 'где', 'адрес', 'карта'], answer: "У нас много автошкол-партнеров. Вы можете найти ближайшую на вкладке 'Автошколы' на карте." }
+  { keywords: ['привет', 'здравствуйте', 'добрый', 'здравствуй'], answerKey: 'chatbot.responses.bonjour' },
+  { keywords: ['цена', 'тариф', 'стоимость', 'сколько', 'стоит'], answerKey: 'chatbot.responses.prix' },
+  { keywords: ['теория', 'код', 'экзамен', 'пдд', 'тест'], answerKey: 'chatbot.responses.code' },
+  { keywords: ['права', 'вождение', 'часы', 'часов', 'автомат'], answerKey: 'chatbot.responses.permis' },
+  { keywords: ['автошкола', 'школа', 'где', 'адрес', 'карта'], answerKey: 'chatbot.responses.auto_ecole' }
 ];
 
 export default function ChatBot() {
@@ -35,15 +36,23 @@ export default function ChatBot() {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const t = (key: string) => {
+    const keys = key.split('.');
+    let val: any = translations[language];
+    for (const k of keys) {
+      if (!val || !val[k]) return key;
+      val = val[k];
+    }
+    return val;
+  };
+
   // Initialize welcome message based on language
   useEffect(() => {
     setMessages([
       { 
         id: 0, 
         sender: 'bot', 
-        text: language === 'fr' 
-          ? 'Bonjour ! Je suis votre assistant "Le Volant Pour Tous". Avez-vous des questions sur le permis ou le code de la route ?' 
-          : 'Здравствуйте! Я ваш помощник "Le Volant Pour Tous". Есть ли у вас вопросы о водительских правах или правилах дорожного движения?' 
+        text: t('chatbot.welcome')
       }
     ]);
   }, [language]);
@@ -69,9 +78,7 @@ export default function ChatBot() {
 
     // Simulate thinking and finding response
     setTimeout(() => {
-      let responseText = language === 'fr'
-        ? "Je suis désolé, je n'ai pas bien compris. Pourriez-vous reformuler votre question concernant le code de la route ou le permis ?"
-        : "Извините, я вас не совсем понял. Не могли бы вы переформулировать ваш вопрос о правилах дорожного движения или правах?";
+      let responseText = t('chatbot.fallback');
       
       const lowerInput = userText.toLowerCase();
       const responses = language === 'fr' ? BOT_RESPONSES_FR : BOT_RESPONSES_RU;
@@ -80,7 +87,7 @@ export default function ChatBot() {
       );
       
       if (matchedRule) {
-        responseText = matchedRule.answer;
+        responseText = t(matchedRule.answerKey);
       }
 
       setMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bot', text: responseText }]);
@@ -109,11 +116,11 @@ export default function ChatBot() {
                 </div>
                 <div>
                   <h3 className="font-bold text-base leading-tight">
-                    {language === 'fr' ? 'Assistant LVPT' : 'Помощник LVPT'}
+                    {t('chatbot.assistant_title')}
                   </h3>
                   <p className="text-xs text-blue-100 flex items-center gap-1 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-green-400"></span> 
-                    {language === 'fr' ? 'En ligne' : 'В сети'}
+                    {t('chatbot.online')}
                   </p>
                 </div>
               </div>
@@ -181,7 +188,7 @@ export default function ChatBot() {
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder={language === 'fr' ? "Posez votre question..." : "Задайте ваш вопрос..."}
+                placeholder={t('chatbot.placeholder')}
                 className="w-full bg-gray-50 border border-gray-200 text-sm rounded-full pl-4 pr-12 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700"
               />
               <button 

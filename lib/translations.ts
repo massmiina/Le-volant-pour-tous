@@ -1663,6 +1663,33 @@ export const translations: Record<Language | string, any> = {
         q38: { q: "Quel est le numéro d'appel d'urgence unique européen ?", o: ["15", "17", "18", "112"], exp: "Le 112 est accessible gratuitement partout en Europe, même sans réseau de son opérateur." },
         q39: { q: "Hors agglomération, quel intervalle latéral laisser pour dépasser un vélo ?", o: ["0,5 mètre", "1 mètre", "1,5 mètre", "2 mètres"], exp: "On laisse plus d'espace à cause de la vitesse et des turbulences d'air." },
         q40: { q: "Face à un tramway en circulation en ville, celui-ci :", o: ["Doit respecter la priorité à droite", "Est prioritaire dans la quasi-totalité des cas", "Doit vous laisser passer", "S'arrête toujours aux passages piétons"], exp: "Le tramway, de par sa masse et son inertie, est le roi de la priorité urbaine." }
+      },
+      saving_results: "Sauvegarde de vos résultats...",
+      success_title: "Félicitations !",
+      fail_title: "Entraînement Requis",
+      retry_btn: "Refaire un test",
+      review_errors: "Revoir mes erreurs",
+      dashboard_btn: "Mon Espace",
+      back_to_results: "Retour aux résultats",
+      analysis_title: "Analyse de vos {count} erreurs",
+      no_answer: "Aucune (Temps écoulé)",
+      media_question_fallback: "Média Question",
+      shortcuts_label: "Raccourcis clavier :",
+      key_enter: "Entrée",
+      validate_btn: "Valider"
+    },
+    chatbot: {
+      welcome: "Bonjour ! Je suis votre assistant \"Le Volant Pour Tous\". Avez-vous des questions sur le permis ou le code de la route ?",
+      placeholder: "Posez votre question...",
+      assistant_title: "Assistant LVPT",
+      online: "En ligne",
+      fallback: "Je suis désolé, je n'ai pas bien compris. Pourriez-vous reformuler votre question concernant le code de la route ou le permis ?",
+      responses: {
+        bonjour: "Bonjour ! Comment puis-je vous aider avec votre apprentissage de la conduite aujourd'hui ?",
+        prix: "Nos formules Permis B commencent à partir de 650€. Les stages de code intensifs sont à 250€. Souhaitez-vous voir le détail ?",
+        code: "L'examen du code de la route comporte 40 questions. Vous devez obtenir au moins 35 bonnes réponses. Pratiquez avec nos quiz !",
+        permis: "La formation pratique légale est d'au moins 20 heures de conduite sur boîte manuelle, ou 13h sur boîte automatique.",
+        auto_ecole: "Nous avons plusieurs auto-écoles partenaires. Vous pouvez consulter la page 'Auto-écoles' pour trouver la plus proche de chez vous sur la carte."
       }
     }
   },
@@ -3460,6 +3487,33 @@ export const translations: Record<Language | string, any> = {
           q38: { q: "Единый номер спасения в Европе:", o: ["15", "17", "18", "112"], exp: "112 работает везде бесплатно." },
           q39: { q: "Интервал обгона велосипеда вне города:", o: ["0,5 м", "1 м", "1,5 м", "2 м"], exp: "Больше места из-за высокой скорости ветра." },
           q40: { q: "Трамвай в городе:", o: ["Уступает помехам справа", "Почти всегда главный", "Должен вас ждать", "Стоит у пешеходов"], exp: "Трамвай — король городских перекрестков." }
+      },
+      saving_results: "Сохранение ваших результатов...",
+      success_title: "Поздравляем!",
+      fail_title: "Требуется тренировка",
+      retry_btn: "Пройти еще раз",
+      review_errors: "Посмотреть ошибки",
+      dashboard_btn: "Личный кабинет",
+      back_to_results: "Назад к результатам",
+      analysis_title: "Анализ ваших {count} ошибок",
+      no_answer: "Нет ответа (Время истекло)",
+      media_question_fallback: "Вопрос",
+      shortcuts_label: "Горячие клавиши :",
+      key_enter: "Ввод",
+      validate_btn: "Подтвердить"
+    },
+    chatbot: {
+      welcome: "Здравствуйте! Я ваш помощник \"Le Volant Pour Tous\". Есть ли у вас вопросы о водительских правах или правилах дорожного движения?",
+      placeholder: "Задайте ваш вопрос...",
+      assistant_title: "Помощник LVPT",
+      online: "В сети",
+      fallback: "Извините, я вас не совсем понял. Не могли бы вы переформулировать ваш вопрос о правилах дорожного движения или правах?",
+      responses: {
+        bonjour: "Здравствуйте! Как я могу помочь вам с обучением вождению сегодня?",
+        prix: "Наши пакеты на права категории B начинаются от 650€. Интенсивные курсы теории стоят 250€. Хотите узнать подробности?",
+        code: "Теоретический экзамен состоит из 40 вопросов. Для успешной сдачи нужно правильно ответить минимум на 35. Тренируйтесь на наших тестах!",
+        permis: "Обязательное практическое обучение составляет минимум 20 часов вождения на механике или 13 часов на автомате.",
+        auto_ecole: "У нас много автошкол-партнеров. Вы можете найти ближайшую на вкладке 'Автошколы' на карте."
       }
     }
   }
