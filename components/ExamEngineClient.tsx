@@ -240,7 +240,7 @@ export default function ExamEngineClient() {
           {isSaving ? (
             <div className="flex flex-col items-center py-20">
               <div className="w-16 h-16 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-6" />
-              <h2 className="text-2xl font-bold">Sauvegarde de vos résultats...</h2>
+              <h2 className="text-2xl font-bold">{language === 'fr' ? 'Sauvegarde de vos résultats...' : 'Сохранение ваших результатов...'}</h2>
             </div>
           ) : (
             <>
@@ -253,7 +253,9 @@ export default function ExamEngineClient() {
                     </div>
                     
                     <h1 className={`text-5xl font-bold mb-4 ${passed ? 'text-emerald-400' : 'text-rose-400'} ${rockSalt.className}`}>
-                      {passed ? 'Félicitations !' : 'Entraînement Requis'}
+                      {passed 
+                        ? (language === 'fr' ? 'Félicitations !' : 'Поздравляем!') 
+                        : (language === 'fr' ? 'Entraînement Requis' : 'Требуется тренировка')}
                     </h1>
                     
                     <div className="flex items-center justify-center gap-2 mb-10 mt-8">
@@ -266,19 +268,19 @@ export default function ExamEngineClient() {
                         onClick={() => window.location.reload()}
                         className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-colors"
                       >
-                        <RotateCcw className="w-5 h-5" /> Refaire un test
+                        <RotateCcw className="w-5 h-5" /> {language === 'fr' ? 'Refaire un test' : 'Пройти еще раз'}
                       </button>
                       <button 
                         onClick={() => setShowReview(true)}
                         className="px-8 py-4 bg-violet-600/20 border border-violet-500/50 hover:bg-violet-600/40 text-violet-300 font-bold rounded-xl flex items-center justify-center gap-3 transition-colors"
                       >
-                        Revoir mes erreurs ({mistakes.length})
+                        {language === 'fr' ? 'Revoir mes erreurs' : 'Посмотреть ошибки'} ({mistakes.length})
                       </button>
                       <Link 
                         href="/dashboard"
                         className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-black font-bold uppercase tracking-widest rounded-xl flex items-center justify-center gap-3 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                       >
-                        <Home className="w-5 h-5" /> Mon Espace
+                        <Home className="w-5 h-5" /> {language === 'fr' ? 'Mon Espace' : 'Личный кабинет'}
                       </Link>
                     </div>
                   </>
@@ -289,14 +291,14 @@ export default function ExamEngineClient() {
                       className="mb-8 flex items-center gap-2 text-gray-400 hover:text-white transition-colors font-bold"
                     >
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                      Retour aux résultats
+                      {language === 'fr' ? 'Retour aux résultats' : 'Назад к результатам'}
                     </button>
                     
                     <h2 className="text-3xl font-bold mb-8 flex items-center gap-4">
                       <XCircle className="text-rose-500" />
-                      Analyse de vos {mistakes.length} erreurs
+                      {language === 'fr' ? `Analyse de vos ${mistakes.length} erreurs` : `Анализ ваших ${mistakes.length} ошибок`}
                     </h2>
-
+ 
                     <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
                       {mistakes.map((m, idx) => {
                         const transQ = t(`exam.questions.q${m.question.id}`);
@@ -312,18 +314,18 @@ export default function ExamEngineClient() {
                                 <h3 className="text-lg font-bold text-white mb-3">{transQ.q}</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                                   <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg">
-                                    <span className="text-xs text-rose-400 uppercase font-black block mb-1">Votre réponse</span>
+                                    <span className="text-xs text-rose-400 uppercase font-black block mb-1">{language === 'fr' ? 'Votre réponse' : 'Ваш ответ'}</span>
                                     <span className="text-sm font-bold text-rose-100">
-                                      {m.given.length > 0 ? m.given.map((g: number) => ['A', 'B', 'C', 'D'][g]).join(', ') : 'Aucune (Temps écoulé)'}
+                                      {m.given.length > 0 ? m.given.map((g: number) => ['A', 'B', 'C', 'D'][g]).join(', ') : (language === 'fr' ? 'Aucune (Temps écoulé)' : 'Нет ответа (Время истекло)')}
                                     </span>
                                   </div>
                                   <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-                                    <span className="text-xs text-emerald-400 uppercase font-black block mb-1">Bonne réponse</span>
+                                    <span className="text-xs text-emerald-400 uppercase font-black block mb-1">{language === 'fr' ? 'Bonne réponse' : 'Верный ответ'}</span>
                                     <span className="text-sm font-bold text-emerald-100">{['A', 'B', 'C', 'D'][m.correct]}</span>
                                   </div>
                                 </div>
                                 <p className="text-sm text-gray-400 italic bg-black/30 p-4 rounded-xl border border-white/5">
-                                  <span className="font-bold text-gray-300 not-italic">Explication : </span>
+                                  <span className="font-bold text-gray-300 not-italic">{language === 'fr' ? 'Explication : ' : 'Пояснение : '}</span>
                                   {transQ.exp}
                                 </p>
                               </div>
@@ -370,7 +372,7 @@ export default function ExamEngineClient() {
                className="w-full h-full object-cover"
              />
            ) : (
-             <span className="text-neutral-600 uppercase tracking-widest font-bold">Média Question {currentIdx + 1}</span>
+             <span className="text-neutral-600 uppercase tracking-widest font-bold">{language === 'fr' ? 'Média Question' : 'Вопрос'} {currentIdx + 1}</span>
            )}
            
            <div className={`absolute top-6 right-6 backdrop-blur-md border rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg transition-colors ${
@@ -427,16 +429,16 @@ export default function ExamEngineClient() {
              <div className="flex flex-col sm:flex-row justify-between items-center border-t border-white/10 pt-8 gap-6">
                 <div className="text-gray-400 flex items-center gap-4 text-sm font-medium">
                   <span className="px-4 py-2 bg-white/5 rounded-lg border border-white/5 text-white">
-                    Question {currentIdx + 1} / 40
+                    {language === 'fr' ? 'Question' : 'Вопрос'} {currentIdx + 1} / 40
                   </span>
-                  <span className="hidden md:inline">Raccourcis clavier : <kbd className="bg-white/10 px-2 py-1 rounded mx-1">A</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">B</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">C</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">D</kbd> <kbd className="bg-white/10 px-2 py-1 rounded ml-1">Entrée</kbd></span>
+                  <span className="hidden md:inline">{language === 'fr' ? 'Raccourcis clavier :' : 'Горячие клавиши :'} <kbd className="bg-white/10 px-2 py-1 rounded mx-1">A</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">B</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">C</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">D</kbd> <kbd className="bg-white/10 px-2 py-1 rounded ml-1">{language === 'fr' ? 'Entrée' : 'Ввод'}</kbd></span>
                 </div>
                 
                 <button 
                   onClick={handleValidate}
                   className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95"
                 >
-                  Valider
+                  {language === 'fr' ? 'Valider' : 'Подтвердить'}
                 </button>
              </div>
           </motion.div>

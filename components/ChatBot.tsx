@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Message {
   id: number;
@@ -9,7 +10,7 @@ interface Message {
   text: string;
 }
 
-const botResponses: { keywords: string[], answer: string }[] = [
+const BOT_RESPONSES_FR = [
   { keywords: ['bonjour', 'salut', 'coucou'], answer: "Bonjour ! Comment puis-je vous aider avec votre apprentissage de la conduite aujourd'hui ?" },
   { keywords: ['prix', 'tarif', 'combien', 'coût'], answer: "Nos formules Permis B commencent à partir de 650€. Les stages de code intensifs sont à 250€. Souhaitez-vous voir le détail ?" },
   { keywords: ['code', 'route', 'examen'], answer: "L'examen du code de la route comporte 40 questions. Vous devez obtenir au moins 35 bonnes réponses. Pratiquez avec nos quiz !" },
@@ -17,15 +18,35 @@ const botResponses: { keywords: string[], answer: string }[] = [
   { keywords: ['auto-ecole', 'ecole', 'localiser', 'où'], answer: "Nous avons plusieurs auto-écoles partenaires. Vous pouvez consulter la page 'Auto-écoles' pour trouver la plus proche de chez vous sur la carte." }
 ];
 
+const BOT_RESPONSES_RU = [
+  { keywords: ['привет', 'здравствуйте', 'добрый', 'здравствуй'], answer: "Здравствуйте! Как я могу помочь вам с обучением вождению сегодня?" },
+  { keywords: ['цена', 'тариф', 'стоимость', 'сколько', 'стоит'], answer: "Наши пакеты на права категории B начинаются от 650€. Интенсивные курсы теории стоят 250€. Хотите узнать подробности?" },
+  { keywords: ['теория', 'код', 'экзамен', 'пдд', 'тест'], answer: "Теоретический экзамен состоит из 40 вопросов. Для успешной сдачи нужно правильно ответить минимум на 35. Тренируйтесь на наших тестах!" },
+  { keywords: ['права', 'вождение', 'часы', 'часов', 'автомат'], answer: "Обязательное практическое обучение составляет минимум 20 часов вождения на механике или 13 часов на автомате." },
+  { keywords: ['автошкола', 'школа', 'где', 'адрес', 'карта'], answer: "У нас много автошкол-партнеров. Вы можете найти ближайшую на вкладке 'Автошколы' на карте." }
+];
+
 export default function ChatBot() {
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 0, sender: 'bot', text: 'Bonjour ! Je suis votre assistant "Le Volant Pour Tous". Avez-vous des questions sur le permis ou le code de la route ?' }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize welcome message based on language
+  useEffect(() => {
+    setMessages([
+      { 
+        id: 0, 
+        sender: 'bot', 
+        text: language === 'fr' 
+          ? 'Bonjour ! Je suis votre assistant "Le Volant Pour Tous". Avez-vous des questions sur le permis ou le code de la route ?' 
+          : 'Здравствуйте! Я ваш помощник "Le Volant Pour Tous". Есть ли у вас вопросы о водительских правах или правилах дорожного движения?' 
+      }
+    ]);
+  }, [language]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -48,10 +69,13 @@ export default function ChatBot() {
 
     // Simulate thinking and finding response
     setTimeout(() => {
-      let responseText = "Je suis désolé, je n'ai pas bien compris. Pourriez-vous reformuler votre question concernant le code de la route ou le permis ?";
+      let responseText = language === 'fr'
+        ? "Je suis désolé, je n'ai pas bien compris. Pourriez-vous reformuler votre question concernant le code de la route ou le permis ?"
+        : "Извините, я вас не совсем понял. Не могли бы вы переформулировать ваш вопрос о правилах дорожного движения или правах?";
       
       const lowerInput = userText.toLowerCase();
-      const matchedRule = botResponses.find(rule => 
+      const responses = language === 'fr' ? BOT_RESPONSES_FR : BOT_RESPONSES_RU;
+      const matchedRule = responses.find(rule => 
         rule.keywords.some(kw => lowerInput.includes(kw))
       );
       
@@ -84,9 +108,12 @@ export default function ChatBot() {
                   <span className="text-xl">🤖</span>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg leading-tight">Assistant LVPT</h3>
-                  <p className="text-xs text-blue-100 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-green-400"></span> En ligne
+                  <h3 className="font-bold text-base leading-tight">
+                    {language === 'fr' ? 'Assistant LVPT' : 'Помощник LVPT'}
+                  </h3>
+                  <p className="text-xs text-blue-100 flex items-center gap-1 mt-0.5">
+                    <span className="w-2 h-2 rounded-full bg-green-400"></span> 
+                    {language === 'fr' ? 'En ligne' : 'В сети'}
                   </p>
                 </div>
               </div>
@@ -154,7 +181,7 @@ export default function ChatBot() {
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="Posez votre question..."
+                placeholder={language === 'fr' ? "Posez votre question..." : "Задайте ваш вопрос..."}
                 className="w-full bg-gray-50 border border-gray-200 text-sm rounded-full pl-4 pr-12 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700"
               />
               <button 
