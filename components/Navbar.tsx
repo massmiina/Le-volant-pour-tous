@@ -19,6 +19,7 @@ const Navbar = () => {
     { name: t('nav.courses'), href: '/cours' },
     { name: t('nav.quiz'), href: '/quiz' },
     { name: t('nav.exam'), href: '/examen' },
+    { name: t('nav.situations'), href: '/situations' },
     { name: t('nav.schools'), href: '/auto-ecole' },
     { name: t('nav.reviews'), href: '/avis' },
     { name: t('nav.contact'), href: '/contact' },

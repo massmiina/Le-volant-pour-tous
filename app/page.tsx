@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { Award } from 'lucide-react';
+import { Award, Car } from 'lucide-react';
 import { Rock_Salt } from 'next/font/google';
 
 const rockSalt = Rock_Salt({ subsets: ['latin'], weight: ['400'] });
@@ -135,6 +135,22 @@ export default function Home() {
                 <div className="absolute -top-3 -right-3 bg-white text-amber-600 text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm border border-amber-100">
                   Premium
                 </div>
+              </motion.button>
+            </Link>
+
+            {/* Quaternary Button: Mises en Situation (Cyan Theme) */}
+            <Link href="/situations" className="w-full sm:w-auto max-w-sm sm:max-w-none">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: "#06b6d4", // Cyan 600
+                  boxShadow: "0 0 40px rgba(6, 182, 212, 0.4)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-cyan-500 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(6,182,212,0.2)] group"
+              >
+                <Car className="w-6 h-6 animate-pulse" />
+                {t('nav.situations')}
               </motion.button>
             </Link>
           </motion.div>

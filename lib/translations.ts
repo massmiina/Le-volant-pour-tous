@@ -10,6 +10,7 @@ export const translations: Record<Language | string, any> = {
       contact: "Contact",
       quiz: "Quiz",
       exam: "Examen Blanc",
+      situations: "Mises en Situation",
     },
     ui: {
       welcome: "Bienvenue",
@@ -1764,6 +1765,63 @@ export const translations: Record<Language | string, any> = {
         replay: "Rejouer",
         controls_instruction: "Utilisez les flèches ← et → ou les boutons"
       }
+    },
+    situations: {
+      title: "Mises en Situation",
+      subtitle: "Faites face aux scénarios réels de l'examen comme si vous y étiez !",
+      progress: "Scénario {current} sur {total}",
+      question_title: "La Situation",
+      question_ask: "Votre décision :",
+      btn_validate: "Valider la réponse",
+      correct: "Bonne réponse ! 🎉",
+      incorrect: "Mauvaise réponse... ❌",
+      explanation_title: "💡 L'explication de l'examinateur :",
+      btn_next: "Scénario Suivant",
+      btn_finish: "Recommencer la session",
+      score_title: "Bilan des Mises en Situation",
+      score_desc: "Vous avez complété tous les scénarios de conduite.",
+      score_result: "Votre score final : {score} / {total}",
+      feedback_excellent: "Excellent ! Vous maîtrisez parfaitement les situations complexes. 🏆",
+      feedback_medium: "Pas mal ! Encore quelques révisions des règles de base pour être prêt. 📚",
+      feedback_low: "Attention, plusieurs situations critiques ont été mal gérées. Révisez vos cours ! ⚠️",
+      list: [
+        {
+          situation: "Vous circulez sur une route de nuit sans éclairage public. Vous rattrapez un usager roulant très lentement. Vous souhaitez le dépasser. Un véhicule arrive loin en face.",
+          question: "Quelle précaution est absolument indispensable pour ne pas éblouir et garantir la sécurité ?",
+          o1: "Je passe immédiatement en feux de route pour mieux voir la route pendant le dépassement.",
+          o2: "Je reste en feux de croisement pour ne pas éblouir, et je ne passe en feux de route qu'au moment où je suis à sa hauteur.",
+          o3: "Je klaxonne avant d'entamer la manœuvre pour prévenir de mon arrivée.",
+          o4: "J'allume mes feux de détresse durant toute la manœuvre de dépassement.",
+          exp: "Les feux de route éblouiraient l'usager dépassé dans son rétroviseur s'ils sont mis trop tôt, et l'usager arrivant en face s'il y en a un. On garde les feux de croisement et on repasse en feux de route à hauteur de sa cabine."
+        },
+        {
+          situation: "Vous approchez d'un passage à niveau. Le feu rouge clignote et la barrière commence à descendre, mais le train n'est pas encore visible.",
+          question: "Que devez-vous faire immédiatement ?",
+          o1: "J'accélère pour passer rapidement avant que la barrière ne se ferme complètement.",
+          o2: "Je m'arrête obligatoirement avant le feu rouge clignotant.",
+          o3: "Je m'arrête uniquement si la barrière est totalement horizontale.",
+          o4: "Je klaxonne pour avertir le train de ma présence.",
+          exp: "Le feu rouge clignotant impose l'arrêt ABSOLU et immédiat. Il est formellement interdit de s'engager dès que le signal lumineux s'active, sous peine de sanctions très lourdes (délit de classe 4)."
+        },
+        {
+          situation: "Vous montez à bord du véhicule. Vous devez régler votre poste de conduite avant de démarrer.",
+          question: "Dans quel ordre chronologique effectuez-vous ces opérations obligatoirement ?",
+          o1: "Rétroviseurs, siège, ceinture de sécurité.",
+          o2: "Siège, rétroviseurs, ceinture de sécurité.",
+          o3: "Ceinture de sécurité, siège, rétroviseurs.",
+          o4: "Rétroviseurs, ceinture de sécurité, siège.",
+          exp: "La règle d'or mnémotechnique est Siège, Rétroviseurs, Ceinture. On règle d'abord l'assise et le dossier du Siège, ensuite on ajuste les Rétroviseurs (qui dépendent de la position des yeux), et enfin on met la Ceinture (qui bloque certains mouvements)."
+        },
+        {
+          situation: "Vous circulez dans un tunnel à double sens de circulation. Le véhicule devant vous s'arrête brusquement à cause d'un incident mécanique.",
+          question: "Quelle est la règle essentielle de sécurité routière à respecter immédiatement ?",
+          o1: "Je me colle le plus près possible du véhicule devant pour libérer de l'espace derrière.",
+          o2: "Je m'arrête à au moins 150 mètres du véhicule.",
+          o3: "Je m'arrête en laissant un intervalle de sécurité suffisant (les deux diodes bleues de sécurité visibles au sol) et je coupe mon moteur.",
+          o4: "Je fais marche arrière immédiatement pour sortir du tunnel.",
+          exp: "En tunnel, la distance de sécurité minimale doit être maintenue même à l'arrêt pour éviter la propagation d'incendies. Couper le moteur limite la concentration de gaz toxiques."
+        }
+      ]
     }
   },
   ru: {
@@ -1775,6 +1833,7 @@ export const translations: Record<Language | string, any> = {
       contact: "Контакты",
       quiz: "Викторина",
       exam: "Экзамен",
+      situations: "Ситуации",
     },
     ui: {
       welcome: "Добро пожаловать",
@@ -3661,6 +3720,63 @@ export const translations: Record<Language | string, any> = {
         replay: "Играть снова",
         controls_instruction: "Используйте стрелки ← и → или кнопки"
       }
+    },
+    situations: {
+      title: "Ситуации на Дороге",
+      subtitle: "Решайте реальные экзаменационные сценарии прямо за рулем автомобиля!",
+      progress: "Сценарий {current} из {total}",
+      question_title: "Ситуация",
+      question_ask: "Ваше решение :",
+      btn_validate: "Подтвердить ответ",
+      correct: "Правильный ответ! 🎉",
+      incorrect: "Неверный ответ... ❌",
+      explanation_title: "💡 Объяснение экзаменатора :",
+      btn_next: "Следующий сценарий",
+      btn_finish: "Начать сначала",
+      score_title: "Итоги симуляции",
+      score_desc: "Вы завершили все предложенные сценарии вождения.",
+      score_result: "Ваш итоговый счет : {score} / {total}",
+      feedback_excellent: "Отлично! Вы идеально справляетесь со сложными ситуациями. 🏆",
+      feedback_medium: "Неплохо! Повторите базовые правила, чтобы быть полностью готовым к экзамену. 📚",
+      feedback_low: "Внимание, вы совершили критические ошибки в нескольких ситуациях. Повторите теорию! ⚠️",
+      list: [
+        {
+          situation: "Вы едете ночью по неосвещенной дороге. Вы догоняете медленно едущий автомобиль и хотите его обогнать. Вдали навстречу едет машина.",
+          question: "Какая мера предосторожности абсолютно необходима, чтобы не ослепить водителей и обеспечить безопасность?",
+          o1: "Я сразу включаю дальний свет, чтобы лучше видеть дорогу во время обгона.",
+          o2: "Я остаюсь с ближним светом, чтобы не слепить водителя, и включаю дальний только когда поравняюсь с ним.",
+          o3: "Я сигналю звуковым сигналом перед обгоном, чтобы предупредить о маневре.",
+          o4: "Я включаю аварийную световую сигнализацию на протяжении всего обгона.",
+          exp: "Дальний свет ослепит обгоняемого водителя через зеркало заднего вида, если включить его слишком рано. Следует ехать с ближним светом и переключаться на дальний, только когда вы поравняетесь с ним."
+        },
+        {
+          situation: "Вы приближаетесь к железнодорожному переезду. Мигает красный сигнал светофора, шлагбаум начинает опускаться, но поезда еще не видно.",
+          question: "Что вы должны сделать немедленно?",
+          o1: "Я ускоряюсь, чтобы проехать до того, как шлагбаум полностью опустится.",
+          o2: "Я обязан остановиться перед мигающим красным сигналом.",
+          o3: "Я останавливаюсь только если шлагбаум находится в полностью горизонтальном положении.",
+          o4: "Я сигналю, чтобы предупредить поезд о своем присутствии.",
+          exp: "Мигающий красный сигнал светофора требует ОБЯЗАТЕЛЬНОЙ и немедленной остановки. Въезд на переезд после активации сигнала строго запрещен."
+        },
+        {
+          situation: "Вы садитесь в автомобиль. Вы должны настроить водительское место перед началом движения.",
+          question: "В какой обязательной хронологической последовательности вы выполняете эти регулировки?",
+          o1: "Зеркала, сиденье, ремень безопасности.",
+          o2: "Сиденье, зеркала, ремень безопасности.",
+          o3: "Ремень безопасности, сиденье, зеркала.",
+          o4: "Зеркала, ремень безопасности, сиденье.",
+          exp: "Сначала настраивается сиденье (высота, наклон, вылет), затем зеркала заднего вида (так как их положение зависит от положения ваших глаз) и в последнюю очередь пристегивается ремень."
+        },
+        {
+          situation: "Вы едете в тоннеле с двухсторонним движением. Машина перед вами резко останавливается из-за поломки.",
+          question: "Какое ключевое правило безопасности необходимо соблюдать немедленно?",
+          o1: "Я прижимаюсь как можно ближе к переднему автомобилю, чтобы освободить место сзади.",
+          o2: "Я останавливаюсь на расстоянии не менее 150 метров от машины.",
+          o3: "Я останавливаюсь, соблюдая безопасную дистанцию (ориентируясь по синим диодам на стене или дороге), и глушу двигатель.",
+          o4: "Я немедленно еду задним ходом, чтобы выехать из тоннеля.",
+          exp: "В тоннеле минимальная безопасная дистанция должна соблюдаться даже при остановке во избежание распространения огня в случае пожара. Отключение двигателя снижает концентрацию токсичных газов."
+        }
+      ]
     }
   }
 };
