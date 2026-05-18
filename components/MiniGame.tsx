@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Game Constants
 const LANE_COUNT = 3;
@@ -15,6 +16,7 @@ interface Obstacle {
 }
 
 export default function MiniGame() {
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [carLane, setCarLane] = useState(1); // 0: Left, 1: Middle, 2: Right
@@ -111,7 +113,7 @@ export default function MiniGame() {
       {/* Game Information */}
       <div className="absolute top-0 left-0 w-full p-4 flex justify-between z-10 font-black text-white pointer-events-none">
         <div className="bg-black/50 px-3 py-1 rounded-lg backdrop-blur-sm">
-          Distance: {Math.floor(score / 10)}m
+          {t('jeu.esquive_route.distance').replace('{score}', String(Math.floor(score / 10)))}
         </div>
       </div>
 
@@ -131,17 +133,17 @@ export default function MiniGame() {
             className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-30 p-8 text-center"
           >
             <h2 className="text-4xl font-black text-white mb-2 uppercase italic tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">
-              {gameOver ? 'Crash !' : 'Conduite'}
+              {gameOver ? t('jeu.esquive_route.crash') : t('jeu.esquive_route.driving')}
             </h2>
-            {gameOver && <p className="text-gray-300 font-bold mb-6">Score final: {Math.floor(score / 10)}m</p>}
+            {gameOver && <p className="text-gray-300 font-bold mb-6">{t('jeu.esquive_route.final_score').replace('{score}', String(Math.floor(score / 10)))}</p>}
             
             <button 
               onClick={startGame}
               className="px-8 py-3 bg-white text-gray-900 rounded-xl font-black uppercase text-lg hover:bg-orange-400 hover:text-white transition-colors duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(251,146,60,0.8)]"
             >
-              {gameOver ? 'Rejouer' : 'Jouer'}
+              {gameOver ? t('jeu.esquive_route.replay') : t('jeu.play')}
             </button>
-            <p className="text-gray-500 text-sm mt-6 font-bold">Utilisez les flèches ← et → ou les boutons</p>
+            <p className="text-gray-500 text-sm mt-6 font-bold">{t('jeu.esquive_route.controls_instruction')}</p>
           </motion.div>
         )}
       </AnimatePresence>

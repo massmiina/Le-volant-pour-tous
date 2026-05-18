@@ -107,13 +107,13 @@ const Navbar = () => {
                   {/* Dropdown Logout */}
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                     <button onClick={() => signOut({ callbackUrl: '/' })} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
-                      {language === 'fr' ? 'Déconnexion' : 'Выйти'}
+                      {t('auth.logout')}
                     </button>
                   </div>
                 </div>
               ) : (
                 <Link href="/login" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors">
-                  {language === 'fr' ? 'Connexion' : 'Войти'}
+                  {t('auth.login')}
                 </Link>
               )}
             </div>

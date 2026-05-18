@@ -123,11 +123,11 @@ export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProp
               </p>
               
               <div className="bg-gradient-to-r from-indigo-900/40 to-violet-900/40 border border-indigo-500/30 rounded-2xl p-8 max-w-lg mx-auto backdrop-blur-sm">
-                <h4 className="text-xl font-bold text-white mb-2">{language === 'fr' ? 'Sauvegardez votre progression' : 'Сохраните ваш прогресс'}</h4>
-                <p className="text-gray-300 mb-6 text-sm">{language === 'fr' ? "Créez un compte gratuit pour enregistrer vos scores et débloquer l'examen blanc dans des conditions réelles." : "Создайте бесплатный аккаунт, чтобы сохранять свои результаты и разблокировать пробный экзамен в реальных условиях."}</p>
+                <h4 className="text-xl font-bold text-white mb-2">{t('quiz.save_progress_title')}</h4>
+                <p className="text-gray-300 mb-6 text-sm">{t('quiz.save_progress_desc')}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link href="/register" className="px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white font-black rounded-xl transition-all shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] text-center">
-                    {language === 'fr' ? 'Créer mon compte' : 'Создать аккаунт'}
+                    {t('quiz.create_account')}
                   </Link>
                   <button 
                     onClick={() => {
@@ -153,7 +153,7 @@ export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProp
             >
               <div className="flex justify-between items-center bg-black/40 p-4 rounded-xl border border-white/5">
                 <span className="text-sm font-bold text-violet-400 uppercase tracking-widest">{t('quiz.question_progress')} {currentIdx + 1} / {questions.length}</span>
-                <span className="text-sm font-bold text-gray-400">{language === 'fr' ? 'Score' : 'Счет'}: {score}</span>
+                <span className="text-sm font-bold text-gray-400">{t('quiz.score_label')}: {score}</span>
               </div>
 
               {q.imageUrl && (
@@ -212,7 +212,7 @@ export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProp
                   >
                     <div className={`p-6 mt-6 rounded-2xl ${selectedIdx === q.answer ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-200' : 'bg-rose-900/20 border-rose-500/30 text-rose-200'} border backdrop-blur-sm`}>
                       <p className="font-black mb-3 uppercase tracking-widest text-sm flex items-center gap-2">
-                        {selectedIdx === q.answer ? `✅ ${t('quiz.correct')} !` : `❌ ${language === 'fr' ? 'Mauvaise réponse' : 'Неверный ответ'}`}
+                        {selectedIdx === q.answer ? `✅ ${t('quiz.correct')} !` : `❌ ${t('quiz.wrong_answer')}`}
                       </p>
                       <p className="font-medium leading-relaxed opacity-90">{q.explanation}</p>
                     </div>

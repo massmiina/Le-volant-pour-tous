@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rock_Salt } from 'next/font/google';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 
 export default function SignMaster() {
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [score, setScore] = useState(0);
 
@@ -17,18 +19,18 @@ export default function SignMaster() {
            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-emerald-500/10" />
            <div className="relative z-10">
              <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl mx-auto mb-6 flex items-center justify-center text-5xl shadow-[0_0_30px_rgba(16,185,129,0.4)]">
-               🛑
+                🛑
              </div>
              <h2 className={`text-3xl font-bold text-white mb-3 ${rockSalt.className}`}>Sign Master</h2>
              <p className="text-gray-400 mb-8 text-sm leading-relaxed font-sans">
-               Testez vos réflexes sur les panneaux de signalisation. Glissez-les sur la bonne réponse. Vous avez 60 secondes !
+                {t('jeu.sign_master.intro')}
              </p>
              
              <button 
                onClick={() => setIsPlaying(true)}
                className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] font-sans"
              >
-               Insérer un jeton
+               {t('jeu.sign_master.insert_coin')}
              </button>
            </div>
         </div>
@@ -41,17 +43,17 @@ export default function SignMaster() {
       {/* Game Header */}
       <div className="w-full bg-white/5 border-b border-white/10 p-4 md:px-8 flex justify-between items-center z-20">
         <div className="flex flex-col">
-          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Score</span>
+          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">{t('jeu.sign_master.score')}</span>
           <span className="text-3xl font-black text-emerald-400">{score}</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-[10px] text-violet-400 uppercase tracking-widest font-bold mb-1">Combo</span>
+          <span className="text-[10px] text-violet-400 uppercase tracking-widest font-bold mb-1">{t('jeu.sign_master.combo')}</span>
           <span className="px-3 py-1 bg-violet-500/20 text-violet-400 font-bold rounded-lg border border-violet-500/30 text-sm">
             x1
           </span>
         </div>
         <div className="flex flex-col text-right">
-          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Temps</span>
+          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">{t('jeu.sign_master.time')}</span>
           <span className="text-3xl font-black text-white">59s</span>
         </div>
       </div>
@@ -75,16 +77,16 @@ export default function SignMaster() {
          </motion.div>
 
          <p className="mt-12 text-emerald-400 font-bold tracking-widest uppercase text-xs md:text-sm animate-pulse">
-           Glissez le panneau vers sa définition
+           {t('jeu.sign_master.drag_instruction')}
          </p>
 
          {/* Dropzones (Mock) */}
          <div className="w-full grid grid-cols-2 gap-4 md:gap-8 mt-8 relative z-20">
            <div className="border-2 border-dashed border-white/20 rounded-3xl p-6 md:p-8 flex items-center justify-center bg-black/60 text-center transition-colors hover:border-white/40 hover:bg-white/10">
-             <span className="text-gray-200 font-bold text-sm md:text-base">Interdiction de stationner</span>
+             <span className="text-gray-200 font-bold text-sm md:text-base">{t('jeu.sign_master.sign_no_parking')}</span>
            </div>
            <div className="border-2 border-dashed border-white/20 rounded-3xl p-6 md:p-8 flex items-center justify-center bg-black/60 text-center transition-colors hover:border-emerald-500/50 hover:bg-emerald-500/10">
-             <span className="text-gray-200 font-bold text-sm md:text-base">Arrêt obligatoire (STOP)</span>
+             <span className="text-gray-200 font-bold text-sm md:text-base">{t('jeu.sign_master.sign_stop')}</span>
            </div>
          </div>
          
@@ -92,7 +94,7 @@ export default function SignMaster() {
            onClick={() => setIsPlaying(false)}
            className="absolute bottom-4 text-gray-500 hover:text-gray-300 text-xs font-medium uppercase tracking-widest transition-colors"
          >
-           Quitter la partie
+           {t('jeu.sign_master.quit_game')}
          </button>
       </div>
     </div>

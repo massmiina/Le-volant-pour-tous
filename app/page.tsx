@@ -27,8 +27,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent md:w-3/4"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-8 md:px-24 relative z-10 py-20">
-        <div className="max-w-3xl space-y-12 text-left items-start">
+      <div className="max-w-7xl mx-auto w-full px-6 sm:px-8 md:px-24 relative z-10 py-12 sm:py-20">
+        <div className="max-w-3xl space-y-8 sm:space-y-12 text-left items-start">
           
           {/* Title Section with Glow Effect */}
           <div className="space-y-6">
@@ -44,13 +44,13 @@ export default function Home() {
               initial={{ opacity: 0, x: -70 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className={`text-6xl md:text-8xl lg:text-[7.5rem] leading-[1.2] pb-6 ${rockSalt.className}`}
+              className={`text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[1.1] pb-3 sm:pb-6 ${rockSalt.className}`}
               style={{ letterSpacing: '-0.15em' }}
             >
               <span className="neon-mixed-title block">
                 {t('home.title_1') || "Le Volant"}
               </span>
-              <span className="neon-mixed-title block -mt-2 md:-mt-6">
+              <span className="neon-mixed-title block -mt-1 sm:-mt-2 md:-mt-6">
                 {t('home.title_2') || "Pour Tous"}
               </span>
             </motion.h1>
@@ -59,7 +59,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-xl md:text-2xl text-violet-100/80 font-medium max-w-xl leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-violet-100/80 font-medium max-w-xl leading-relaxed"
             >
               {t('home.subtitle')}
             </motion.p>
@@ -70,10 +70,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-6 justify-start items-center pt-4"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start items-start pt-2 sm:pt-4 w-full sm:w-auto"
           >
             {/* Primary Button: Cours (Violet Theme) */}
-            <Link href="/cours" className="w-full sm:w-auto">
+            <Link href="/cours" className="w-full sm:w-auto max-w-sm sm:max-w-none">
               <motion.button
                 initial={{ y: 0 }}
                 animate={{ y: [0, -10, 0] }} // Entrance bounce
@@ -84,7 +84,7 @@ export default function Home() {
                   boxShadow: "0 0 40px rgba(167, 139, 250, 0.6)" 
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-12 py-5 bg-violet-600 text-white rounded-[2.5rem] font-bold text-xl shadow-[0_10px_40px_rgba(139,92,246,0.3)] transition-all duration-300 flex items-center justify-center gap-3 group"
+                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-violet-600 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl shadow-[0_10px_40px_rgba(139,92,246,0.3)] transition-all duration-300 flex items-center justify-center gap-3 group"
               >
                 {t('nav.courses')}
                 <motion.svg 
@@ -101,7 +101,7 @@ export default function Home() {
             </Link>
 
             {/* Secondary Button: Quiz (Translucent Glassmorphism) */}
-            <Link href="/quiz" className="w-full sm:w-auto">
+            <Link href="/quiz" className="w-full sm:w-auto max-w-sm sm:max-w-none">
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
@@ -109,7 +109,7 @@ export default function Home() {
                   borderColor: "#a78bfa"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-12 py-5 bg-white/5 backdrop-blur-md text-violet-100 border-2 border-violet-400/20 rounded-[2.5rem] font-bold text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg"
+                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-white/5 backdrop-blur-md text-violet-100 border-2 border-violet-400/20 rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg"
               >
                 {t('nav.quiz')}
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +119,7 @@ export default function Home() {
             </Link>
 
             {/* Tertiary Button: Examen (Amber/Gold Theme) */}
-            <Link href="/examen" className="w-full sm:w-auto">
+            <Link href="/examen" className="w-full sm:w-auto max-w-sm sm:max-w-none">
               <motion.button
                 style={{ position: 'relative' }}
                 whileHover={{ 
@@ -128,7 +128,7 @@ export default function Home() {
                   boxShadow: "0 0 40px rgba(251, 191, 36, 0.4)"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-12 py-5 bg-amber-500 text-white rounded-[2.5rem] font-bold text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(245,158,11,0.2)] group"
+                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-amber-500 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(245,158,11,0.2)] group"
               >
                 <Award className="w-6 h-6" />
                 {t('nav.exam')}

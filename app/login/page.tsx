@@ -12,7 +12,7 @@ const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 
 export default function LoginPage() {
   const router = useRouter();
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ export default function LoginPage() {
     });
 
     if (res?.error) {
-      setError(language === 'fr' ? "Email ou mot de passe incorrect." : "Неверный email или пароль.");
+      setError(t('auth.error_credentials'));
       setLoading(false);
     } else {
       router.push("/dashboard");
@@ -51,13 +51,13 @@ export default function LoginPage() {
       >
         <h1 className={`text-4xl text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-emerald-400 ${rockSalt.className}`}
             style={{ filter: 'drop-shadow(0 0 10px rgba(139,92,246,0.5))' }}>
-          {language === 'fr' ? 'Connexion' : 'Войти'}
+          {t('auth.login')}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              {language === 'fr' ? 'Adresse Email' : 'Email адрес'}
+              {t('auth.email')}
             </label>
             <input
               type="email"
@@ -71,7 +71,7 @@ export default function LoginPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              {language === 'fr' ? 'Mot de passe' : 'Пароль'}
+              {t('auth.password')}
             </label>
             <input
               type="password"
@@ -96,15 +96,15 @@ export default function LoginPage() {
             style={{ boxShadow: '0 0 20px rgba(16,185,129,0.4)' }}
           >
             {loading 
-              ? (language === 'fr' ? 'Chargement...' : 'Загрузка...') 
-              : (language === 'fr' ? 'Allumer le moteur' : 'Завести двигатель')}
+              ? t('auth.loading_login') 
+              : t('auth.btn_login')}
           </button>
         </form>
 
         <p className="mt-8 text-center text-gray-400">
-          {language === 'fr' ? "Pas encore de compte ?" : "Еще нет аккаунта?"}{" "}
+          {t('auth.no_account')}{" "}
           <Link href="/register" className="text-violet-400 hover:text-emerald-400 font-bold transition-colors">
-            {language === 'fr' ? "S'inscrire" : "Зарегистрироваться"}
+            {t('auth.register')}
           </Link>
         </p>
       </motion.div>

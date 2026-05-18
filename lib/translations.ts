@@ -90,6 +90,13 @@ export const translations: Record<Language | string, any> = {
       restart: "Recommencer le Quiz",
       correct: "Correct",
       wrong: "Faux",
+      save_progress_title: "Sauvegardez votre progression",
+      save_progress_desc: "Créez un compte gratuit pour enregistrer vos scores et débloquer l'examen blanc dans des conditions réelles.",
+      create_account: "Créer mon compte",
+      score_label: "Score",
+      wrong_answer: "Mauvaise réponse",
+      explication_label: "Explication",
+      correction_label: "Correction",
       q1: {
         q: "Quelle est la distance de sécurité minimale sur autoroute à 130 km/h ?",
         o1: "2 traits de la bande d'arrêt d'urgence",
@@ -1691,6 +1698,72 @@ export const translations: Record<Language | string, any> = {
         permis: "La formation pratique légale est d'au moins 20 heures de conduite sur boîte manuelle, ou 13h sur boîte automatique.",
         auto_ecole: "Nous avons plusieurs auto-écoles partenaires. Vous pouvez consulter la page 'Auto-écoles' pour trouver la plus proche de chez vous sur la carte."
       }
+    },
+    auth: {
+      login: "Connexion",
+      logout: "Déconnexion",
+      email: "Adresse Email",
+      password: "Mot de passe",
+      name: "Nom ou Pseudo",
+      loading_login: "Chargement...",
+      loading_register: "Création...",
+      btn_login: "Allumer le moteur",
+      btn_register: "Rejoindre l'équipage",
+      no_account: "Pas encore de compte ?",
+      have_account: "Déjà un compte ?",
+      register: "S'inscrire",
+      error_credentials: "Email ou mot de passe incorrect.",
+      error_generic: "Une erreur est survenue.",
+      error_network: "Erreur de connexion au serveur."
+    },
+    dashboard: {
+      welcome: "Bonjour, {name} 🚀",
+      subtitle: "Prêt pour votre prochaine session d'entraînement ?",
+      completed: "Complété",
+      resume_title: "Reprendre l'apprentissage",
+      resume_btn: "Continuer l'entraînement",
+      latest_exams: "Derniers Examens",
+      no_exams: "Aucun examen passé pour l'instant.",
+      exam_title: "Test Blanc #{number}",
+      start_test: "Lancer un test"
+    },
+    avis: {
+      title: "Avis de nos élèves",
+      subtitle: "Découvrez les retours d'expérience et témoignages de nos pilotes.",
+      leave_review: "Laisser un avis",
+      name: "Votre nom",
+      rating: "Note globale",
+      message: "Votre message",
+      placeholder: "Partagez votre expérience avec nous...",
+      send: "Envoyer l'avis",
+      latest: "Derniers avis",
+      just_now: "À l'instant"
+    },
+    jeu: {
+      back_to_hub: "Retour au Hub",
+      choose_training: "Choisissez votre entraînement.",
+      play: "Jouer",
+      sign_master_desc: "Entraînez vos réflexes visuels sur les panneaux de signalisation. Glissez-déposez le plus vite possible !",
+      esquive_route_desc: "Évitez les obstacles sur une autoroute infinie. Entraînez votre anticipation.",
+      sign_master: {
+        intro: "Testez vos réflexes sur les panneaux de signalisation. Glissez-les sur la bonne réponse. Vous avez 60 secondes !",
+        insert_coin: "Insérer un jeton",
+        score: "Score",
+        combo: "Combo",
+        time: "Temps",
+        drag_instruction: "Glissez le panneau vers sa définition",
+        sign_stop: "Arrêt obligatoire (STOP)",
+        sign_no_parking: "Interdiction de stationner",
+        quit_game: "Quitter la partie"
+      },
+      esquive_route: {
+        distance: "Distance : {score}m",
+        crash: "Crash !",
+        driving: "Conduite",
+        final_score: "Score final : {score}m",
+        replay: "Rejouer",
+        controls_instruction: "Utilisez les flèches ← et → ou les boutons"
+      }
     }
   },
   ru: {
@@ -1782,6 +1855,13 @@ export const translations: Record<Language | string, any> = {
       restart: "Начать заново",
       correct: "Верно",
       wrong: "Неверно",
+      save_progress_title: "Сохраните ваш прогресс",
+      save_progress_desc: "Создайте бесплатный аккаунт, чтобы сохранять свои результаты и разблокировать пробный экзамен в реальных условиях.",
+      create_account: "Создать аккаунт",
+      score_label: "Счет",
+      wrong_answer: "Неверный ответ",
+      explication_label: "Пояснение",
+      correction_label: "Исправление",
       q1: {
         q: "Какова минимальная дистанция безопасности на трассе при 130 км/ч?",
         o1: "2 полосы аварийной остановки",
@@ -3514,6 +3594,72 @@ export const translations: Record<Language | string, any> = {
         code: "Теоретический экзамен состоит из 40 вопросов. Для успешной сдачи нужно правильно ответить минимум на 35. Тренируйтесь на наших тестах!",
         permis: "Обязательное практическое обучение составляет минимум 20 часов вождения на механике или 13 часов на автомате.",
         auto_ecole: "У нас много автошкол-партнеров. Вы можете найти ближайшую на вкладке 'Автошколы' на карте."
+      }
+    },
+    auth: {
+      login: "Войти",
+      logout: "Выйти",
+      email: "Email адрес",
+      password: "Пароль",
+      name: "Имя или Никнейм",
+      loading_login: "Загрузка...",
+      loading_register: "Создание...",
+      btn_login: "Завести двигатель",
+      btn_register: "Присоединиться",
+      no_account: "Еще нет аккаунта?",
+      have_account: "Уже есть аккаунт?",
+      register: "Зарегистрироваться",
+      error_credentials: "Неверный email или пароль.",
+      error_generic: "Произошла ошибка.",
+      error_network: "Ошибка подключения к серверу."
+    },
+    dashboard: {
+      welcome: "Привет, {name} 🚀",
+      subtitle: "Готовы к следующей тренировке?",
+      completed: "Пройдено",
+      resume_title: "Продолжить обучение",
+      resume_btn: "Продолжить тренировку",
+      latest_exams: "Последние экзамены",
+      no_exams: "Вы еще не проходили экзаменов.",
+      exam_title: "Пробный тест #{number}",
+      start_test: "Запустить тест"
+    },
+    avis: {
+      title: "Отзывы наших учеников",
+      subtitle: "Узнайте мнение наших выпускников об обучении.",
+      leave_review: "Оставить отзыв",
+      name: "Ваше имя",
+      rating: "Ваша оценка",
+      message: "Ваш отзыв",
+      placeholder: "Поделитесь вашим опытом с нами...",
+      send: "Отправить отзыв",
+      latest: "Последние отзывы",
+      just_now: "Только что"
+    },
+    jeu: {
+      back_to_hub: "Назад в хаб",
+      choose_training: "Выберите вашу тренировку.",
+      play: "Играть",
+      sign_master_desc: "Тренируйте зрительные рефлексы на дорожных знаках. Перетаскивайте их как можно быстрее!",
+      esquive_route_desc: "Избегайте препятствий на бесконечном шоссе. Тренируйте предвосхищение.",
+      sign_master: {
+        intro: "Проверьте свои рефлексы на дорожных знаках. Перетащите их на правильный ответ. У вас есть 60 секунд!",
+        insert_coin: "Вставить жетон",
+        score: "Счет",
+        combo: "Комбо",
+        time: "Время",
+        drag_instruction: "Перетащите знак к его определению",
+        sign_stop: "Обязательная остановка (СТОП)",
+        sign_no_parking: "Стоянка запрещена",
+        quit_game: "Выйти из игры"
+      },
+      esquive_route: {
+        distance: "Дистанция: {score}м",
+        crash: "Авария!",
+        driving: "Вождение",
+        final_score: "Финальный счет: {score}м",
+        replay: "Играть снова",
+        controls_instruction: "Используйте стрелки ← и → или кнопки"
       }
     }
   }

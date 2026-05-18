@@ -11,7 +11,7 @@ const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,10 +36,10 @@ export default function RegisterPage() {
         router.push("/login");
       } else {
         const data = await res.json();
-        setError(data.message || "Une erreur est survenue.");
+        setError(data.message || t('auth.error_generic'));
       }
     } catch (err) {
-      setError("Erreur de connexion au serveur.");
+      setError(t('auth.error_network'));
     } finally {
       setLoading(false);
     }
@@ -58,13 +58,13 @@ export default function RegisterPage() {
       >
         <h1 className={`text-4xl text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 ${rockSalt.className}`}
             style={{ filter: 'drop-shadow(0 0 10px rgba(16,185,129,0.5))' }}>
-          {language === 'fr' ? "S'inscrire" : 'Регистрация'}
+          {t('auth.register')}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              {language === 'fr' ? 'Nom ou Pseudo' : 'Имя или Никнейм'}
+              {t('auth.name')}
             </label>
             <input
               type="text"
@@ -78,7 +78,7 @@ export default function RegisterPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              {language === 'fr' ? 'Adresse Email' : 'Email адрес'}
+              {t('auth.email')}
             </label>
             <input
               type="email"
@@ -92,7 +92,7 @@ export default function RegisterPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              {language === 'fr' ? 'Mot de passe' : 'Пароль'}
+              {t('auth.password')}
             </label>
             <input
               type="password"
@@ -117,15 +117,15 @@ export default function RegisterPage() {
             style={{ boxShadow: '0 0 20px rgba(16,185,129,0.4)' }}
           >
             {loading 
-              ? (language === 'fr' ? 'Création...' : 'Создание...') 
-              : (language === 'fr' ? 'Rejoindre l\'équipage' : 'Присоединиться')}
+              ? t('auth.loading_register') 
+              : t('auth.btn_register')}
           </button>
         </form>
 
         <p className="mt-8 text-center text-gray-400">
-          {language === 'fr' ? "Déjà un compte ?" : "Уже есть аккаунт?"}{" "}
+          {t('auth.have_account')}{" "}
           <Link href="/login" className="text-emerald-400 hover:text-cyan-400 font-bold transition-colors">
-            {language === 'fr' ? "Se connecter" : "Войти"}
+            {t('auth.login')}
           </Link>
         </p>
       </motion.div>

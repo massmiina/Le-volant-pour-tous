@@ -204,7 +204,7 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
                         {isCorrect ? '✔️' : '❌'}
                       </div>
                       <div>
-                        <p className="font-black text-sm uppercase tracking-widest mb-1">{isCorrect ? 'Explication' : 'Correction'}</p>
+                        <p className="font-black text-sm uppercase tracking-widest mb-1">{isCorrect ? t('quiz.explication_label') : t('quiz.correction_label')}</p>
                         <p className="text-sm opacity-80 leading-relaxed">{questions[currentQuestion].explanation}</p>
                       </div>
                     </div>
