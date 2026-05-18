@@ -13,16 +13,7 @@ const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 const TIME_PER_QUESTION = 20000; // 20 secondes
 
 export default function ExamEngineClient() {
-  const { language } = useLanguage();
-  const t = (key: string) => {
-    const keys = key.split('.');
-    let val: any = translations[language];
-    for (const k of keys) {
-      if (!val || !val[k]) return key;
-      val = val[k];
-    }
-    return val;
-  };
+  const { language, t } = useLanguage();
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [allAnswers, setAllAnswers] = useState<number[][]>(new Array(40).fill([]));

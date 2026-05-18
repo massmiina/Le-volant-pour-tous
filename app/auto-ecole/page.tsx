@@ -10,14 +10,21 @@ import { Search, MapPin, Star, Heart, Navigation } from 'lucide-react';
 
 const rockSalt = Rock_Salt({ weight: '400', subsets: ['latin'] });
 
-const MapClient = dynamic(() => import('@/components/MapComponent'), { 
-  ssr: false,
-  loading: () => (
+function MapLoadingSpinner() {
+  const { t } = useLanguage();
+  return (
     <div className="h-[500px] w-full bg-neutral-900 animate-pulse rounded-[2.5rem] flex flex-col items-center justify-center border-4 border-white/5 shadow-2xl">
       <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4"></div>
-      <span className="text-gray-500 font-bold tracking-widest uppercase text-xs">Initialisation du radar...</span>
+      <span className="text-gray-500 font-bold tracking-widest uppercase text-xs">
+        {t('auto_ecole.loading') || "Initialisation du radar..."}
+      </span>
     </div>
-  )
+  );
+}
+
+const MapClient = dynamic(() => import('@/components/MapComponent'), { 
+  ssr: false,
+  loading: () => <MapLoadingSpinner />
 });
 
 const mockAutoEcoles = [

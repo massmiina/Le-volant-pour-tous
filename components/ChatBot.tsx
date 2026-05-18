@@ -28,23 +28,13 @@ const BOT_RESPONSES_RU = [
 ];
 
 export default function ChatBot() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const t = (key: string) => {
-    const keys = key.split('.');
-    let val: any = translations[language];
-    for (const k of keys) {
-      if (!val || !val[k]) return key;
-      val = val[k];
-    }
-    return val;
-  };
 
   // Initialize welcome message based on language
   useEffect(() => {
