@@ -70,7 +70,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start items-start pt-2 sm:pt-4 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-start pt-2 sm:pt-4 w-full sm:w-auto"
           >
             {/* Primary Button: Cours (Violet Theme) */}
             <Link href="/cours" className="w-full sm:w-auto max-w-sm sm:max-w-none">
@@ -81,14 +81,14 @@ export default function Home() {
                 whileHover={{ 
                   scale: 1.05, 
                   backgroundColor: "#10b981", // Becomes Green on hover
-                  boxShadow: "0 0 40px rgba(167, 139, 250, 0.6)" 
+                  boxShadow: "0 0 30px rgba(167, 139, 250, 0.5)" 
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-violet-600 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl shadow-[0_10px_40px_rgba(139,92,246,0.3)] transition-all duration-300 flex items-center justify-center gap-3 group"
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-violet-600 text-white rounded-[2rem] font-bold text-sm sm:text-base shadow-[0_8px_30px_rgba(139,92,246,0.25)] transition-all duration-300 flex items-center justify-center gap-2.5 group"
               >
                 {t('nav.courses')}
                 <motion.svg 
-                  className="w-6 h-6" 
+                  className="w-5 h-5" 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
@@ -109,10 +109,10 @@ export default function Home() {
                   borderColor: "#a78bfa"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-white/5 backdrop-blur-md text-violet-100 border-2 border-violet-400/20 rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg"
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-white/5 backdrop-blur-md text-violet-100 border-2 border-violet-400/20 rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md"
               >
                 {t('nav.quiz')}
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </motion.button>
@@ -125,14 +125,14 @@ export default function Home() {
                 whileHover={{ 
                   scale: 1.05,
                   backgroundColor: "#d97706", // Amber 600
-                  boxShadow: "0 0 40px rgba(251, 191, 36, 0.4)"
+                  boxShadow: "0 0 30px rgba(251, 191, 36, 0.3)"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-amber-500 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(245,158,11,0.2)] group"
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-amber-500 text-white rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_8px_30px_rgba(245,158,11,0.15)] group"
               >
-                <Award className="w-6 h-6" />
+                <Award className="w-5 h-5" />
                 {t('nav.exam')}
-                <div className="absolute -top-3 -right-3 bg-white text-amber-600 text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter shadow-sm border border-amber-100">
+                <div className="absolute -top-2.5 -right-2.5 bg-white text-amber-600 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-sm border border-amber-100">
                   Premium
                 </div>
               </motion.button>
@@ -144,12 +144,12 @@ export default function Home() {
                 whileHover={{ 
                   scale: 1.05,
                   backgroundColor: "#06b6d4", // Cyan 600
-                  boxShadow: "0 0 40px rgba(6, 182, 212, 0.4)"
+                  boxShadow: "0 0 30px rgba(6, 182, 212, 0.3)"
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 sm:px-12 sm:py-5 bg-cyan-500 text-white rounded-[2.5rem] font-bold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_10px_40px_rgba(6,182,212,0.2)] group"
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-cyan-500 text-white rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_8px_30px_rgba(6, 182, 212, 0.15)] group"
               >
-                <Car className="w-6 h-6 animate-pulse" />
+                <Car className="w-5 h-5 animate-pulse" />
                 {t('nav.situations')}
               </motion.button>
             </Link>
