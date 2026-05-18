@@ -1726,7 +1726,12 @@ export const translations: Record<Language | string, any> = {
       latest_exams: "Derniers Examens",
       no_exams: "Aucun examen passé pour l'instant.",
       exam_title: "Test Blanc #{number}",
-      start_test: "Lancer un test"
+      start_test: "Lancer un test",
+      volant_ready: "VolantReady™",
+      volant_ready_desc: "Chances de réussite",
+      ready_status_learning: "Apprentissage",
+      ready_status_medium: "En progression",
+      ready_status_excellent: "Feu Vert ! Prêt",
     },
     avis: {
       title: "Avis de nos élèves",
@@ -3681,7 +3686,12 @@ export const translations: Record<Language | string, any> = {
       latest_exams: "Последние экзамены",
       no_exams: "Вы еще не проходили экзаменов.",
       exam_title: "Пробный тест #{number}",
-      start_test: "Запустить тест"
+      start_test: "Запустить тест",
+      volant_ready: "Шанс сдачи",
+      volant_ready_desc: "Вероятность успеха",
+      ready_status_learning: "Обучение",
+      ready_status_medium: "В процессе",
+      ready_status_excellent: "Зеленый свет! Готов",
     },
     avis: {
       title: "Отзывы наших учеников",
