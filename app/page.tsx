@@ -70,10 +70,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-start items-start pt-2 sm:pt-4 w-full sm:w-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2 sm:pt-4 w-full max-w-md sm:max-w-xl"
           >
             {/* Primary Button: Cours (Violet Theme) */}
-            <Link href="/cours" className="w-full sm:w-auto max-w-sm sm:max-w-none">
+            <Link href="/cours" className="w-full">
               <motion.button
                 initial={{ y: 0 }}
                 animate={{ y: [0, -10, 0] }} // Entrance bounce
@@ -101,7 +101,7 @@ export default function Home() {
             </Link>
 
             {/* Secondary Button: Quiz (Translucent Glassmorphism) */}
-            <Link href="/quiz" className="w-full sm:w-auto max-w-sm sm:max-w-none">
+            <Link href="/quiz" className="w-full">
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
@@ -119,7 +119,7 @@ export default function Home() {
             </Link>
 
             {/* Tertiary Button: Examen (Amber/Gold Theme) */}
-            <Link href="/examen" className="w-full sm:w-auto max-w-sm sm:max-w-none">
+            <Link href="/examen" className="w-full">
               <motion.button
                 style={{ position: 'relative' }}
                 whileHover={{ 
@@ -139,7 +139,7 @@ export default function Home() {
             </Link>
 
             {/* Quaternary Button: Mises en Situation (Cyan Theme) */}
-            <Link href="/situations" className="w-full sm:w-auto max-w-sm sm:max-w-none">
+            <Link href="/situations" className="w-full">
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
