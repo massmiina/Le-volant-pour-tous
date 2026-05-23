@@ -295,10 +295,10 @@ export default function MisesEnSituation() {
                           <span>{opt}</span>
                         </div>
                         {isSubmitted && isCorrectOption && (
-                          <span className="shrink-0 text-emerald-400 font-mono text-sm font-black uppercase tracking-wider">Correct</span>
+                          <span className="shrink-0 text-emerald-400 font-mono text-sm font-black uppercase tracking-wider">{t('quiz.correct') || "Correct"}</span>
                         )}
                         {isSubmitted && isSelected && !isCorrectOption && (
-                          <span className="shrink-0 text-rose-400 font-mono text-sm font-black uppercase tracking-wider">Faux</span>
+                          <span className="shrink-0 text-rose-400 font-mono text-sm font-black uppercase tracking-wider">{t('quiz.wrong') || "Faux"}</span>
                         )}
                       </motion.button>
                     );
