@@ -98,6 +98,10 @@ export const translations: Record<Language | string, any> = {
       wrong_answer: "Mauvaise réponse",
       explication_label: "Explication",
       correction_label: "Correction",
+      title: "Testez vos connaissances",
+      subtitle: "Choisissez un module pour commencer votre entraînement intensif.",
+      start: "Commencer",
+      quit: "Quitter le quiz",
       q1: {
         q: "Quelle est la distance de sécurité minimale sur autoroute à 130 km/h ?",
         o1: "2 traits de la bande d'arrêt d'urgence",
@@ -1926,6 +1930,10 @@ export const translations: Record<Language | string, any> = {
       wrong_answer: "Неверный ответ",
       explication_label: "Пояснение",
       correction_label: "Исправление",
+      title: "Проверьте свои знания",
+      subtitle: "Выберите модуль, чтобы начать интенсивную тренировку.",
+      start: "Начать",
+      quit: "Выйти из викторины",
       q1: {
         q: "Какова минимальная дистанция безопасности на трассе при 130 км/ч?",
         o1: "2 полосы аварийной остановки",

@@ -167,10 +167,10 @@ export default function QuizPage() {
               <AnimatedSection>
                 <header className="text-center mb-16">
                   <h1 className="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-purple-300 to-emerald-400 tracking-tighter">
-                    Testez vos connaissances
+                    {t('quiz.title') || "Testez vos connaissances"}
                   </h1>
                   <p className="text-xl text-violet-100/60 font-medium max-w-2xl mx-auto">
-                    Choisissez un module pour commencer votre entraînement intensif.
+                    {t('quiz.subtitle') || "Choisissez un module pour commencer votre entraînement intensif."}
                   </p>
                 </header>
               </AnimatedSection>
@@ -195,7 +195,7 @@ export default function QuizPage() {
                         {m.desc}
                       </p>
                       <div className="mt-10 flex items-center gap-2 text-violet-400 font-bold uppercase tracking-widest text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span>Commencer</span>
+                        <span>{t('quiz.start') || "Commencer"}</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -220,7 +220,7 @@ export default function QuizPage() {
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
-                  Quitter le quiz
+                  {t('quiz.quit') || "Quitter le quiz"}
                 </button>
               </div>
               <Quiz moduleKey={activeModule} onRestart={() => setActiveModule(null)} />
