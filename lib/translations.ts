@@ -11,6 +11,7 @@ export const translations: Record<Language | string, any> = {
       quiz: "Quiz",
       exam: "Examen Blanc",
       situations: "Mises en Situation",
+      more: "Plus",
     },
     ui: {
       welcome: "Bienvenue",
@@ -1843,6 +1844,7 @@ export const translations: Record<Language | string, any> = {
       quiz: "Викторина",
       exam: "Экзамен",
       situations: "Ситуации",
+      more: "Ещё",
     },
     ui: {
       welcome: "Добро пожаловать",

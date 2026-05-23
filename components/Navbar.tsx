@@ -11,19 +11,25 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const { data: session, status } = useSession();
 
-  const navLinks = [
+  const mainLinks = [
     { name: t('nav.home'), href: '/' },
     { name: t('nav.courses'), href: '/cours' },
     { name: t('nav.quiz'), href: '/quiz' },
     { name: t('nav.exam'), href: '/examen' },
     { name: t('nav.situations'), href: '/situations' },
     { name: t('nav.schools'), href: '/auto-ecole' },
+  ];
+
+  const dropdownLinks = [
     { name: t('nav.reviews'), href: '/avis' },
     { name: t('nav.contact'), href: '/contact' },
   ];
+
+  const navLinks = [...mainLinks, ...dropdownLinks];
 
   const languages: { code: Language; label: string; flag: string }[] = [
     { code: 'fr', label: 'Français', flag: '🇫🇷' },
@@ -44,7 +50,7 @@ const Navbar = () => {
           
           {/* Desktop menu */}
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
-            {navLinks.map((link) => (
+            {mainLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -57,6 +63,46 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {/* Dropdown for "Plus" (Avis & Contact) */}
+            <div 
+              className="relative py-4"
+              onMouseEnter={() => setIsMoreOpen(true)}
+              onMouseLeave={() => setIsMoreOpen(false)}
+            >
+              <button
+                className={`inline-flex items-center px-1 pt-1 pb-1 border-b-2 text-sm font-medium transition-colors duration-200 focus:outline-none ${
+                  dropdownLinks.some(link => pathname === link.href)
+                    ? 'border-blue-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
+              >
+                <span>{t('nav.more') || "Plus"}</span>
+                <svg className={`ml-1.5 h-4 w-4 transition-transform duration-200 ${isMoreOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isMoreOpen && (
+                <div className="absolute left-0 mt-1 w-48 rounded-2xl shadow-xl bg-white border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden transform origin-top-left transition-all duration-200">
+                  <div className="py-2 px-1 space-y-1">
+                    {dropdownLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`block px-4 py-2.5 text-sm rounded-xl transition-all duration-200 ${
+                          pathname === link.href
+                            ? 'bg-blue-50 text-blue-600 font-bold'
+                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Language Selector */}
             <div className="relative ml-4">
