@@ -49,7 +49,7 @@ const Navbar = () => {
           </div>
           
           {/* Desktop menu */}
-          <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+          <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4 lg:space-x-5">
             {mainLinks.map((link) => (
               <Link
                 key={link.href}
@@ -84,13 +84,13 @@ const Navbar = () => {
               </button>
 
               {isMoreOpen && (
-                <div className="absolute left-0 mt-1 w-48 rounded-2xl shadow-xl bg-white border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden transform origin-top-left transition-all duration-200">
-                  <div className="py-2 px-1 space-y-1">
+                <div className="absolute left-0 mt-1 w-40 rounded-xl shadow-xl bg-white border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden transform origin-top-left transition-all duration-200">
+                  <div className="py-1.5 px-1 space-y-0.5">
                     {dropdownLinks.map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
-                        className={`block px-4 py-2.5 text-sm rounded-xl transition-all duration-200 ${
+                        className={`block px-3.5 py-1.5 text-sm rounded-lg transition-all duration-200 ${
                           pathname === link.href
                             ? 'bg-blue-50 text-blue-600 font-bold'
                             : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -105,7 +105,7 @@ const Navbar = () => {
             </div>
 
             {/* Language Selector */}
-            <div className="relative ml-4">
+            <div className="relative ml-3">
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
                 className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition-colors"
@@ -118,7 +118,7 @@ const Navbar = () => {
               </button>
 
               {isLangOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                <div className="absolute right-0 mt-2 w-36 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden border border-gray-100">
                   <div className="py-1">
                     {languages.map((lang) => (
                       <button
@@ -127,8 +127,8 @@ const Navbar = () => {
                           setLanguage(lang.code);
                           setIsLangOpen(false);
                         }}
-                        className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors ${
-                          language === lang.code ? 'font-bold text-blue-600 bg-blue-50' : 'text-gray-700'
+                        className={`block w-full text-left px-3 py-1.5 text-sm hover:bg-gray-50 transition-colors ${
+                          language === lang.code ? 'font-bold text-blue-600 bg-blue-50/50' : 'text-gray-700'
                         }`}
                       >
                         <span className="mr-2">{lang.flag}</span>
@@ -141,7 +141,7 @@ const Navbar = () => {
             </div>
             
             {/* Auth Button */}
-            <div className="ml-4 flex items-center">
+            <div className="ml-3 flex items-center">
               {status === "loading" ? (
                 <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse"></div>
               ) : session ? (
