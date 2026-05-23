@@ -65,134 +65,94 @@ export default function Home() {
             </motion.p>
           </div>
 
-          {/* Action Buttons: Premium Bento Grid Console */}
+          {/* Action Buttons */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="w-full max-w-md sm:max-w-xl p-4 sm:p-5 bg-black/40 backdrop-blur-xl border border-violet-500/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] grid grid-cols-2 gap-3 sm:gap-4 relative overflow-hidden"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2 sm:pt-4 w-full max-w-md sm:max-w-xl"
           >
-            {/* Column 1 (Left): Tall then Short */}
-            <div className="flex flex-col gap-3 sm:gap-4 w-full">
-              {/* Primary Button: Cours (Violet Theme, Taller) */}
-              <Link href="/cours" className="w-full">
-                <motion.button
-                  initial={{ y: 0 }}
-                  animate={{ y: [0, -6, 0] }} // Gentle entrance bounce
-                  transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
-                  whileHover={{ 
-                    scale: 1.03, 
-                    borderColor: "rgba(168, 85, 247, 0.5)",
-                    boxShadow: "0 0 30px rgba(139,92,246,0.35)" 
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full h-36 sm:h-44 p-4 sm:p-5 rounded-2xl border border-violet-500/20 bg-violet-950/20 text-left flex flex-col justify-between transition-all duration-300 relative overflow-hidden group shadow-[0_4px_20px_rgba(139,92,246,0.05)] cursor-pointer select-none"
+            {/* Primary Button: Cours (Violet Theme) */}
+            <Link href="/cours" className="w-full">
+              <motion.button
+                initial={{ y: 0 }}
+                animate={{ y: [0, -10, 0] }} // Entrance bounce
+                transition={{ duration: 1.5, delay: 1, ease: "easeInOut" }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  backgroundColor: "#10b981", // Becomes Green on hover
+                  boxShadow: "0 0 30px rgba(167, 139, 250, 0.5)" 
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-violet-600 text-white rounded-[2rem] font-bold text-sm sm:text-base shadow-[0_8px_30px_rgba(139,92,246,0.25)] transition-all duration-300 flex items-center justify-center gap-2.5 group cursor-pointer select-none"
+              >
+                {t('nav.courses')}
+                <motion.svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-white text-base sm:text-lg font-black tracking-wider group-hover:text-violet-200 transition-colors uppercase">
-                      {t('nav.courses')}
-                    </span>
-                    <span className="text-violet-300/60 text-[10px] sm:text-xs font-semibold">
-                      18 Modules
-                    </span>
-                  </div>
-                  
-                  <div className="self-end text-violet-400/80 group-hover:text-violet-200 transition-colors">
-                    <svg className="w-8 h-8 sm:w-10 h-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 4.5l15 15m0 0H8.25m11.25 0V8.25" />
-                    </svg>
-                  </div>
-                </motion.button>
-              </Link>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </motion.svg>
+              </motion.button>
+            </Link>
 
-              {/* Secondary Button: Quiz (Translucent Glassmorphism, Shorter) */}
-              <Link href="/quiz" className="w-full">
-                <motion.button
-                  whileHover={{ 
-                    scale: 1.03,
-                    borderColor: "rgba(255, 255, 255, 0.3)",
-                    boxShadow: "0 0 20px rgba(255, 255, 255, 0.15)"
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full h-28 sm:h-32 p-4 sm:p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md text-left flex flex-col justify-between transition-all duration-300 relative overflow-hidden group shadow-md cursor-pointer select-none"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-violet-100 text-sm sm:text-base font-black tracking-wider uppercase">
-                      {t('nav.quiz')}
-                    </span>
-                    <span className="text-violet-300/40 text-[9px] sm:text-xs font-semibold">
-                      Thématiques
-                    </span>
-                  </div>
-                  
-                  <span className="absolute bottom-2 right-4 text-violet-300/10 group-hover:text-violet-300/20 transition-colors text-5xl sm:text-6xl font-serif font-black select-none">
-                    ?
-                  </span>
-                </motion.button>
-              </Link>
-            </div>
+            {/* Secondary Button: Quiz (Translucent Glassmorphism) */}
+            <Link href="/quiz" className="w-full">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: "rgba(139, 92, 246, 0.2)",
+                  borderColor: "#a78bfa"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-white/5 backdrop-blur-md text-violet-100 border-2 border-violet-400/20 rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-md cursor-pointer select-none"
+              >
+                {t('nav.quiz')}
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </motion.button>
+            </Link>
 
-            {/* Column 2 (Right): Short then Tall */}
-            <div className="flex flex-col gap-3 sm:gap-4 w-full">
-              {/* Tertiary Button: Examen (Amber/Gold Theme, Shorter) */}
-              <Link href="/examen" className="w-full">
-                <motion.button
-                  whileHover={{ 
-                    scale: 1.03,
-                    borderColor: "rgba(245, 158, 11, 0.5)",
-                    boxShadow: "0 0 30px rgba(245, 158, 11, 0.35)"
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full h-28 sm:h-32 p-4 sm:p-5 rounded-2xl border border-amber-500/20 bg-amber-950/20 text-left flex flex-col justify-between transition-all duration-300 relative overflow-hidden group shadow-[0_4px_20px_rgba(245,158,11,0.05)] cursor-pointer select-none"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-white text-sm sm:text-base font-black tracking-wider group-hover:text-amber-200 transition-colors uppercase">
-                      {t('nav.exam')}
-                    </span>
-                    <span className="text-amber-300/50 text-[9px] sm:text-xs font-semibold">
-                      Examen Blanc
-                    </span>
-                  </div>
+            {/* Tertiary Button: Examen (Amber/Gold Theme) */}
+            <Link href="/examen" className="w-full">
+              <motion.button
+                style={{ position: 'relative' }}
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: "#d97706", // Amber 600
+                  boxShadow: "0 0 30px rgba(251, 191, 36, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-amber-500 text-white rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_8px_30px_rgba(245,158,11,0.15)] group cursor-pointer select-none"
+              >
+                <Award className="w-5 h-5" />
+                {t('nav.exam')}
+                <div className="absolute -top-2.5 -right-2.5 bg-white text-amber-600 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-sm border border-amber-100">
+                  Premium
+                </div>
+              </motion.button>
+            </Link>
 
-                  <Award className="w-8 h-8 sm:w-10 h-10 text-amber-400/80 group-hover:text-amber-300 transition-colors absolute bottom-3 right-3" />
-
-                  <div className="absolute top-3 right-3 bg-white/95 text-amber-600 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider shadow-sm border border-amber-100">
-                    Premium
-                  </div>
-                </motion.button>
-              </Link>
-
-              {/* Quaternary Button: Mises en Situation (Cyan Theme, Taller) */}
-              <Link href="/situations" className="w-full">
-                <motion.button
-                  whileHover={{ 
-                    scale: 1.03,
-                    borderColor: "rgba(6, 182, 212, 0.5)",
-                    boxShadow: "0 0 30px rgba(6, 182, 212, 0.35)"
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full h-36 sm:h-44 p-4 sm:p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/20 text-left flex flex-col justify-between transition-all duration-300 relative overflow-hidden group shadow-[0_4px_20px_rgba(6,182,212,0.05)] cursor-pointer select-none"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-white text-base sm:text-lg font-black tracking-wider group-hover:text-cyan-200 transition-colors uppercase">
-                      {t('nav.situations')}
-                    </span>
-                    <span className="text-cyan-300/60 text-[10px] sm:text-xs font-semibold">
-                      Subjectif 3D
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-2 right-2 text-cyan-400/20 group-hover:text-cyan-400/40 transition-colors">
-                    <svg className="w-14 h-14 sm:w-18 h-18 group-hover:scale-105 transition-transform" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                      <path d="M20 80 A 40 40 0 1 1 80 80" strokeWidth="6" strokeLinecap="round" strokeDasharray="5,5" />
-                      <path d="M20 80 A 40 40 0 0 1 70 25" strokeWidth="8" strokeLinecap="round" className="text-cyan-400/80" />
-                      <line x1="50" y1="50" x2="75" y2="35" strokeWidth="4" strokeLinecap="round" className="text-cyan-300" />
-                      <circle cx="50" cy="50" r="6" fill="currentColor" />
-                    </svg>
-                  </div>
-                </motion.button>
-              </Link>
-            </div>
+            {/* Quaternary Button: Mises en Situation (Cyan Theme) */}
+            <Link href="/situations" className="w-full">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: "#06b6d4", // Cyan 600
+                  boxShadow: "0 0 30px rgba(6, 182, 212, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-6 py-3 sm:px-9 sm:py-3.5 bg-cyan-500 text-white rounded-[2rem] font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_8px_30px_rgba(6, 182, 212, 0.15)] group cursor-pointer select-none"
+              >
+                <Car className="w-5 h-5 animate-pulse" />
+                {t('nav.situations')}
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </div>
