@@ -11,6 +11,21 @@ interface QuizProps {
   onRestart: () => void;
 }
 
+const moduleNameKeys: Record<QuizProps['moduleKey'], string> = {
+  signalisation: 'm1_title',
+  priorites: 'm2_title',
+  regles: 'm3_title',
+  vitesse: 'm4_title',
+  stationnement: 'm5_title',
+  autoroute: 'm6_title',
+  securite: 'm7_title',
+  alcool: 'm8_title',
+  mecanique: 'm9_title',
+  eco_conduite: 'm10_title',
+  premiers_secours: 'm11_title',
+  partage_route: 'm12_title'
+};
+
 export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
   const { t } = useLanguage();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -116,7 +131,7 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
                   {t('quiz.question_progress')} {currentQuestion + 1} / {questions.length}
                 </span>
                 <span className="bg-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-violet-200 border border-white/5 uppercase tracking-wider">
-                  {moduleKey}
+                  {t('cours.modules_list.' + moduleNameKeys[moduleKey]) || moduleKey}
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight tracking-tight">
