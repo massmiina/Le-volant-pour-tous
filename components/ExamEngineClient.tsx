@@ -183,7 +183,7 @@ export default function ExamEngineClient() {
   // 0. Écran de Démarrage (Règles)
   if (!hasStarted) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 overflow-hidden relative">
+      <div className="min-h-[calc(100vh-4rem)] bg-black text-white flex items-center justify-center p-4 overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/hero-bg.jpg')] bg-cover bg-center opacity-20 pointer-events-none" />
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
@@ -195,15 +195,17 @@ export default function ExamEngineClient() {
              <h1 className={`text-5xl md:text-7xl font-bold mb-6 text-white ${rockSalt.className}`}>{t('exam.title')}</h1>
              <p className="text-xl text-gray-400 mb-12 font-medium tracking-wide">{t('exam.subtitle')}</p>
              
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left mb-12">
-                {[1, 2, 3, 4].map((num) => (
-                  <div key={num} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex items-start gap-4 hover:bg-white/10 transition-colors">
-                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 font-bold">
-                        {num}
-                     </div>
-                     <p className="text-gray-300 font-medium leading-snug">{t(`exam.rules_${num}`)}</p>
-                  </div>
-                ))}
+             {/* Sleek inline key info badges replacing the heavy steps grid */}
+             <div className="flex flex-wrap justify-center gap-3 mb-12">
+                <span className="bg-white/5 border border-white/10 px-5 py-2.5 rounded-full text-sm font-extrabold text-violet-300 uppercase tracking-wider">
+                  📋 {t('exam.rules_1')}
+                </span>
+                <span className="bg-white/5 border border-white/10 px-5 py-2.5 rounded-full text-sm font-extrabold text-emerald-300 uppercase tracking-wider">
+                  ⏱️ {t('exam.rules_2')}
+                </span>
+                <span className="bg-white/5 border border-white/10 px-5 py-2.5 rounded-full text-sm font-extrabold text-amber-300 uppercase tracking-wider">
+                  🎯 {t('exam.rules_4')}
+                </span>
              </div>
 
              <button 
@@ -222,7 +224,7 @@ export default function ExamEngineClient() {
   if (isFinished) {
     const passed = score !== null && score >= 35;
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 py-20 overflow-y-auto">
+      <div className="min-h-[calc(100vh-4rem)] bg-black text-white flex flex-col items-center justify-center p-4 py-10 overflow-y-auto">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -339,7 +341,7 @@ export default function ExamEngineClient() {
   const options = transQ?.o || ["Option A", "Option B", "Option C", "Option D"];
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col font-sans selection:bg-emerald-500/30">
+    <div className="min-h-[calc(100vh-4rem)] bg-black text-white flex flex-col font-sans selection:bg-emerald-500/30">
       <div className="w-full h-2 bg-neutral-900 relative">
         <motion.div 
           className={`h-full shadow-[0_0_15px_rgba(16,185,129,0.5)] transition-colors duration-500 ${
@@ -351,8 +353,8 @@ export default function ExamEngineClient() {
         />
       </div>
       
-      <div className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
-        <div className="w-full max-w-5xl aspect-video bg-neutral-900 border border-white/5 rounded-3xl flex items-center justify-center mb-8 relative overflow-hidden shadow-2xl">
+      <div className="flex-1 flex flex-col items-center justify-center p-3 md:p-6">
+        <div className="w-full max-w-4xl h-44 md:h-60 bg-neutral-900 border border-white/5 rounded-2xl flex items-center justify-center mb-4 relative overflow-hidden shadow-2xl">
            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-emerald-500/5" />
            {currentQ.image ? (
              <img 
@@ -364,11 +366,11 @@ export default function ExamEngineClient() {
              <span className="text-neutral-600 uppercase tracking-widest font-bold">{t('exam.media_question_fallback')} {currentIdx + 1}</span>
            )}
            
-           <div className={`absolute top-6 right-6 backdrop-blur-md border rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg transition-colors ${
+           <div className={`absolute top-4 right-4 backdrop-blur-md border rounded-xl px-4 py-2 flex items-center gap-2.5 shadow-lg transition-colors ${
              progress < 25 ? 'bg-red-900/80 border-red-500/50' : 'bg-black/80 border-white/10'
            }`}>
-             <span className={`w-3 h-3 rounded-full ${progress < 25 ? 'bg-red-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`} />
-             <span className={`font-mono text-2xl font-bold ${progress < 25 ? 'text-red-400' : 'text-white'}`}>
+             <span className={`w-2.5 h-2.5 rounded-full ${progress < 25 ? 'bg-red-500 animate-ping' : 'bg-emerald-500 animate-pulse'}`} />
+             <span className={`font-mono text-xl font-bold ${progress < 25 ? 'text-red-400' : 'text-white'}`}>
                {timeLeftStr}
              </span>
            </div>
@@ -381,13 +383,13 @@ export default function ExamEngineClient() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="w-full max-w-5xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 md:p-10 relative overflow-hidden"
+            className="w-full max-w-4xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 md:p-6 relative overflow-hidden"
           >
-             <h2 className="text-2xl md:text-3xl font-bold mb-8 leading-tight">
+             <h2 className="text-xl md:text-2xl font-bold mb-4 leading-tight">
                {questionText}
              </h2>
              
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                 {options.map((ans: string, i: number) => {
                   const letters = ['A', 'B', 'C', 'D'];
                   const isSelected = currentSelection.includes(i);
@@ -396,18 +398,18 @@ export default function ExamEngineClient() {
                     <button 
                       key={i} 
                       onClick={() => toggleSelection(i)}
-                      className={`flex items-center gap-5 p-5 rounded-2xl border transition-all text-left group ${
+                      className={`flex items-center gap-4 p-3 rounded-xl border transition-all text-left group ${
                         isSelected 
                           ? 'bg-emerald-500/20 border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.2)]' 
                           : 'bg-black/50 border-white/5 hover:bg-white/5'
                       }`}
                     >
-                      <div className={`w-14 h-14 rounded-xl flex items-center justify-center font-bold text-xl transition-colors ${
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg transition-colors ${
                         isSelected ? 'bg-emerald-500 text-black' : 'bg-white/10 text-gray-400 group-hover:bg-white/20 group-hover:text-white'
                       }`}>
                         {letters[i]}
                       </div>
-                      <span className={`font-medium text-lg ${isSelected ? 'text-white' : 'text-gray-300'}`}>
+                      <span className={`font-semibold text-base ${isSelected ? 'text-white' : 'text-gray-300'}`}>
                         {ans}
                       </span>
                     </button>
@@ -415,9 +417,9 @@ export default function ExamEngineClient() {
                 })}
              </div>
 
-             <div className="flex flex-col sm:flex-row justify-between items-center border-t border-white/10 pt-8 gap-6">
-                <div className="text-gray-400 flex items-center gap-4 text-sm font-medium">
-                  <span className="px-4 py-2 bg-white/5 rounded-lg border border-white/5 text-white">
+             <div className="flex flex-col sm:flex-row justify-between items-center border-t border-white/10 pt-4 gap-4">
+                <div className="text-gray-400 flex items-center gap-4 text-xs font-medium">
+                  <span className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/5 text-white">
                     {t('exam.progress_label').replace('{current}', String(currentIdx + 1)).replace('{total}', '40')}
                   </span>
                   <span className="hidden md:inline">{t('exam.shortcuts_label')} <kbd className="bg-white/10 px-2 py-1 rounded mx-1">A</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">B</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">C</kbd> <kbd className="bg-white/10 px-2 py-1 rounded mx-1">D</kbd> <kbd className="bg-white/10 px-2 py-1 rounded ml-1">{t('exam.key_enter')}</kbd></span>
@@ -425,7 +427,7 @@ export default function ExamEngineClient() {
                 
                 <button 
                   onClick={handleValidate}
-                  className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95"
+                  className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] text-sm hover:scale-105 active:scale-95"
                 >
                   {t('exam.validate_btn')}
                 </button>

@@ -14,7 +14,7 @@ export default function JeuPage() {
 
   if (activeGame === 'car') {
     return (
-      <div className="min-h-screen bg-[#0f172a] py-24 px-4 flex flex-col items-center">
+      <div className="min-h-[calc(100vh-4rem)] bg-[#0f172a] py-12 px-4 flex flex-col items-center">
          <button onClick={() => setActiveGame('menu')} className="mb-8 text-gray-400 hover:text-white uppercase tracking-widest font-bold text-sm">← {t('jeu.back_to_hub')}</button>
          <MiniGame />
       </div>
@@ -23,7 +23,7 @@ export default function JeuPage() {
 
   if (activeGame === 'sign') {
     return (
-      <div className="min-h-screen bg-black py-24 px-4 flex flex-col items-center relative">
+      <div className="min-h-[calc(100vh-4rem)] bg-black py-12 px-4 flex flex-col items-center relative">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-black to-black pointer-events-none" />
          <button onClick={() => setActiveGame('menu')} className="mb-8 text-gray-400 hover:text-white uppercase tracking-widest font-bold text-sm relative z-20">← {t('jeu.back_to_hub')}</button>
          <SignMaster />
@@ -32,7 +32,7 @@ export default function JeuPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white py-24 px-4 flex flex-col items-center relative overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] bg-black text-white py-12 px-4 flex flex-col items-center relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/20 via-black to-black" />
       
       <div className="relative z-10 text-center mb-16">

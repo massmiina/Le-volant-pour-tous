@@ -178,7 +178,7 @@ export default function MisesEnSituation() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#070417] text-white py-24 px-4 overflow-hidden font-sans">
+    <div className="relative min-h-[calc(100vh-4rem)] bg-[#070417] text-white py-10 px-4 overflow-hidden font-sans">
       {/* Intense Glowing Neon Styles */}
       <style dangerouslySetInnerHTML={{__html: `
         .neon-title-situations {
@@ -232,7 +232,7 @@ export default function MisesEnSituation() {
               className="cyber-card rounded-[2.5rem] overflow-hidden border border-violet-500/10"
             >
               {/* Image / Immersive visual compartment */}
-              <div className="relative w-full h-56 md:h-72 border-b border-violet-500/10">
+              <div className="relative w-full h-44 md:h-56 border-b border-violet-500/10">
                 {renderMockupVisual()}
                 
                 {/* Progress Overlay */}
@@ -245,7 +245,7 @@ export default function MisesEnSituation() {
               </div>
 
               {/* Interaction Details Area */}
-              <div className="p-8 md:p-12 space-y-8">
+              <div className="p-6 md:p-8 space-y-6">
                 {/* Heading details */}
                 <div className="space-y-4">
                   <span className="text-xs uppercase font-black tracking-widest text-cyan-400 flex items-center gap-2">
@@ -286,7 +286,7 @@ export default function MisesEnSituation() {
                         whileTap={!isSubmitted ? { scale: 0.99 } : {}}
                         onClick={() => handleSelectOption(idx)}
                         disabled={isSubmitted}
-                        className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 flex items-center justify-between gap-4 font-bold text-base md:text-lg ${btnStyle}`}
+                        className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between gap-4 font-bold text-sm md:text-base ${btnStyle}`}
                       >
                         <div className="flex items-center gap-4">
                           <span className="shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-mono font-black text-sm uppercase text-slate-300">
@@ -313,7 +313,7 @@ export default function MisesEnSituation() {
                       whileTap={{ scale: selectedAns !== null ? 0.97 : 1 }}
                       onClick={handleValidate}
                       disabled={selectedAns === null}
-                      className={`w-full sm:w-auto px-10 py-5 rounded-2xl font-black text-lg uppercase tracking-wider transition-all duration-300 ${
+                      className={`w-full sm:w-auto px-8 py-4 rounded-xl font-black text-base uppercase tracking-wider transition-all duration-300 ${
                         selectedAns !== null 
                           ? 'bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white shadow-[0_10px_30px_rgba(139,92,246,0.3)]'
                           : 'bg-white/5 text-slate-500 cursor-not-allowed border border-white/5'
@@ -326,7 +326,7 @@ export default function MisesEnSituation() {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={handleNext}
-                      className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white shadow-[0_10px_30px_rgba(6,182,212,0.3)] rounded-2xl font-black text-lg uppercase tracking-wider transition-all duration-300"
+                      className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white shadow-[0_10px_30px_rgba(6,182,212,0.3)] rounded-xl font-black text-base uppercase tracking-wider transition-all duration-300"
                     >
                       {t('situations.btn_next') || "Suivant"}
                     </motion.button>

@@ -109,7 +109,7 @@ export default function AutoEcole() {
   };
 
   return (
-    <div className="bg-black min-h-screen py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="bg-black min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Neon Glows */}
       <div className="absolute top-0 -left-1/4 w-1/2 h-1/2 bg-violet-600/10 blur-[120px] rounded-full pointer-events-none"></div>
       <div className="absolute bottom-0 -right-1/4 w-1/2 h-1/2 bg-emerald-600/10 blur-[120px] rounded-full pointer-events-none"></div>

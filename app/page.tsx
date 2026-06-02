@@ -13,7 +13,7 @@ export default function Home() {
   const { t } = useLanguage();
 
   return (
-    <div className="relative min-h-screen flex items-center overflow-hidden bg-[#0A061E]">
+    <div className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden bg-[#0A061E]">
       {/* Refined AI-generated Neon Background (similar to user's sample) */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -27,7 +27,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent md:w-3/4"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-6 sm:px-8 md:px-24 relative z-10 py-12 sm:py-20">
+      <div className="max-w-7xl mx-auto w-full px-6 sm:px-8 md:px-24 relative z-10 py-8 sm:py-12">
         <div className="max-w-3xl space-y-8 sm:space-y-12 text-left items-start">
           
           {/* Title Section with Glow Effect */}
