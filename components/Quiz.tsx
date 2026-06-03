@@ -66,7 +66,7 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
   if (questions.length === 0) return null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 sm:p-10 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 min-h-[550px] flex flex-col justify-center relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto p-5 sm:p-8 bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 min-h-[420px] flex flex-col justify-center relative overflow-hidden">
       {/* Progress Bar */}
       <div className="absolute top-0 left-0 w-full h-1.5 bg-white/5">
         <motion.div 
@@ -125,16 +125,16 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
             exit={{ opacity: 0, x: -50 }}
             className="w-full"
           >
-            <div className="mb-10">
-              <div className="flex justify-between items-center mb-6">
-                <span className="text-violet-400 font-black uppercase tracking-[0.2em] text-sm">
+            <div className="mb-5">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-violet-400 font-black uppercase tracking-[0.2em] text-xs">
                   {t('quiz.question_progress')} {currentQuestion + 1} / {questions.length}
                 </span>
-                <span className="bg-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-violet-200 border border-white/5 uppercase tracking-wider">
+                <span className="bg-white/10 px-3 py-1.5 rounded-full text-[10px] font-bold text-violet-200 border border-white/5 uppercase tracking-wider">
                   {t('cours.modules_list.' + moduleNameKeys[moduleKey]) || moduleKey}
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-white leading-tight tracking-tight">
                 {questions[currentQuestion].question}
               </h2>
             </div>
@@ -172,9 +172,9 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
                     whileTap={selectedOption === null ? { scale: 0.99 } : {}}
                     onClick={() => handleAnswerOptionClick(index)}
                     disabled={selectedOption !== null}
-                    className={`w-full text-left p-4 rounded-xl border transition-all duration-300 flex items-center gap-4 text-base sm:text-lg ${buttonClass} relative overflow-hidden`}
+                    className={`w-full text-left p-3 rounded-lg border transition-all duration-300 flex items-center gap-3.5 text-sm sm:text-base ${buttonClass} relative overflow-hidden`}
                   >
-                    <span className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold border ${markerClass} text-sm transition-colors shadow-sm`}>
+                    <span className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center font-bold border ${markerClass} text-xs transition-colors shadow-sm`}>
                       {String.fromCharCode(65 + index)}
                     </span>
                     
@@ -211,9 +211,9 @@ export const Quiz = ({ moduleKey, onRestart }: QuizProps) => {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-8 space-y-6"
+                  className="mt-4 space-y-4"
                 >
-                  <div className={`p-6 rounded-2xl border ${isCorrect ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-100' : 'bg-red-500/10 border-red-500/20 text-red-100'} backdrop-blur-md`}>
+                  <div className={`p-4 rounded-xl border ${isCorrect ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-100' : 'bg-red-500/10 border-red-500/20 text-red-100'} backdrop-blur-md`}>
                     <div className="flex items-start gap-4">
                       <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${isCorrect ? 'bg-emerald-500' : 'bg-red-500'} text-white`}>
                         {isCorrect ? '✔️' : '❌'}

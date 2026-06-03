@@ -54,7 +54,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0A061E] text-white pt-32 pb-20 px-6 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#0A061E] text-white pt-16 pb-12 px-6 relative overflow-hidden">
       {/* Decorative Blur Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-600/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>

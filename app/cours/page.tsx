@@ -84,7 +84,7 @@ export default function Cours() {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-50 min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <AnimatedSection>
           <header className="mb-24 text-center">

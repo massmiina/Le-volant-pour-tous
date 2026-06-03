@@ -150,7 +150,7 @@ export default function QuizPage() {
 
 
   return (
-    <div className="min-h-screen bg-[#0A061E] text-white pt-32 pb-20 px-6 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#0A061E] text-white pt-16 pb-12 px-6 relative overflow-hidden">
       {/* Decorative Orbs */}
       <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -165,36 +165,36 @@ export default function QuizPage() {
               exit={{ opacity: 0, scale: 0.95 }}
             >
               <AnimatedSection>
-                <header className="text-center mb-16">
-                  <h1 className="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-purple-300 to-emerald-400 tracking-tighter">
+                <header className="text-center mb-8">
+                  <h1 className="text-4xl md:text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-purple-300 to-emerald-400 tracking-tighter">
                     {t('quiz.title') || "Testez vos connaissances"}
                   </h1>
-                  <p className="text-xl text-violet-100/60 font-medium max-w-2xl mx-auto">
+                  <p className="text-base text-violet-100/60 font-medium max-w-2xl mx-auto">
                     {t('quiz.subtitle') || "Choisissez un module pour commencer votre entraînement intensif."}
                   </p>
                 </header>
               </AnimatedSection>
 
-              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {modules.map((m, idx) => (
                   <motion.div
                     key={m.id}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * idx }}
-                    whileHover={{ y: -10 }}
+                    whileHover={{ y: -5 }}
                     onClick={() => setActiveModule(m.id)}
                     className="group cursor-pointer"
                   >
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 h-full flex flex-col items-center text-center transition-all hover:bg-white/10 hover:border-violet-500/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]">
-                      <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${m.color} flex items-center justify-center mb-8 shadow-2xl group-hover:scale-110 transition-transform`}>
+                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 h-full flex flex-col items-center text-center transition-all hover:bg-white/10 hover:border-violet-500/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]">
+                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.color} flex items-center justify-center mb-4 shadow-2xl group-hover:scale-105 transition-transform`}>
                         {m.icon}
                       </div>
-                      <h3 className="text-2xl font-black mb-4">{m.title}</h3>
-                      <p className="text-violet-100/40 font-medium leading-relaxed">
+                      <h3 className="text-xl font-black mb-2">{m.title}</h3>
+                      <p className="text-sm text-violet-100/40 font-medium leading-relaxed">
                         {m.desc}
                       </p>
-                      <div className="mt-10 flex items-center gap-2 text-violet-400 font-bold uppercase tracking-widest text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="mt-6 flex items-center gap-2 text-violet-400 font-bold uppercase tracking-widest text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>{t('quiz.start') || "Commencer"}</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />

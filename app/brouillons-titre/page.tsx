@@ -7,7 +7,7 @@ const rock = Rock_Salt({ subsets: ['latin'], weight: ['400'] });
 
 export default function Brouillons() {
   return (
-    <div className="relative min-h-screen flex flex-col items-center overflow-y-auto bg-[#0A061E] py-20">
+    <div className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center overflow-y-auto bg-[#0A061E] py-10">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Image
           src="/images/home-bg-v5.png"
