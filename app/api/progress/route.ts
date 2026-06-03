@@ -36,11 +36,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { moduleId, score } = body;
-
-    if (moduleId === undefined || score === undefined) {
-      return NextResponse.json({ error: "Missing moduleId or score" }, { status: 400 });
-    }
+    const { moduleId, score, guestScores } = body;
 
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
@@ -59,16 +55,60 @@ export async function POST(req: Request) {
       try { completedModules = JSON.parse(user.progress.completedModules); } catch (e) {}
     }
 
-    // Garder le score le plus élevé
-    const existingScore = quizScores[moduleId.toString()] || 0;
-    if (score > existingScore) {
-      quizScores[moduleId.toString()] = score;
-    }
+    const moduleKeyToIdMap: Record<string, number> = {
+      signalisation: 1,
+      priorites: 2,
+      regles: 3,
+      vitesse: 4,
+      stationnement: 5,
+      autoroute: 6,
+      securite: 7,
+      alcool: 8,
+      mecanique: 9,
+      eco_conduite: 10,
+      premiers_secours: 11,
+      partage_route: 12
+    };
 
-    // Ajouter aux modules complétés si pas déjà présent
-    const modIdNum = Number(moduleId);
-    if (!completedModules.includes(modIdNum)) {
-      completedModules.push(modIdNum);
+    if (guestScores && typeof guestScores === 'object') {
+      // Bulk merge guest scores
+      Object.entries(guestScores).forEach(([key, val]) => {
+        const scoreVal = Number(val);
+        const targetModuleKey = key;
+        
+        let targetModuleId = Number(key);
+        if (isNaN(targetModuleId)) {
+          targetModuleId = moduleKeyToIdMap[key] || 0;
+        }
+
+        const existingScore = quizScores[targetModuleKey] || 0;
+        if (scoreVal > existingScore) {
+          quizScores[targetModuleKey] = scoreVal;
+        }
+
+        if (targetModuleId > 0 && !completedModules.includes(targetModuleId)) {
+          completedModules.push(targetModuleId);
+        }
+      });
+    } else {
+      // Single score post
+      if (moduleId === undefined || score === undefined) {
+        return NextResponse.json({ error: "Missing moduleId or score" }, { status: 400 });
+      }
+
+      const existingScore = quizScores[moduleId.toString()] || 0;
+      if (score > existingScore) {
+        quizScores[moduleId.toString()] = score;
+      }
+
+      let modIdNum = Number(moduleId);
+      if (isNaN(modIdNum)) {
+        modIdNum = moduleKeyToIdMap[moduleId.toString()] || 0;
+      }
+
+      if (modIdNum > 0 && !completedModules.includes(modIdNum)) {
+        completedModules.push(modIdNum);
+      }
     }
 
     const updatedProgress = await prisma.progress.upsert({
