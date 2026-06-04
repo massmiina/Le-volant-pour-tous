@@ -1,18 +1,20 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+    const { data: { user: authUser } } = await supabase.auth.getUser();
     
-    if (!session || !session.user || !session.user.email) {
+    if (!authUser || !authUser.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
+      where: { email: authUser.email },
       include: { progress: true }
     });
 
@@ -29,9 +31,11 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+    const { data: { user: authUser } } = await supabase.auth.getUser();
     
-    if (!session || !session.user || !session.user.email) {
+    if (!authUser || !authUser.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -39,7 +43,7 @@ export async function POST(req: Request) {
     const { moduleId, score, guestScores } = body;
 
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
+      where: { email: authUser.email },
       include: { progress: true }
     });
 

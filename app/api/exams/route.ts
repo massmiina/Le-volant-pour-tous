@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const cookieStore = await cookies();
+    const supabase = createClient(cookieStore);
+    const { data: { user: authUser } } = await supabase.auth.getUser();
 
-    if (!session?.user?.email) {
+    if (!authUser?.email) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -15,7 +17,7 @@ export async function POST(req: Request) {
     const { score, passed } = body;
 
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
+      where: { email: authUser.email },
     });
 
     if (!user) {

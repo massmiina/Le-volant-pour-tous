@@ -2,13 +2,13 @@
 
 import { useEffect } from "react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { SessionProvider, useSession } from "next-auth/react";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 
 function ProgressSync() {
-  const { status } = useSession();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (status === "authenticated" && typeof window !== "undefined") {
+    if (user && typeof window !== "undefined") {
       const localScores = localStorage.getItem("guest_quiz_scores");
       if (localScores) {
         try {
@@ -34,16 +34,16 @@ function ProgressSync() {
         }
       }
     }
-  }, [status]);
+  }, [user]);
 
   return null;
 }
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <AuthProvider>
       <ProgressSync />
       <LanguageProvider>{children}</LanguageProvider>
-    </SessionProvider>
+    </AuthProvider>
   );
 }

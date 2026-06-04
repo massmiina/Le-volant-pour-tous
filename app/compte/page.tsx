@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import CompteClient from "./CompteClient";
 import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 export const metadata = {
   title: 'Mon Espace Compte | Le Volant Pour Tous',
@@ -10,14 +10,16 @@ export const metadata = {
 };
 
 export default async function ComptePage() {
-  const session = await getServerSession(authOptions);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+  const { data: { user: authUser } } = await supabase.auth.getUser();
 
-  if (!session?.user?.email) {
+  if (!authUser?.email) {
     redirect("/login");
   }
 
   const user = await prisma.user.findUnique({
-    where: { email: session.user.email },
+    where: { email: authUser.email },
     include: {
       progress: true,
       examResults: true,
