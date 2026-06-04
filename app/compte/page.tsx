@@ -1,10 +1,15 @@
 import { prisma } from "@/lib/prisma";
-import DashboardClient from "./DashboardClient";
+import CompteClient from "./CompteClient";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-export default async function DashboardPage() {
+export const metadata = {
+  title: 'Mon Espace Compte | Le Volant Pour Tous',
+  description: 'Gérez vos informations de compte et vos statistiques de conduite.',
+};
+
+export default async function ComptePage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
   const { data: { user: authUser } } = await supabase.auth.getUser();
@@ -13,15 +18,12 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // Récupération des données utilisateur complètes
   const user = await prisma.user.findUnique({
     where: { email: authUser.email },
     include: {
       progress: true,
-      examResults: {
-        orderBy: { createdAt: 'desc' },
-        take: 5
-      }
+      examResults: true,
+      gameScores: true,
     }
   });
 
@@ -30,10 +32,15 @@ export default async function DashboardPage() {
   }
 
   return (
-    <DashboardClient 
-      user={{ name: user.name || "", email: user.email }}
+    <CompteClient 
+      user={{
+        name: user.name || "",
+        email: user.email,
+        createdAt: user.createdAt.toISOString()
+      }}
       progress={user.progress}
-      examResults={user.examResults}
+      examResultsCount={user.examResults.length}
+      gameScoresCount={user.gameScores.length}
     />
   );
 }

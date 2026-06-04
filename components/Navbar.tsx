@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Language } from '@/lib/translations';
-import { useSession, signOut } from "next-auth/react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-  const { data: session, status } = useSession();
+  const { user, loading, signOut } = useAuth();
 
   const mainLinks = [
     { name: t('nav.home'), href: '/' },
@@ -142,19 +142,26 @@ const Navbar = () => {
             
             {/* Auth Button */}
             <div className="ml-3 flex items-center">
-              {status === "loading" ? (
+              {loading ? (
                 <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse"></div>
-              ) : session ? (
+              ) : user ? (
                 <div className="relative group">
                   <Link href="/dashboard" className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-blue-600">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-emerald-500 text-white flex items-center justify-center font-bold">
-                      {session.user?.name?.charAt(0).toUpperCase() || "U"}
+                      {(user.user_metadata?.name || user.email || "U").charAt(0).toUpperCase()}
                     </div>
                   </Link>
-                  {/* Dropdown Logout */}
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                    <button onClick={() => signOut({ callbackUrl: '/' })} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
-                      {t('auth.logout')}
+                  {/* Dropdown Menu */}
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 py-1">
+                    <Link href="/compte" className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                      👤 {t('account.title') || "Mon Compte"}
+                    </Link>
+                    <Link href="/dashboard" className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                      📊 {t('exam.dashboard_btn') || "Mon Dashboard"}
+                    </Link>
+                    <hr className="border-gray-100 my-1" />
+                    <button onClick={signOut} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors">
+                      🚪 {t('auth.logout')}
                     </button>
                   </div>
                 </div>

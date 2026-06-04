@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface QuizQuestion {
@@ -22,7 +22,7 @@ interface ModuleQuizProps {
 }
 
 export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProps) => {
-  const { data: session } = useSession();
+  const { user } = useAuth();
   const { t, language } = useLanguage();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -66,7 +66,7 @@ export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProp
       
       const finalScore = score + (selectedIdx === questions[currentIdx].answer ? 1 : 0);
       
-      if (session?.user) {
+      if (user) {
         // Save to DB
         fetch('/api/progress', {
           method: 'POST',
@@ -86,7 +86,7 @@ export const ModuleQuiz = ({ moduleId, questions, title, intro }: ModuleQuizProp
         }
       }
     }
-  }, [isFinished, scoreSaved, score, selectedIdx, questions, currentIdx, session, moduleId]);
+  }, [isFinished, scoreSaved, score, selectedIdx, questions, currentIdx, user, moduleId]);
 
   return (
     <div className="bg-gray-900 rounded-3xl p-6 md:p-12 shadow-2xl border border-gray-800 mt-12 overflow-hidden relative">
