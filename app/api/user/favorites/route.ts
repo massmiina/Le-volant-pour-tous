@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-// GET: Retrieve the list of favorite driving school IDs for the logged-in user
+// GET: Retrieve the list of favorite driving school references for the logged-in user
 export async function GET() {
   try {
     const cookieStore = await cookies();
@@ -16,14 +16,31 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { email: authUser.email },
-      select: { favoriteSchools: true }
+      select: {
+        id: true,
+        favoriteSchools: true,
+        favoriteSchoolLinks: {
+          select: {
+            googlePlaceId: true,
+            partnerId: true,
+          },
+        },
+      },
     });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const favorites = user.favoriteSchools ? JSON.parse(user.favoriteSchools) : [];
+    const legacyFavorites = parseLegacyFavorites(user.favoriteSchools);
+    const favorites = [
+      ...user.favoriteSchoolLinks.map((favorite) => ({
+        googlePlaceId: favorite.googlePlaceId ?? undefined,
+        partnerId: favorite.partnerId ?? undefined,
+      })),
+      ...legacyFavorites,
+    ];
+
     return NextResponse.json({ favorites });
   } catch (error) {
     console.error("GET Favorites Error:", error);
@@ -31,7 +48,7 @@ export async function GET() {
   }
 }
 
-// POST: Save the updated list of favorite driving school IDs
+// POST: Add or remove a favorite driving school reference
 export async function POST(req: Request) {
   try {
     const cookieStore = await cookies();
@@ -42,25 +59,84 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { favorites } = await req.json();
+    const { googlePlaceId, partnerId, action } = await req.json();
 
-    if (!Array.isArray(favorites)) {
-      return NextResponse.json({ error: "Invalid data format: favorites must be an array" }, { status: 400 });
+    if (!googlePlaceId && !partnerId) {
+      return NextResponse.json({ error: "googlePlaceId or partnerId is required" }, { status: 400 });
     }
 
-    const updatedUser = await prisma.user.update({
+    const user = await prisma.user.findUnique({
       where: { email: authUser.email },
-      data: {
-        favoriteSchools: JSON.stringify(favorites)
-      }
+      select: { id: true },
     });
 
-    return NextResponse.json({ 
-      message: "Favoris mis à jour", 
-      favorites: updatedUser.favoriteSchools ? JSON.parse(updatedUser.favoriteSchools) : [] 
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    if (action === "remove") {
+      await prisma.userFavoriteSchool.deleteMany({
+        where: {
+          userId: user.id,
+          ...(partnerId ? { partnerId } : { googlePlaceId }),
+        },
+      });
+    } else {
+      await prisma.userFavoriteSchool.upsert({
+        where: partnerId
+          ? {
+              userId_partnerId: {
+                userId: user.id,
+                partnerId,
+              },
+            }
+          : {
+              userId_googlePlaceId: {
+                userId: user.id,
+                googlePlaceId,
+              },
+            },
+        update: {},
+        create: {
+          userId: user.id,
+          googlePlaceId: googlePlaceId || null,
+          partnerId: partnerId || null,
+        },
+      });
+    }
+
+    const favorites = await prisma.userFavoriteSchool.findMany({
+      where: { userId: user.id },
+      select: {
+        googlePlaceId: true,
+        partnerId: true,
+      },
+    });
+
+    return NextResponse.json({
+      message: "Favoris mis à jour",
+      favorites: favorites.map((favorite) => ({
+        googlePlaceId: favorite.googlePlaceId ?? undefined,
+        partnerId: favorite.partnerId ?? undefined,
+      })),
     });
   } catch (error) {
     console.error("POST Favorites Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+function parseLegacyFavorites(value: string | null) {
+  if (!value) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed
+      .filter((item): item is string => typeof item === "string")
+      .map((googlePlaceId) => ({ googlePlaceId }));
+  } catch {
+    return [];
   }
 }

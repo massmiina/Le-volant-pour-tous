@@ -10,7 +10,7 @@ Ce document décrit l'arborescence du site, les différents profils d'utilisateu
 - **`/quiz`** : Espace d'entraînement rapide (série de questions aléatoires ou ciblées).
 - **`/examen`** : Mode Examen Blanc (Conditions réelles, 40 questions, chronométré).
 - **`/jeu`** : Espace de gamification / Mini-jeux (ex: Glisser-déposer de panneaux).
-- **`/auto-ecole`** : Carte interactive pour rechercher et comparer les auto-écoles de la région.
+- **`/auto-ecole`** : Carte interactive pour rechercher les auto-écoles réelles d'une ville ou autour de la position utilisateur, avec mise en avant des auto-écoles recommandées / partenaires par Le Volant Pour Tous.
 - **`/contact`** : Formulaire de demande d'assistance et informations de contact.
 - **`/avis`** : Section des témoignages (Social Proof).
 - ***(Futur)* `/dashboard`** : Espace personnel de l'élève (suivi de progression).
@@ -24,7 +24,7 @@ L'objectif est de lui faire découvrir la qualité pédagogique pour l'inciter �
 - Peut basculer la langue du site (Français / Russe) à tout moment de sa navigation.
 - A un accès complet à la lecture des cours théoriques (`/cours`).
 - Peut tester quelques quiz de base pour découvrir l'interface gamifiée.
-- Utilise la carte des auto-écoles librement.
+- Utilise la carte des auto-écoles librement : recherche par ville/adresse, géolocalisation, consultation des fiches et ouverture d'un itinéraire.
 - **Sauvegarde Locale (Sans Compte)** : Sa progression (modules lus, scores des quiz) est **automatiquement sauvegardée** de manière persistante sur son appareil (via `localStorage` ou équivalent). Le visiteur peut fermer son navigateur et revenir des jours plus tard sans perdre son avancement.
 
 ### B. L'Élève Inscrit (Futur)
@@ -35,11 +35,11 @@ L'objectif est de le fidéliser et de l'accompagner jusqu'à l'obtention du code
   - **Sauvegarde Cloud** de sa progression (marquage automatique des modules comme "Terminés").
   - **Historique** de tous ses scores aux quiz et examens blancs.
   - **Analyse des faiblesses** : L'algorithme lui conseille les modules à réviser selon ses mauvaises réponses.
-  - Possibilité de mettre des auto-écoles en "Favoris".
+  - Possibilité de mettre des auto-écoles en "Favoris" personnels.
 
 ### C. L'Administrateur (Futur lointain)
 - Accès sécurisé à une interface d'administration métier (`/admin`).
-- **Droits** : Édition des questions de quiz, modération des avis utilisateurs, gestion de la liste des auto-écoles partenaires.
+- **Droits** : Édition des questions de quiz, modération des avis utilisateurs, gestion de la liste des auto-écoles recommandées / partenaires, association avec leur identifiant Google Places et choix de leur affichage prioritaire sur la carte.
 
 ## 3. Flux de Conversion Principal (Core User Flow)
 
