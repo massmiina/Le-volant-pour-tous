@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-  id              String         @id @default(cuid())
-  name            String?
-  email           String         @unique
-  password        String?
-  image           String?
-  favoriteSchools String?        // Stocké sous forme de string JSON
-  createdAt       DateTime       @default(now())
+  id                  String               @id @default(cuid())
+  name                String?
+  email               String               @unique
+  password            String?
+  image               String?
+  favoriteSchools     String?              // Legacy JSON string, replaced by favoriteSchoolLinks.
+  createdAt           DateTime             @default(now())
   
-  progress        Progress?
-  examResults     ExamResult[]
-  gameScores      GameScore[]
+  progress            Progress?
+  examResults         ExamResult[]
+  gameScores          GameScore[]
+  favoriteSchoolLinks UserFavoriteSchool[]
 }
 
 model Progress {
@@ -54,4 +55,43 @@ model GameScore {
   score     Int
   maxCombo  Int
   createdAt DateTime @default(now())
+}
+
+model DrivingSchoolPartner {
+  id            String               @id @default(cuid())
+  googlePlaceId String?              @unique
+  name          String
+  address       String?
+  city          String?
+  latitude      Float
+  longitude     Float
+  phone         String?
+  website       String?
+  featuredLabel String?
+  iconVariant   String               @default("featured")
+  isActive      Boolean              @default(true)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  favoritedBy   UserFavoriteSchool[]
+
+  @@index([city])
+  @@index([isActive])
+  @@index([latitude, longitude])
+}
+
+model UserFavoriteSchool {
+  id            String                @id @default(cuid())
+  userId        String
+  googlePlaceId String?
+  partnerId     String?
+  createdAt     DateTime              @default(now())
+
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  partner       DrivingSchoolPartner? @relation(fields: [partnerId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, googlePlaceId])
+  @@unique([userId, partnerId])
+  @@index([userId])
+  @@index([googlePlaceId])
 }

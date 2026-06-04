@@ -12,8 +12,9 @@ L'application repose sur des technologies modernes pour garantir performance, SE
 - **Langage** : TypeScript strict pour la sécurité du code.
 - **Styling & UI** : Tailwind CSS (approches utilitaires), Framer Motion (pour les micro-animations fluides).
 - **Gestion d'État** : React Context API (ex: `LanguageContext` pour l'internationalisation à la volée).
-- **Données Actuelles** : Fichiers statiques TypeScript (ex: `lib/translations.ts`, `lib/quizData.ts`).
-- **Backend / BDD (À venir)** : *[En attente de définition lors de la phase Login/Dashboard]* (Potentiellement NextAuth.js + Prisma + PostgreSQL).
+- **Données statiques pédagogiques** : Fichiers TypeScript pour les contenus stables du produit (ex: `lib/translations.ts`, `lib/quizData.ts`) tant qu'ils ne nécessitent pas d'administration métier.
+- **Backend / BDD** : Next.js API Routes + Prisma + Supabase PostgreSQL pour les comptes, la progression, les favoris utilisateur et les données métier administrables.
+- **Données cartographiques externes** : La carte des auto-écoles utilise une API externe de lieux (Google Places) pour les résultats publics, et Supabase pour les auto-écoles recommandées / partenaires par la plateforme.
 
 ## 3. Principes de Design (UI/UX)
 - **Esthétique** : Thème sombre (Dark mode) profond (`#0A061E`), contrastes élevés avec des couleurs Néon (Violet, Émeraude) pour guider l'attention de l'utilisateur.
