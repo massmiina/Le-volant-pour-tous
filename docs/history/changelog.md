@@ -4,6 +4,16 @@ Ce document récapitule l'historique des versions et les modifications apportée
 
 ---
 
+## [1.3.0] - 2026-06-04
+### Ajouté
+- **Géolocalisation (`navigator.geolocation`)** : Centrage de la carte sur l'utilisateur avec marqueur néon cyan à effet d'onde clignotante.
+- **Formule de Haversine** : Calcul de la distance réelle en kilomètres de l'utilisateur à chaque école et tri automatique de la liste par proximité.
+- **Panneau Latéral Cyberpunk** : Barre latérale droite animée (Framer Motion) affichant les détails de l'auto-école sélectionnée (adresse, prestations, téléphone, e-mail, redirection d'itinéraire Google Maps).
+- **Favoris persistés sur Supabase** : Nouvelle route API `GET/POST /api/user/favorites` pour enregistrer les écoles favorites dans la table utilisateur.
+- **Modale d'Authentification Invité** : Invite les utilisateurs non connectés à s'inscrire pour pouvoir ajouter des écoles en favori.
+
+---
+
 ## [1.2.0] - 2026-06-04
 ### Ajouté
 - **Supabase Auth** : Remplacement complet de NextAuth par une authentification native Supabase (via les helpers `@supabase/ssr`).

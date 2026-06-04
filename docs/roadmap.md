@@ -19,7 +19,8 @@ gantt
     section Espace Utilisateur & Sécurité
     Supabase Auth (Magic Link, PKCE)         :done,    des5, 2026-06, 2026-06
     Espace Compte & Sync de Progression      :done,    des6, 2026-06, 2026-06
-    Déploiement Continu (Vercel)             :done,    des7, 2026-06, 2026-06
+    Carte Interactive & Géolocalisation      :done,    des7, 2026-06, 2026-06
+    Déploiement Continu (Vercel)             :done,    des7a, 2026-06, 2026-06
     section Gamification & Dashboard
     Tableau de Bord & Stats Avancées        :active,  des8, 2026-06, 2026-07
     Moteur de Points, Niveaux & Badges      :todo,    des9, 2026-07, 2026-07
@@ -48,6 +49,7 @@ gantt
   - La suppression définitive de compte (effacement en cascade dans la base de données et dans Supabase Auth).
 - [x] Migration transparente de la progression locale : les scores des invités enregistrés dans `localStorage` sont automatiquement importés vers Supabase PostgreSQL lors de leur première connexion.
 - [x] Déploiement continu automatisé sur la plateforme **Vercel** avec intégration des variables d'environnement de production.
+- [x] Carte des auto-écoles opérationnelle (géolocalisation, calcul de distance Haversine, panneau latéral de détails et synchronisation des favoris en base de données).
 
 ## 🚀 Étape 4 : Tableau de Bord & Gamification (En Cours / À venir)
 - [ ] **Tableau de Bord Personnel** (`/dashboard`) :
