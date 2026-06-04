@@ -20,5 +20,5 @@
 - `[x]` Créer un panneau latéral (Sidebar/Bottom-sheet) animé affichant les détails riches de l'école sélectionnée
 
 ## Validation & Déploiement
-- `[/]` Lancer la commande de build local `npm run build` pour s'assurer que tout compile sans erreurs
-- `[/]` Déployer la version stable sur Vercel avec `npx vercel --prod --yes`
+- `[x]` Lancer la commande de build local `npm run build` pour s'assurer que tout compile sans erreurs
+- `[x]` Déployer la version stable sur Vercel avec `npx vercel --prod --yes`
