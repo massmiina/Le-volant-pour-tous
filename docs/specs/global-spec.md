@@ -13,8 +13,8 @@ L'application repose sur des technologies modernes pour garantir performance, SE
 - **Styling & UI** : Tailwind CSS (approches utilitaires), Framer Motion (pour les micro-animations fluides).
 - **Gestion d'État** : React Context API (ex: `LanguageContext` pour l'internationalisation à la volée).
 - **Données statiques pédagogiques** : Fichiers TypeScript pour les contenus stables du produit (ex: `lib/translations.ts`, `lib/quizData.ts`) tant qu'ils ne nécessitent pas d'administration métier.
-- **Backend / BDD** : Next.js API Routes + Prisma + Supabase PostgreSQL pour les comptes, la progression, les favoris utilisateur et les données métier administrables.
-- **Données cartographiques externes** : La carte des auto-écoles utilise une API externe de lieux (Google Places) pour les résultats publics, et Supabase pour les auto-écoles recommandées / partenaires par la plateforme.
+- **Backend / BDD & Authentification** : Next.js API Routes + Prisma + Supabase PostgreSQL pour la persistence. L'authentification et la gestion des sessions sécurisées par cookies sont gérées nativement par **Supabase Auth** (via `@supabase/ssr`), avec synchronisation réactive via `AuthContext`.
+- **Données cartographiques externes** : La carte des auto-écoles utilise Google Places API (Text/Nearby/Details Search) côté serveur, géolocalisation client (`navigator.geolocation`), et tri dynamique par distance (formule de Haversine). Les auto-écoles recommandées et partenaires sont stockées dans Supabase et fusionnées dans l'API.
 
 ## 3. Principes de Design (UI/UX)
 - **Esthétique** : Thème sombre (Dark mode) profond (`#0A061E`), contrastes élevés avec des couleurs Néon (Violet, Émeraude) pour guider l'attention de l'utilisateur.
@@ -23,13 +23,13 @@ L'application repose sur des technologies modernes pour garantir performance, SE
 - **Gamification** : Feedback visuel immédiat (effets de lumière, animations de score sur les quiz).
 
 ## 4. Structure de l'Application
-- `/app` : Architecture des routes (Accueil, Cours 1 à 12, Quiz, Examen, Auto-écoles, Contact).
-- `/components` : Composants isolés et réutilisables (Navbar, Cards, Quiz interactif, MapComponent).
-- `/lib` : Logique métier, données de cours et dictionnaires de traduction.
-- `/contexts` : Fournisseurs d'état pour englober l'application.
+- `/app` : Architecture des routes (Accueil, Cours 1 à 12, Quiz, Examen, Auto-écoles, Contact, Compte, Dashboard, Jeu).
+- `/components` : Composants isolés et réutilisables (Navbar, Cards, Quiz interactif, GoogleMapComponent).
+- `/lib` : Logique métier, données de cours, dictionnaire de traductions et moteur de recherche d'auto-écoles.
+- `/contexts` : Fournisseurs d'état pour englober l'application (ex: `AuthContext`, `LanguageContext`).
 
 ## 5. Stratégie d'Évolution (Roadmap)
-Ce fichier sert de base. Les prochaines étapes définies sont :
-1. **Cartographie** : Définir les parcours utilisateurs précis (`functional-map.md`).
-2. **Authentification** : Protéger les données et suivre la progression (`feature-spec-login.md`).
-3. **Espace Personnel** : Créer l'interface de suivi des élèves (`feature-spec-dashboard.md`).
+Ce fichier sert de base. La suite du développement se concentre sur :
+1. **Gamification Avancée** : Mettre en œuvre le moteur de points, XP, streaks, et les récompenses / badges pour l'apprentissage.
+2. **Intégration BDD des Mini-jeux** : Connecter l'Arcade Hub (`/jeu`) à la table `GameScore` via API pour sauvegarder les meilleurs scores des élèves.
+3. **Mise en situation subjective 8K** : Enrichir le catalogue de quiz et examens blancs avec de nouveaux cas pratiques de conduite à vue immersive.
