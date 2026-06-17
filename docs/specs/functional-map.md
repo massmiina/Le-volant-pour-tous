@@ -48,8 +48,8 @@ L'objectif est de le fidéliser et de l'accompagner jusqu'à l'obtention du code
 
 Voici le parcours idéal que nous souhaitons faire vivre à un nouvel utilisateur :
 1. **Acquisition** : Arrivée sur `/` (Landing Page).
-2. **Engagement** : Clic sur "Commencer l'Aventure" → Redirection vers `/cours/1` (Signalisation).
-3. **Action & Gamification** : Lecture du cours, suivi du Quiz Signalisation.
+2. **Engagement** : Clic sur "Commencer l'Aventure" → Redirection vers `/cours/1` (Signalisation routière) pour étudier le contenu théorique bilingue.
+3. **Action & Gamification** : Lecture du cours, suivie du Quiz Signalisation. La réussite du quiz avec un score d'au moins 80% (ex: 4/5) valide le module et augmente le taux de progression global de l'élève.
 4. **Conversion** : À la fin du quiz ou en essayant d'ajouter une auto-école en favori, une modale/invite s'affiche : *"Sauvegardez votre progression et débloquez l'accès illimité aux examens en créant un compte gratuit"*.
 5. **Synchronisation** : Inscription réussie. Le `localStorage` est fusionné vers sa base cloud, et l'utilisateur est redirigé vers son `/dashboard`.
 6. **Fidélisation** : L'élève revient quotidiennement, suit ses statistiques sur le Radar thématique et travaille sur sa Revue d'erreurs pour augmenter son indice de préparation VolantReady™.

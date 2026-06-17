@@ -4,7 +4,7 @@
 - **Nom du Projet** : Le Volant Pour Tous
 - **Objectif Principal** : Offrir une plateforme moderne, haut de gamme et interactive pour l'apprentissage du code de la route, facilitant la réussite à l'examen grâce à une approche pédagogique gamifiée et visuelle.
 - **Public Cible** : Candidats au permis de conduire de tous niveaux (Débutant, Intermédiaire, Avancé).
-- **Spécificité** : Plateforme bilingue (Français / Russe) avec un design immersif (Rétro-Néon / Futuriste).
+- **Spécificité** : Plateforme bilingue (Français / Russe) avec un design immersif (Rétro-Néon / Futuriste) et un apprentissage calqué sur le référentiel français **REMC** et l'examen **ETG** (voir les [spécifications pédagogiques](file:///Users/yasmina.dzhv/ss5/docs/specs/pedagogical-spec.md)).
 
 ## 2. Architecture Technique (Stack)
 L'application repose sur des technologies modernes pour garantir performance, SEO et maintenabilité :
@@ -21,6 +21,7 @@ L'application repose sur des technologies modernes pour garantir performance, SE
 - **Typographie** : "Rock Salt" pour les titres créatifs à fort impact, couplé à des polices modernes et très lisibles (ex: Inter ou Roboto) pour le contenu pédagogique.
 - **Responsive** : Conception Mobile-First stricte, chaque module doit être parfaitement utilisable sur smartphone.
 - **Gamification** : Feedback visuel immédiat (effets de lumière, animations de score sur les quiz).
+- **Alignement Pédagogique** : Pédagogie bilingue calquée sur la réglementation française. Les termes légaux français sont conservés et expliqués conceptuellement en russe (voir [pedagogical-spec.md](file:///Users/yasmina.dzhv/ss5/docs/specs/pedagogical-spec.md)).
 
 ## 4. Structure de l'Application
 - `/app` : Architecture des routes (Accueil, Cours 1 à 12, Quiz, Examen, Auto-écoles, Contact, Compte, Dashboard, Jeu).
