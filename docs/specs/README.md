@@ -5,57 +5,52 @@
 
 ---
 
-## 🗂️ Index des Spécifications
+## 🧭 System Overview (Point d'Entrée)
 
-Lire dans cet ordre pour une compréhension progressive du projet :
-
-| # | Fichier | Rôle |
-|:-:|---|---|
-| 1 | [01\_global-spec.md](./01_global-spec.md) | 📌 **Point d'entrée** — Vision produit, stack technique, architecture globale |
-| 2 | [02\_pedagogical-spec.md](./02_pedagogical-spec.md) | 📚 **Cœur métier** — Référentiel ETG / REMC, bilinguisme FR/RU, 12 modules |
-| 3 | [03\_functional-map.md](./03_functional-map.md) | 🗺️ **UX globale** — Arborescence des routes, profils utilisateurs, flux de conversion |
-| 4 | [04\_feature-spec-dashboard.md](./04_feature-spec-dashboard.md) | 📊 **Feature** — Tableau de bord élève (VolantReady™, Radar, Revue d'erreurs) |
-| 5 | [05\_feature-spec-examen.md](./05_feature-spec-examen.md) | 📝 **Feature** — Simulateur d'examen blanc (40 questions, anti-crash, persistance) |
-| 6 | [06\_feature-spec-gamification.md](./06_feature-spec-gamification.md) | 🎮 **Feature** — Arcade Hub (Sign Master, Esquive Route, XP, badges) |
-| 7 | [07\_feature-spec-login.md](./07_feature-spec-login.md) | 🔐 **Feature** — Authentification Supabase, Magic Link, gestion de compte |
-| 8 | [08\_feature-spec-map.md](./08_feature-spec-map.md) | 📍 **Feature** — Carte interactive des auto-écoles (Google Places, Haversine, favoris) |
-| 9 | [10\_systeme_questions.md](./10_systeme_questions.md) | ❓ **Architecture** — Système de questions, Question Bank, alignement quiz/examens |
-| 10 | [09\_roadmap.md](./09_roadmap.md) | 🚀 **Roadmap** — Planning, état d'avancement (Gantt), prochaines étapes |
+Commencez par lire le document d'ensemble qui résume le fonctionnement global et lie les différentes couches du projet :
+- [**system-overview.md**](./system-overview.md) : Vision end-to-end et découpage en 3 couches.
 
 ---
 
-## 🔧 Outils Internes (non destinés à la lecture externe)
+## 🧠 Couche 1 : Data System (Technique & Logique)
 
-| Fichier | Usage |
-|---|---|
-| [\_template-spec.md](./_template-spec.md) | Modèle vierge pour rédiger une nouvelle spec feature |
-| [\_spec-reviewer.md](./_spec-reviewer.md) | Skill d'audit critique des spécifications (Architecte Senior) |
+Cette couche décrit la structure des données et les algorithmes du moteur applicatif.
 
----
-
-## 🏗️ Vue d'ensemble rapide
-
-```
-Le Volant Pour Tous
-├── Vision         → Plateforme SaaS d'apprentissage du code de la route FR/RU
-├── Stack          → Next.js 16, TypeScript, Tailwind, Prisma, Supabase PostgreSQL
-├── Auth           → Supabase Auth (Magic Link OTP + Email/MDP), flux PKCE
-├── Pédagogie      → 12 modules REMC, 10 thèmes ETG, seuil 80% par module
-├── /examen        → 40q · 20s/q · anti-dérive · anti-crash · ≥ 35/40 pour réussir
-├── /dashboard     → VolantReady™ · Radar thèmes · Revue d'erreurs interactive
-├── /jeu           → Sign Master (drag & drop) · Esquive Route (arcade 3 voies)
-└── /auto-ecole    → Google Places + Partenaires Supabase + tri Haversine
-```
+- [**data-system/questions.md**](./data-system/questions.md) : Spécification de la banque de questions (Question Bank) et modèles de données Prisma/TypeScript.
+- [**data-system/quiz-exam-logic.md**](./data-system/quiz-exam-logic.md) : Algorithme de tirage d'examens (anti-répétition), chronomètre anti-dérive et synchronisation localStorage ↔ base de données.
 
 ---
 
-## 📊 État d'avancement
+## 🎓 Couche 2 : Pedagogical Framework (Cadre Éducatif)
 
-| Étape | Statut |
-|---|---|
-| ✅ Étape 1 — Fondations & UI Rétro-Cyberpunk | **Complété** |
-| ✅ Étape 2 — Données & Localisation (Supabase, traductions) | **Complété** |
-| ✅ Étape 3 — Auth, Compte & Carte auto-écoles | **Complété** |
-| 🚀 Étape 4 — Dashboard & Gamification | **En cours** |
+Cette couche documente les fondations réglementaires françaises et l'approche didactique du bilinguisme.
 
-> Voir le détail complet dans [09\_roadmap.md](./09_roadmap.md)
+- [**pedagogy/remc-etg.md**](./pedagogy/remc-etg.md) : Référentiels REMC & ETG officiels, modèle comportemental GADGET, et règles de traduction bilingue.
+- [**pedagogy/mapping-modules.md**](./pedagogy/mapping-modules.md) : Table de correspondance entre nos 12 modules de cours et les 10 thèmes officiels ETG, seuils de complétion et validation.
+
+---
+
+## 🎨 Couche 3 : Product & UX Layer (Expérience Utilisateur)
+
+Cette couche définit les interfaces interactives et le flux utilisateur au sein de l'application.
+
+- [**product/login-auth.md**](./product/login-auth.md) : Expérience de connexion (Lien Magique, mot de passe) et synchronisation de progression.
+- [**product/dashboard.md**](./product/dashboard.md) : Suivi personnalisé, calcul prédictif VolantReady™, Radar thématique et Revue d'erreurs.
+- [**product/exam.md**](./product/exam.md) : Interface immersive du simulateur d'examen blanc en conditions réelles.
+- [**product/quiz.md**](./product/quiz.md) : Parcours utilisateur d'apprentissage et de validation des chapitres.
+- [**product/gamification.md**](./product/gamification.md) : Espace de jeux (Arcade Hub), mécanique d'XP et système de badges.
+- [**product/driving-school-map.md**](./product/driving-school-map.md) : Carte Google Maps cyberpunk de recherche et de sauvegarde d'auto-écoles.
+
+---
+
+## 📌 Documents Généraux
+
+- [**01_global-spec.md**](./01_global-spec.md) : Vision produit, stack technologique et architecture générale.
+- [**02_roadmap.md**](./02_roadmap.md) : Feuille de route globale (progression Gantt) et étapes de développement.
+
+---
+
+## 🔧 Outils Internes
+
+- [**_template-spec.md**](./_template-spec.md) : Gabarit pour rédiger une nouvelle spécification fonctionnelle.
+- [**_spec-reviewer.md**](./_spec-reviewer.md) : Guide d'audit critique des spécifications.
