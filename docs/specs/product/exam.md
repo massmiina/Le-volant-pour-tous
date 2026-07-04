@@ -44,3 +44,28 @@ Un volet en bas de page permet à l'élève d'examiner chaque question ratée lo
 - Il peut y comparer la réponse qu'il a fournie avec la bonne réponse attendue.
 - L'explication théorique et le rappel de la règle s'affichent pour chaque erreur commise.
 - Un bouton permet de retourner au Dashboard, un autre de relancer immédiatement un nouvel examen blanc.
+
+---
+
+## 4. Statut d'Évaluation, Droits d'Accès & Persistance
+
+> [!IMPORTANT]
+> **L'Examen Blanc est un mode d'évaluation uniforme, non adaptatif et identique à l'examen officiel en termes de règles de passation.**
+
+### 4.1 Comportement Strict du Test
+Le déroulement de l'évaluation est strictement identique pour tous les types d'utilisateurs :
+- 40 questions issues de la banque commune.
+- Chronométrage de 20 secondes par question.
+- Pas de retour en arrière ni de modification de réponse validée.
+- Pas d'indices de difficulté ni d'explication pédagogique en cours d'épreuve.
+
+### 4.2 Droits d'Accès & Persistance
+La seule et unique différence entre les statuts réside dans le mécanisme d'enregistrement des résultats :
+
+- **Élève Invité (Non authentifié)** :
+  - Accès libre pour tester ses capacités.
+  - Sauvegarde du score final et de la liste des erreurs dans le cache local du navigateur (`localStorage`) uniquement.
+- **Élève Connecté (Authentifié)** :
+  - Sauvegarde centralisée et pérenne de l'historique d'examen et des erreurs détaillées en base de données cloud (PostgreSQL via Supabase + Prisma).
+  - Alimentation directe des indicateurs statistiques (Radar des thèmes et VolantReady™) sur son Dashboard.
+
