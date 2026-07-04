@@ -86,6 +86,10 @@ Tracks progress back into system
 ---
 
 ## 🔁 6. Quiz vs Examen Blanc (logique système)
+
+> [!NOTE]
+> **Le mode Quiz et le mode Examen partagent exactement la même banque de questions (Question Bank), mais diffèrent par leurs règles de sélection et d'enchaînement.**
+
 ### 📘 Quiz
 - Utilise la Question Bank complète
 - Sélection aléatoire ou par thème

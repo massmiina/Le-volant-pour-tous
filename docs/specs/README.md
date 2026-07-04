@@ -3,12 +3,9 @@
 > Plateforme d'apprentissage du code de la route bilingue (Français / Russe)  
 > Stack : Next.js 16 · TypeScript · Tailwind CSS · Prisma · Supabase · Vercel
 
----
-
-## 🧭 System Overview (Point d'Entrée)
-
-Commencez par lire le document d'ensemble qui résume le fonctionnement global et lie les différentes couches du projet :
-- [**system-overview.md**](./system-overview.md) : Vision end-to-end et découpage en 3 couches.
+> [!IMPORTANT]
+> **🚀 START HERE → [system-overview.md](./system-overview.md)**  
+> Lisez en premier ce document d'ensemble pour comprendre la vision globale, le fonctionnement end-to-end de la plateforme et le découpage en 3 couches.
 
 ---
 

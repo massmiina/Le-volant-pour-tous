@@ -6,6 +6,9 @@ Ce document détaille la couche technique de stockage des questions, leur struct
 
 ## 1. Source de Vérité des Questions
 
+> [!IMPORTANT]
+> **Ce système constitue l'unique source de vérité (Single Source of Truth) pour l'intégralité des questions de quiz et d'examens blancs de l'application.**
+
 Pour la V1, l'application utilise des **fichiers statiques localisés et fortement typés** comme source de vérité.
 
 - **Quiz de module** : Définis de manière localisée dans `lib/translations.ts` sous les clés `quiz.modules.[theme].[index]`.
