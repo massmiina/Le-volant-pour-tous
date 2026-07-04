@@ -7,16 +7,40 @@ import { AnimatedSection } from '@/components/AnimatedSection';
 
 export default function ContactPage() {
   const { t } = useLanguage();
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus('sending');
-    // Simulate API call
-    setTimeout(() => {
-      setFormStatus('success');
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+    
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+      
+      if (res.ok) {
+        setFormStatus('success');
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+        setTimeout(() => setFormStatus('idle'), 4000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 4000);
+      }
+    } catch (err) {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus('idle'), 4000);
+    }
   };
 
   const contactInfo = [
@@ -93,7 +117,9 @@ export default function ContactPage() {
                     <input 
                       required
                       type="text" 
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10 text-white"
                       placeholder="Jean Dupont"
                     />
                   </div>
@@ -102,7 +128,9 @@ export default function ContactPage() {
                     <input 
                       required
                       type="email" 
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10 text-white"
                       placeholder="jean@exemple.fr"
                     />
                   </div>
@@ -113,8 +141,10 @@ export default function ContactPage() {
                   <input 
                     required
                     type="text" 
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10"
-                    placeholder={t('contact.form_subject')}
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all placeholder:text-white/10 text-white"
+                    placeholder={t('contact.form_subject') || "Sujet"}
                   />
                 </div>
 
@@ -123,10 +153,18 @@ export default function ContactPage() {
                   <textarea 
                     required
                     rows={4}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all resize-none placeholder:text-white/10"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-violet-500/40 outline-none transition-all resize-none placeholder:text-white/10 text-white"
                     placeholder="..."
                   ></textarea>
                 </div>
+
+                {formStatus === 'error' && (
+                  <div className="text-rose-400 text-sm font-medium text-center">
+                    ❌ Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.
+                  </div>
+                )}
 
                 <motion.button
                   whileHover={{ scale: 1.02, boxShadow: "0 0 25px rgba(139, 92, 246, 0.4)" }}
@@ -135,6 +173,8 @@ export default function ContactPage() {
                   className={`w-full py-5 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-3 ${
                     formStatus === 'success' 
                       ? 'bg-emerald-500 text-white' 
+                      : formStatus === 'error'
+                      ? 'bg-rose-600 text-white'
                       : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-500 hover:to-indigo-500'
                   }`}
                 >

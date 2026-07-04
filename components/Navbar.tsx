@@ -159,6 +159,9 @@ const Navbar = () => {
                     <Link href="/dashboard" className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                       📊 {t('exam.dashboard_btn') || "Mon Dashboard"}
                     </Link>
+                    <Link href="/admin" className="block w-full text-left px-4 py-2 text-sm text-purple-600 font-semibold hover:bg-gray-50 transition-colors">
+                      ⚙️ Panel Admin
+                    </Link>
                     <hr className="border-gray-100 my-1" />
                     <button onClick={signOut} className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors">
                       🚪 {t('auth.logout')}

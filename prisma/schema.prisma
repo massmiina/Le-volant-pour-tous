@@ -95,3 +95,14 @@ model UserFavoriteSchool {
   @@index([userId])
   @@index([googlePlaceId])
 }
+
+model ContactRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("pending") // pending, read, resolved
+  createdAt DateTime @default(now())
+}
+
