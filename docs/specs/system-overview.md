@@ -9,11 +9,20 @@ Ce document décrit la vision globale et le fonctionnement end-to-end de la plat
 ---
 
 ## 🧠 1. Vue d’ensemble du système
-La plateforme repose sur un flux simple :
+La plateforme repose sur un flux de données strict reliant le contenu brut aux indicateurs d'apprentissage de l'utilisateur :
 
-Question Bank → Logic Engine → User Interface → Progress Tracking
+```mermaid
+flowchart TD
+    QB[(Question Bank)] --> SE[Selection Engine]
+    SE -->|Tirage dynamique| QEE[Quiz / Exam Engine]
+    QEE -->|Réponses utilisateur| UA[User Answers]
+    UA -->|Correction| SCE[Scoring Engine]
+    SCE -->|Calcul progression| PS[Progress System]
+    PS -->|Envoi événements| GE[Gamification Engine]
+    GE -->|XP & Badges| DUB[Dashboard UI]
+```
 
-Chaque interaction utilisateur (quiz, examen blanc, jeu) s’appuie sur la même base de données de questions, mais avec des règles d’utilisation différentes.
+Chaque interaction utilisateur (quiz, examen blanc, jeu d’arcade) s’appuie sur la même base de données de questions (Question Bank), garantissant la cohérence scientifique, mais applique des règles d’utilisation et de sélection différentes.
 
 ---
 
@@ -104,37 +113,63 @@ Tracks progress back into system
 
 ---
 
-## 💾 7. Données utilisateur (progression)
+## 🧮 7. Moteurs Techniques Complémentaires
+
+### 🧾 7.1 Moteur de Correction (Scoring Engine)
+* **Entrées** : Choix de réponses soumis par l'utilisateur + Clé de validation des réponses correctes de la Question Bank.
+* **Sorties** :
+  - Score brut d'examen (sur 40) ou de quiz (pourcentage de réussite).
+  - Identification des questions ratées (`mistakes`) au format JSON pour enregistrement.
+  - Classification thématique de la maîtrise de l'élève (Radar du Dashboard).
+
+### 🎮 7.2 Moteur de Récompenses (Gamification Engine)
+* **Entrées** : Résultats bruts calculés par le Scoring Engine et validation de chapitres du Progress System.
+* **XP Rules (Version V1)** :
+  - **Quiz de fin de module** : `+1 XP` par bonne réponse.
+  - **Examen Blanc** : `+50 XP` en cas de réussite ($\ge$ 35/40) + `+1 XP` par bonne réponse.
+  - **Module validé ($\ge$ 80%)** : `+100 XP` à la première complétion.
+* **Déblocage de Badges** : Analyse après chaque événement (ex: Badge "Perfect Exam" déclenché si score de session = 40/40, Badge "First Quiz" au premier quiz validé).
+
+---
+
+## 💾 8. Données utilisateur & Synchronisation (Progress System)
+
 ### 📌 Sources de données
-- `localStorage` → utilisateur invité
-- Supabase PostgreSQL → utilisateur connecté
+- `localStorage` → Cache local de l'utilisateur invité (hors-connexion).
+- Supabase PostgreSQL (via Prisma) → Base cloud sécurisée de l'utilisateur connecté.
+
 ### 🔄 Synchronisation
-- Fusion automatique à la première connexion
-- Priorité au cloud en cas de conflit
-- Conservation des progrès non sauvegardés localement
+- **Fusion automatique** à la première authentification de l'élève.
+- **Priorité au cloud** en cas de conflit de données pour assurer l'intégrité de la progression.
 
 ---
 
-## 🚪 8. Entrée du système
+## 🚪 9. Entrée du système
 Le point d’entrée logique de la plateforme est :
-> `/dashboard` (pour utilisateur connecté)  
-> `/cours` (pour utilisateur invité)  
+> `/dashboard` (pour un utilisateur connecté)  
+> `/cours` (pour un visiteur invité)  
 
-Tous les autres modules sont des extensions fonctionnelles de ces deux points.
+Tous les autres modules sont des extensions fonctionnelles greffées sur ces deux états.
 
 ---
 
-## ⚠️ 9. Contraintes V1
-- Pas d’admin panel
-- Questions maintenues manuellement par le développeur
-- Base de données simple et stable
-- Logique explicable sans complexité backend avancée
+## 🔐 10. Règles de Cohérence Stricte
+- **Règle 1 — Source Unique de Vérité** : Aucune question ou métadonnée pédagogique ne peut exister en dehors du fichier de configuration centralisé (Question Bank).
+- **Règle 2 — Séparation des Responsabilités (Clean Architecture)** :
+  - *Data System* = Stockage et calcul logique.
+  - *Pedagogical Framework* = Cadres réglementaires et didactiques.
+  - *Product & UX Layer* = Présentation, interfaces et micro-animations.
+- **Règle 3 — Zéro Logique Cachée** : Toutes les règles de sélection, de calcul de score, d'XP ou de déblocage de badges sont documentées de façon transparente.
+
+---
+
+## ⚠️ 11. Gestion des Edge Cases (Cas Limites)
+- **Refresh durant examen** : L'état d'avancement est stocké temporairement dans le `localStorage` (`exam_recovery`). Le rechargement de page ne pénalise pas l'utilisateur et reprend à la question en cours.
+- **Visiteur non inscrit** : Progression conservée localement. L'inscription n'efface rien mais fusionne les scores dans PostgreSQL.
+- **Connexion multi-appareils** : La session active écrase le cache local de l'appareil courant pour éviter toute dérive de progression.
 
 ---
 
 ## 🧭 Résumé
 Le système est conçu autour d’un principe unique :
-> Une seule base de questions, plusieurs façons de les utiliser.
-- Pedagogy définit les règles
-- Data System stocke et fournit les questions
-- Product Layer les rend interactives et gamifiées
+> **Une seule base de questions → deux modes de sélection → un moteur de scoring → un système de progression → une couche gamification → un dashboard.**
