@@ -1,91 +1,90 @@
-# Data System : Logique de Sélection, Répétition & Chronométrage
+# Data System : Logique des Moteurs de Quiz et d'Examen Blanc
 
-Ce document décrit les algorithmes de sélection de questions, de prévention des collisions temporelles (chronomètre) et de synchronisation des états (anti-crash / fusion de données).
+> **Rôle** : Architecte Logiciel Senior
+> **Statut** : Spécifications Logiques & Algorithmiques
 
----
-
-## 1. Logique de Sélection des Questions
-
-### 1.1 Mode Quiz
-Le mode Quiz cible un unique module ou thème ETG.
-- **Sélection** : Extraction de toutes les questions associées au thème demandé dans le dictionnaire statique.
-- **Ordre** : Séquentiel. L'élève doit franchir les questions de manière ordonnée pour garantir l'assimilation progressive de tous les concepts.
-
-### 1.2 Mode Examen Blanc
-Le mode Examen Blanc génère un test transversal de 40 questions respectant la répartition réglementaire officielle de la sécurité routière.
-
-#### Algorithme de génération de série :
-1. **Extraction** de la banque complète de questions groupées par thème ETG.
-2. **Filtrage par historique (Algorithme anti-répétition)** : 
-   - Exclure du tirage les questions réussies par l'utilisateur lors de ses 2 dernières sessions d'examen.
-   - Surpondérer (probabilité accrue de 50%) les questions qui se trouvent actuellement dans la file de la "Revue d'erreurs" de l'utilisateur (questions précédemment ratées et non encore corrigées).
-3. **Sélection par quotas** : Choisir aléatoirement le nombre exact de questions requis pour chaque thème :
-   - *Circulation* : 8 questions
-   - *Conducteur* : 8 questions
-   - *Route* : 4 questions
-   - *Usagers* : 4 questions
-   - *Réglementation* : 4 questions
-   - *Équipements de sécurité* : 3 questions
-   - *Mécanique* : 3 questions
-   - *Premiers secours* : 2 questions
-   - *Précautions* : 2 questions
-   - *Environnement* : 2 questions
-4. **Mélange final** : Application du mélange de *Fisher-Yates* sur la sélection globale pour désordonner le questionnaire et éviter les effets de mémorisation de position.
+Ce document détaille le traitement logique, le flux de données et la gestion des cas limites pour les moteurs de Quiz de module et d'Examen Blanc de la plateforme **Le Volant Pour Tous**.
 
 ---
 
-## 2. Chronomètre Anti-Dérive (Examen Blanc)
+## 1. Data Flow Global (Flux de Données)
 
-Afin de contrer le ralentissement classique des timers JavaScript (ex: `setInterval`) lorsque l'onglet est mis en arrière-plan ou que le processeur ralentit, le moteur d'examen utilise un calcul de temps absolu basé sur l'horloge système :
+Le cycle de vie d'une question, du stockage statique ou dynamique jusqu'à l'affichage à l'élève et l'enregistrement de sa performance, suit ce cheminement :
 
-$$\text{TargetAbsolute} = \text{Date.now()} + 20\,000\text{ ms}$$
-
-Le rafraîchissement visuel de la jauge s'effectue toutes les 50 ms en comparant l'heure actuelle à la cible absolue de fin de question :
-
-$$\text{Temps Restant} = \text{TargetAbsolute} - \text{Date.now()}$$
-
-Si cette valeur est inférieure ou égale à 0, la question est automatiquement soumise avec les choix courants de l'élève.
-
----
-
-## 3. Système Anti-Crash (State Recovery)
-
-En cas de rechargement accidentel de la page, de fermeture d'onglet ou de coupure de batterie lors d'un examen blanc :
-1. À chaque validation de question, l'état complet (`currentIdx` et `allAnswers`) est sérialisé en JSON et sauvegardé dans le `localStorage` sous la clé `exam_recovery`.
-2. Au montage de `/examen`, l'application vérifie la présence de cette clé. Si un examen en cours est détecté, la session reprend exactement à l'index de la dernière question non répondue.
-3. À la validation de la 40ème question, la clé `exam_recovery` est purgée.
-
----
-
-## 4. Algorithme de Synchronisation des Progrès
-
-Pour fusionner la progression hors-connexion (invité) avec le profil cloud d'un élève qui vient de s'authentifier, le hook global `useProgress` exécute la logique suivante :
-
-```typescript
-async function syncProgressAfterLogin(userId: string) {
-  const localCompleted = JSON.parse(localStorage.getItem('completed_modules') || '[]');
-  const localQuizScores = JSON.parse(localStorage.getItem('quiz_scores') || '{}');
-  
-  if (localCompleted.length > 0 || Object.keys(localQuizScores).length > 0) {
-    // Appel API de fusion
-    const res = await fetch('/api/progress/sync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, localCompleted, localQuizScores })
-    });
-    
-    if (res.ok) {
-      // Nettoyage après synchronisation réussie
-      localStorage.removeItem('completed_modules');
-      localStorage.removeItem('quiz_scores');
-    }
-  }
-}
+```
+[Question Bank (TS/JSON)] 
+       ↓ 
+[Selection Engine] ── (Tirage aléatoire/sélection par thèmes) ──> [Memory Cache (State)]
+                                                                           ↓
+[User Interface (RSC/Client)] <── (Rendu multilingue interactif) ── [JSON Endpoint/Prop]
+       ↓
+[User Submission (A/B/C/D)] 
+       ↓
+[Scoring Engine] ── (Calcul score & mistakes) 
+       ↓
+[API POST /api/exams] ── (Persistance Prisma) ──> [Database (Supabase PostgreSQL)]
+                                                           ↓
+[Dashboard UI] <── (Radar & VolantReady™) ── [API GET /api/user/progress]
 ```
 
-### Fusion côté serveur (`POST /api/progress/sync`) :
-1. Extraction de la progression existante en base de données pour cet utilisateur.
-2. **Union des ensembles** pour les modules complétés :
-   $$\text{cloudCompleted} = \text{cloudCompleted} \cup \text{localCompleted}$$
-3. **Comparaison des scores de quiz** : Pour chaque quiz, l'API compare le score cloud et le score local et persiste le score maximal :
-   $$\text{scoreFinal}(id) = \max(\text{scoreCloud}(id), \text{scoreLocal}(id))$$
+---
+
+## 2. Le Moteur de Quiz (Quiz Engine)
+
+Le mode Quiz sert à l'apprentissage immédiat à la suite d'un chapitre de cours.
+- **Règles de sélection** : L'ID du module est fourni en entrée. Le moteur extrait de la base statique l'ensemble des questions qui lui sont associées.
+- **Répétition** : Si l'élève échoue au quiz, il peut le relancer immédiatement. Les mêmes questions sont proposées afin de favoriser la mémorisation et la correction des concepts non acquis.
+- **Scoring** : Le score est calculé sous forme de pourcentage de bonnes réponses ($\frac{\text{bonnes réponses}}{\text{questions posées}} \times 100$). La complétion du module est validée si ce score est $\ge 80\%$.
+
+---
+
+## 3. Le Moteur d'Examen Blanc (Exam Engine)
+
+Le mode Examen Blanc évalue le niveau réel de préparation de l'élève à l'aide d'une simulation officielle de 40 questions.
+
+### 3.1 Génération et distribution thématique
+Le moteur de tirage extrait de la banque de questions globale les questions pour chaque thème officiel afin de respecter les quotas réglementaires de l'ETG français (8 Circulation, 8 Conducteur, 4 Route, 4 Usagers, 4 Réglementation, 3 Sécurité, 3 Mécanique, 2 Secours, 2 Précautions, 2 Environnement).
+
+### 3.2 Verrouillage du test (No Back Navigation)
+- **États immuables** : Les questions déjà répondues sont verrouillées dans l'état de l'application (`React State`). L'utilisateur ne peut pas modifier une réponse déjà validée.
+- **Navigation bloquée** : Les contrôles de navigation du navigateur (bouton retour) sont interceptés à l'aide d'un écouteur d'événement sur `beforeunload` et l'interdiction de changer de route client sans validation.
+
+### 3.3 Chronométrage de précision (Anti-Dérive)
+Le chronomètre évite les décalages induits par l'activité système du navigateur (ex: mise en veille de l'onglet).
+1. Au chargement de la question, une date limite absolue est calculée :
+   $$\text{LimitTime} = \text{Date.now()} + 20\,000\text{ ms}$$
+2. Un intervalle de 50ms calcule récursivement la différence :
+   $$\text{Remaining} = \text{LimitTime} - \text{Date.now()}$$
+3. À $\text{Remaining} \le 0$, le moteur soumet automatiquement les réponses actuellement cochées et passe à la question suivante.
+
+---
+
+## 4. Anti-Bugs & Gestion des Edge Cases (Résilience)
+
+### 4.1 Rechargement de page accidentel (Refresh)
+Pour parer aux interruptions d'examen :
+- À chaque soumission de réponse, l'index de la question courante et le tableau des réponses données sont enregistrés dans le `localStorage` sous la clé `exam_recovery`.
+- Si l'élève rafraîchit la page, le composant client détecte `exam_recovery` et recharge la session à la question où elle s'était arrêtée, avec les réponses précédentes déjà pré-remplies.
+- La clé est supprimée de la mémoire locale lors de l'envoi final des résultats à la base de données.
+
+### 4.2 Perte de connexion internet
+- **Pendant l'examen** : Le test se déroule entièrement côté client (toutes les 40 questions sont chargées en mémoire au démarrage). La perte de réseau n'interrompt pas le déroulement des questions.
+- **Lors de la soumission du score** : Si l'envoi de la requête `POST /api/exams` échoue à cause du réseau, les résultats sont sauvegardés dans le `localStorage` sous la clé `pending_exam_submissions`. L'application tentera de renvoyer le score dès que la connexion sera rétablie ou au prochain chargement de l'application.
+
+### 4.3 Multi-onglets (Multi-tab)
+Pour éviter qu'un utilisateur n'ouvre le même examen sur plusieurs onglets afin de tricher :
+- Un timestamp de session unique est généré au démarrage de l'examen et écrit dans le `localStorage` (`active_exam_session`).
+- Si un autre onglet s'ouvre sur `/examen` avec une session différente, le premier onglet détecte le changement de session locale et s'interrompt en affichant un écran de déconnexion.
+
+---
+
+## 5. Comparaison Synthétique Quiz vs Examen
+
+| Fonctionnalité | Quiz de Module | Examen Blanc |
+| :--- | :--- | :--- |
+| **Sélection** | Filtrée sur 1 thème | Aléatoire transversale sur 10 thèmes |
+| **Questions** | 5 à 12 questions | **Exactement 40 questions** |
+| **Timer** | Pas de limite de temps | **20 secondes / question** |
+| **Répétitions** | Permises | Exclues de l'historique récent |
+| **Verrouillage** | Navigation libre | Navigation bloquée (sans retour) |
+| **Persistance** | Table `Progress` | Table `ExamResult` |

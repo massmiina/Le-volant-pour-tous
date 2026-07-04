@@ -51,3 +51,4 @@ Cette couche définit les interfaces interactives et le flux utilisateur au sein
 
 - [**_template-spec.md**](./_template-spec.md) : Gabarit pour rédiger une nouvelle spécification fonctionnelle.
 - [**_spec-reviewer.md**](./_spec-reviewer.md) : Guide d'audit critique des spécifications.
+- [**_final-validation.md**](./_final-validation.md) : Rapport d'audit de validation finale du système de questions.
