@@ -16,6 +16,27 @@ Pour la V1, l'intégralité du catalogue de questions est stockée de manière s
 - **Fichier centralisateur** : `lib/examData.ts` (pour les questions d'examens blancs) et les clés de traductions localisées bilingues dans `lib/translations.ts` (pour les quiz de cours).
 - **Maintenance** : Gérée manuellement par le développeur / propriétaire du projet. Toute modification de question (correction d'une erreur réglementaire, changement d'énoncé) fait l'objet d'un commit Git et d'un déploiement sur Vercel. Il n'existe pas d'interface d'administration en ligne pour cette V1.
 
+### 1.2 Cycle de Vie des Questions (Question Lifecycle)
+Chaque question présente dans le système suit un cycle de vie strict avant d'être jouable par les utilisateurs :
+1. **DRAFT** :
+   - Créée ou modifiée par le mainteneur du projet.
+   - Non visible et exclue de tous les quiz et examens blancs.
+2. **VALIDATED** :
+   - Qualité pédagogique vérifiée par rapport aux exigences du REMC/ETG.
+   - Qualité linguistique (cohérence du bilinguisme FR/RU) validée.
+3. **PUBLISHED** :
+   - Disponible et intégrée dans le moteur de tirage pour les Quiz et les Examens Blancs.
+4. **DEPRECATED** (V2) :
+   - Exclue des tirages actifs mais conservée en base pour ne pas casser l'historique des statistiques de progression des anciens élèves.
+
+### 1.3 Responsabilité de Validation (Gouvernance)
+- Dans la version V1 de la plateforme, le **propriétaire unique (Owner) du projet** porte la responsabilité de validation de la banque de questions. 
+- Aucune validation externe automatisée ou panel administratif tiers n'est déployé en V1.
+
+### 1.4 Garanties de Cohérence Pédagogique
+- L'Examen Blanc (évaluation officielle simulée) n'accepte strictement que des questions ayant le statut **PUBLISHED**. Une question invalide, incomplète ou au statut DRAFT ne peut jamais entrer dans le tirage des 40 questions.
+- Le Quiz (apprentissage) tolère des questions expérimentales ou temporaires pour tester de nouveaux cas de figure pédagogiques.
+
 ---
 
 ## 2. Modèle de Données Unique (Question Schema)
@@ -114,3 +135,14 @@ Afin de garantir l'homologation pédagogique et l'accessibilité :
 | **Retour en arrière** | Autorisé | Strictement interdit |
 | **Affichage de la correction** | Instantané après chaque question | Différé (écran de synthèse + revue d'erreurs) |
 | **Validation du module** | Seuil de réussite à **80%** (ex: 4/5) | Seuil de réussite à **35 bonnes réponses sur 40** |
+
+### 6.1 Distinction Fonctionnelle et Pédagogique Finale
+- **QUIZ (Apprentissage & Répétition)** :
+  - Vise à ancrer la théorie par la répétition libre. 
+  - Tolère le droit à l'erreur avec un feedback immédiat pour comprendre les explications de manière synchrone.
+  - Peut inclure des questions DRAFT ou expérimentales pour évaluer de nouvelles approches didactiques.
+- **EXAMEN BLANC (Évaluation Normative)** :
+  - Vise à certifier la préparation globale de l'élève à l'aide d'un score officiel représentatif de l'ETG.
+  - Strictement limité aux questions validées et publiées (**PUBLISHED**).
+  - Aucune adaptation ou aide n'est apportée durant l'épreuve.
+
