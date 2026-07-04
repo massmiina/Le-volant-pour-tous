@@ -3,13 +3,12 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-// API GET: Permet aux administrateurs de lister les messages de contact
-export async function GET(req: NextRequest) {
+// Vérifier si l'utilisateur connecté est bien l'administrateur officiel
+async function checkAdminAuth(req: NextRequest): Promise<boolean> {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-    // Récupérer la session utilisateur via Supabase
     const supabase = createServerClient(
       supabaseUrl!,
       supabaseKey!,
@@ -25,12 +24,20 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    const { data: { user: authUser } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
+    return user?.email === "yasmina.dzhv@gmail.com";
+  } catch (error) {
+    console.error("Admin Auth Check Error:", error);
+    return false;
+  }
+}
 
-    // Pour des raisons de sécurité, nous limitons l'accès aux utilisateurs connectés.
-    // Idéalement, nous devrions valider un rôle "admin" mais ici nous filtrons pour la V1.
-    if (!authUser?.email) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+// API GET: Permet aux administrateurs de lister les messages de contact
+export async function GET(req: NextRequest) {
+  try {
+    const isAdmin = await checkAdminAuth(req);
+    if (!isAdmin) {
+      return NextResponse.json({ error: "Accès interdit. Réservé à l'administrateur." }, { status: 403 });
     }
 
     // Récupérer les demandes de contact triées par date décroissante
@@ -47,7 +54,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// API POST: Permet aux utilisateurs d'envoyer une demande de contact
+// API POST: Permet aux utilisateurs d'envoyer une demande de contact (publique)
 export async function POST(req: NextRequest) {
   try {
     const { name, email, subject, message } = await req.json();
@@ -59,7 +66,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Créer la demande de contact en base de données
     const contactRequest = await prisma.contactRequest.create({
       data: {
         name,
@@ -86,6 +92,11 @@ export async function POST(req: NextRequest) {
 // API PATCH: Permet à l'admin de mettre à jour le statut d'un message
 export async function PATCH(req: NextRequest) {
   try {
+    const isAdmin = await checkAdminAuth(req);
+    if (!isAdmin) {
+      return NextResponse.json({ error: "Non autorisé." }, { status: 403 });
+    }
+
     const { id, status } = await req.json();
 
     if (!id || !status) {
@@ -107,6 +118,11 @@ export async function PATCH(req: NextRequest) {
 // API DELETE: Permet à l'admin de supprimer un message
 export async function DELETE(req: NextRequest) {
   try {
+    const isAdmin = await checkAdminAuth(req);
+    if (!isAdmin) {
+      return NextResponse.json({ error: "Non autorisé." }, { status: 403 });
+    }
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
