@@ -19,7 +19,8 @@ Lire dans cet ordre pour une compréhension progressive du projet :
 | 6 | [06\_feature-spec-gamification.md](./06_feature-spec-gamification.md) | 🎮 **Feature** — Arcade Hub (Sign Master, Esquive Route, XP, badges) |
 | 7 | [07\_feature-spec-login.md](./07_feature-spec-login.md) | 🔐 **Feature** — Authentification Supabase, Magic Link, gestion de compte |
 | 8 | [08\_feature-spec-map.md](./08_feature-spec-map.md) | 📍 **Feature** — Carte interactive des auto-écoles (Google Places, Haversine, favoris) |
-| 9 | [09\_roadmap.md](./09_roadmap.md) | 🚀 **Roadmap** — Planning, état d'avancement (Gantt), prochaines étapes |
+| 9 | [10\_systeme_questions.md](./10_systeme_questions.md) | ❓ **Architecture** — Système de questions, Question Bank, alignement quiz/examens |
+| 10 | [09\_roadmap.md](./09_roadmap.md) | 🚀 **Roadmap** — Planning, état d'avancement (Gantt), prochaines étapes |
 
 ---
 
