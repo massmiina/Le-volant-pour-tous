@@ -64,14 +64,14 @@ export default function Brouillons() {
 
       <div className="relative z-10 w-full max-w-6xl px-8 space-y-24">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">Graffiti "Rock Salt" en Mode Néon 💡</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Graffiti &quot;Rock Salt&quot; en Mode Néon 💡</h1>
           <p className="text-violet-300 text-lg">La police Rock Salt (tassée) avec de vrais tubes néon virtuels.</p>
         </div>
 
         {/* Theme 1 */}
         <div className="bg-black/60 backdrop-blur-md border border-violet-500/30 p-12 rounded-3xl text-left space-y-6 overflow-hidden">
           <h2 className="text-emerald-400 font-mono text-xl mb-4 border-b border-emerald-400/30 pb-2">
-            Couleur 1 : Violet & Émeraude (S'intègre parfaitement au site)
+            Couleur 1 : Violet & Émeraude (S&apos;intègre parfaitement au site)
           </h2>
           <h1 className={`text-5xl md:text-7xl tracking-tight leading-[1.4] pb-8 ${rock.className}`}>
             <span className="neon-t1-violet tangled-letters block">Le Volant</span>

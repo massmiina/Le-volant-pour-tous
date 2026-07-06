@@ -65,7 +65,7 @@ export default function RegisterPage() {
             </div>
             <h2 className="text-2xl font-black text-emerald-300">Confirmation requise !</h2>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Un email de confirmation a été envoyé à <span className="font-bold text-white">{email}</span>. Veuillez cliquer sur le lien qu'il contient pour confirmer votre inscription et activer votre espace.
+              Un email de confirmation a été envoyé à <span className="font-bold text-white">{email}</span>. Veuillez cliquer sur le lien qu&apos;il contient pour confirmer votre inscription et activer votre espace.
             </p>
             <Link 
               href="/login" 

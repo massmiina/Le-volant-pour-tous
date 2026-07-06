@@ -45,7 +45,7 @@ export default function MisesEnSituation() {
       <div className="min-h-screen bg-[#0A061E] flex items-center justify-center text-white">
         <div className="text-center space-y-4">
           <p className="text-xl font-bold">Erreur de chargement des scénarios.</p>
-          <Link href="/" className="text-violet-400 hover:underline">Retour à l'accueil</Link>
+          <Link href="/" className="text-violet-400 hover:underline">Retour à l&apos;accueil</Link>
         </div>
       </div>
     );

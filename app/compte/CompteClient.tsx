@@ -276,7 +276,7 @@ export default function CompteClient({ user, progress, examResultsCount, gameSco
 
                 {/* Mini Game Highscores Count */}
                 <div className="bg-white/5 border border-white/5 rounded-xl p-4 flex flex-col justify-between">
-                  <span className="text-xs text-gray-500 font-extrabold uppercase tracking-wider mb-2">Parties d'Arcade</span>
+                  <span className="text-xs text-gray-500 font-extrabold uppercase tracking-wider mb-2">Parties d&apos;Arcade</span>
                   <span className="text-3xl font-black">{gameScoresCount}</span>
                 </div>
 

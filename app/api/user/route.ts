@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 
 // PUT: Update profile name and/or password
 export async function PUT(req: Request) {
@@ -93,7 +94,6 @@ export async function DELETE(req: Request) {
       // Optionally delete from Supabase Auth if service role key is configured
       if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
         try {
-          const { createClient: createAdminClient } = require("@supabase/supabase-js");
           const supabaseAdmin = createAdminClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.SUPABASE_SERVICE_ROLE_KEY

@@ -162,7 +162,7 @@ export default function ContactPage() {
 
                 {formStatus === 'error' && (
                   <div className="text-rose-400 text-sm font-medium text-center">
-                    ❌ Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.
+                    ❌ Une erreur est survenue lors de l&apos;envoi de votre message. Veuillez réessayer.
                   </div>
                 )}
 

@@ -1,7 +1,18 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { DrivingSchoolSearchResult } from '@/lib/driving-schools/types';
+
+export interface SimpleDrivingSchool {
+  placeId: string;
+  name: string;
+  lat: number;
+  lng: number;
+  address: string;
+  rating?: number;
+  phone?: string;
+  website?: string;
+  googleMapsUri?: string;
+}
 
 type LatLngLiteral = { lat: number; lng: number };
 
@@ -66,9 +77,9 @@ declare global {
 }
 
 interface GoogleMapComponentProps {
-  locations: DrivingSchoolSearchResult[];
+  locations: SimpleDrivingSchool[];
   selectedId: string | null;
-  onSelect: (school: DrivingSchoolSearchResult) => void;
+  onSelect: (school: SimpleDrivingSchool) => void;
   center: [number, number];
   zoom: number;
   userLocation: [number, number] | null;
@@ -90,8 +101,10 @@ export default function GoogleMapComponent({
   const userMarkerRef = useRef<GoogleMarker | null>(null);
   const [googleMaps, setGoogleMaps] = useState<GoogleMapsNamespace | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_KEY;
-  const missingKeyError = apiKey ? null : 'NEXT_PUBLIC_GOOGLE_MAPS_BROWSER_KEY est manquante dans .env.local.';
+  const isKeyInvalid = !apiKey || apiKey === 'VOTRE_CLE_API_NAVIGATEUR_GOOGLE_ICI';
+  const displayedLoadError = loadError ?? (isKeyInvalid ? "La carte n'est pas disponible." : null);
 
   const mapStyles = useMemo(
     () => [
@@ -107,15 +120,15 @@ export default function GoogleMapComponent({
   );
 
   useEffect(() => {
-    if (!apiKey) return;
+    if (isKeyInvalid || !apiKey) return;
 
     loadGoogleMaps(apiKey)
       .then((google) => setGoogleMaps(google))
       .catch((error) => {
         console.error('Google Maps load error:', error);
-        setLoadError("Impossible de charger Google Maps.");
+        setLoadError("La carte n'est pas disponible.");
       });
-  }, [apiKey]);
+  }, [apiKey, isKeyInvalid]);
 
   useEffect(() => {
     if (!googleMaps || !mapRef.current || mapInstanceRef.current) return;
@@ -151,8 +164,8 @@ export default function GoogleMapComponent({
         position: { lat: school.lat, lng: school.lng },
         map,
         title: school.name,
-        icon: createMarkerIcon(googleMaps, school.isFeatured, selectedId === school.id),
-        zIndex: school.isFeatured ? 20 : 10,
+        icon: createMarkerIcon(googleMaps, selectedId === school.placeId),
+        zIndex: 10,
       });
 
       marker.addListener('click', () => onSelect(school));
@@ -185,8 +198,6 @@ export default function GoogleMapComponent({
       zIndex: 30,
     });
   }, [googleMaps, userLocation]);
-
-  const displayedLoadError = loadError ?? missingKeyError;
 
   if (displayedLoadError) {
     return (
@@ -245,15 +256,15 @@ function loadGoogleMaps(apiKey: string) {
   return googleMapsPromise;
 }
 
-function createMarkerIcon(googleMaps: GoogleMapsNamespace, isFeatured: boolean, isSelected: boolean) {
-  const fill = isFeatured ? '#10b981' : '#7c3aed';
-  const stroke = isSelected ? '#ffffff' : isFeatured ? '#a7f3d0' : '#c4b5fd';
-  const symbol = isFeatured ? '★' : '●';
+function createMarkerIcon(googleMaps: GoogleMapsNamespace, isSelected: boolean) {
+  const fill = '#7c3aed';
+  const stroke = isSelected ? '#ffffff' : '#c4b5fd';
+  const symbol = '●';
   const size = isSelected ? 44 : 36;
   const svg = `
     <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
       <circle cx="${size / 2}" cy="${size / 2}" r="${size / 2 - 4}" fill="${fill}" stroke="${stroke}" stroke-width="3"/>
-      <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="${isFeatured ? 18 : 14}" font-family="Arial" font-weight="900" fill="${isFeatured ? '#02140d' : '#ffffff'}">${symbol}</text>
+      <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="14" font-family="Arial" font-weight="900" fill="#ffffff">${symbol}</text>
     </svg>
   `;
 
@@ -276,3 +287,4 @@ function createUserLocationIcon(googleMaps: GoogleMapsNamespace) {
     scaledSize: new googleMaps.maps.Size(28, 28),
   };
 }
+

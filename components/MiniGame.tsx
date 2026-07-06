@@ -27,61 +27,65 @@ export default function MiniGame() {
   const requestRef = useRef<number>(null);
   const lastSpawnRef = useRef<number>(0);
   
-  // Game Loop
-  const gameLoop = useCallback((time: number) => {
-    if (!isPlaying || gameOver) {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      return;
-    }
+  // Game Loop Ref to avoid circular dependency / access-before-declaration in hooks
+  const gameLoopRef = useRef<(time: number) => void | null>(null);
 
-    // Spawn new obstacles
-    if (time - lastSpawnRef.current > SPAWN_RATE) {
-      setObstacles(prev => [
-        ...prev, 
-        { id: time, lane: Math.floor(Math.random() * LANE_COUNT), y: -50 }
-      ]);
-      lastSpawnRef.current = time;
-    }
-
-    setObstacles(prev => {
-      let isColliding = false;
-      
-      const newObstacles = prev.map(obs => {
-        const newY = obs.y + GAME_SPEED;
-        
-        // Collsion threshold (car is at bottom, around 80% to 100% of height)
-        // Assuming height is ~500px, car is at ~400px to 450px.
-        const carYStart = 400;
-        const carYEnd = 480;
-        
-        if (newY > carYStart && newY < carYEnd && obs.lane === carLane) {
-          isColliding = true;
-        }
-        
-        return { ...obs, y: newY };
-      }).filter(obs => obs.y < 600); // Remove if out of bounds
-
-      if (isColliding) {
-        setGameOver(true);
-        setIsPlaying(false);
+  // Update game loop logic when dependencies change
+  useEffect(() => {
+    gameLoopRef.current = (time: number) => {
+      if (!isPlaying || gameOver) {
+        if (requestRef.current) cancelAnimationFrame(requestRef.current);
+        return;
       }
 
-      return newObstacles;
-    });
+      // Spawn new obstacles
+      if (time - lastSpawnRef.current > SPAWN_RATE) {
+        setObstacles(prev => [
+          ...prev, 
+          { id: time, lane: Math.floor(Math.random() * LANE_COUNT), y: -50 }
+        ]);
+        lastSpawnRef.current = time;
+      }
 
-    setScore(prev => prev + 1);
+      setObstacles(prev => {
+        let isColliding = false;
+        
+        const newObstacles = prev.map(obs => {
+          const newY = obs.y + GAME_SPEED;
+          
+          // Collision threshold (car is at bottom, around 80% to 100% of height)
+          const carYStart = 400;
+          const carYEnd = 480;
+          
+          if (newY > carYStart && newY < carYEnd && obs.lane === carLane) {
+            isColliding = true;
+          }
+          
+          return { ...obs, y: newY };
+        }).filter(obs => obs.y < 600); // Remove if out of bounds
 
-    requestRef.current = requestAnimationFrame(gameLoop);
+        if (isColliding) {
+          setGameOver(true);
+          setIsPlaying(false);
+        }
+
+        return newObstacles;
+      });
+
+      setScore(prev => prev + 1);
+
+      requestRef.current = requestAnimationFrame(gameLoopRef.current!);
+    };
   }, [isPlaying, gameOver, carLane]);
 
   useEffect(() => {
-    if (isPlaying) {
-      requestRef.current = requestAnimationFrame(gameLoop);
+    if (isPlaying && gameLoopRef.current) {
+      requestRef.current = requestAnimationFrame(gameLoopRef.current);
     }
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [isPlaying, gameLoop]);
+  }, [isPlaying]);
 
   // Keybindings
   useEffect(() => {

@@ -112,7 +112,7 @@ export default function AdminPage() {
         <div className="max-w-md text-center space-y-6 relative z-10 border border-rose-500/20 bg-white/5 p-8 rounded-[2rem] shadow-2xl">
           <h1 className={`${rockSalt.className} text-3xl font-black text-rose-500`}>ACCÈS REFUSÉ</h1>
           <p className="text-white/60 text-sm">
-            Vous n'avez pas les privilèges requis pour accéder au Panel d'Administration. Cet espace est strictement confidentiel.
+            Vous n&apos;avez pas les privilèges requis pour accéder au Panel d&apos;Administration. Cet espace est strictement confidentiel.
           </p>
           <Link href="/dashboard" className="inline-block px-6 py-3 bg-rose-500/10 border border-rose-500/30 text-rose-400 rounded-2xl hover:bg-rose-500/20 transition-all font-semibold">
             Retour au Dashboard Éléve

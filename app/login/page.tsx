@@ -81,7 +81,7 @@ export default function LoginPage() {
             </div>
             <h2 className="text-2xl font-black text-purple-300">Lien magique envoyé !</h2>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Nous avons envoyé un lien de connexion rapide à l'adresse <span className="font-bold text-white">{email}</span>. Cliquez sur ce lien pour vous connecter instantanément.
+              Nous avons envoyé un lien de connexion rapide à l&apos;adresse <span className="font-bold text-white">{email}</span>. Cliquez sur ce lien pour vous connecter instantanément.
             </p>
             <button 
               onClick={() => { setMagicLinkSent(false); setEmail(""); }}
