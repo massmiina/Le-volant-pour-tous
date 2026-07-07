@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-type SignCategory = 'danger' | 'interdiction' | 'obligation' | 'indication' | 'priorite';
+type SignCategory = 'danger' | 'interdiction' | 'obligation' | 'indication' | 'priorite' | 'services';
 
 interface SignData {
   id: string;
@@ -31,7 +31,7 @@ const SIGNS: SignData[] = [
   { id: 'A13b_raised', category: 'danger', name: 'Passage pour piétons surélevé', meaning: 'Signale un passage piéton implanté sur un ralentisseur dos-d\'âne. Vigilance accrue.' },
   { id: 'A13a', category: 'danger', name: 'Endroit fréquenté par les enfants', meaning: 'Proximité d\'une école, d\'une aire de jeux ou d\'un parc. Ralentissez fortement.' },
   { id: 'A15b', category: 'danger', name: 'Passage d\'animaux domestiques', meaning: 'Risque de rencontre avec du bétail (vaches, moutons) pouvant traverser la chaussée.' },
-  { id: 'A15a1', category: 'danger', name: 'Passage d\'animaux sauvages', meaning: 'Risque de traversée de grand gibier (cerfs, sangliers) en forêt. Vigilance accrue.' },
+  { id: 'A15a1', category: 'danger', name: 'Passage d\'animaux sauvages', meaning: 'Risque de traversée de grand gigier (cerfs, sangliers) en forêt. Vigilance accrue.' },
   { id: 'A15c', category: 'danger', name: 'Passage de cavaliers', meaning: 'Présence fréquente de chevaux et cavaliers traversant ou longeant la route.' },
   { id: 'A16', category: 'danger', name: 'Descente dangereuse', meaning: 'Annonce une descente à forte inclinaison (10%). Utiliser le frein moteur pour ne pas surchauffer les freins.' },
   { id: 'A17', category: 'danger', name: 'Annonce de feux tricolores', meaning: 'Signale des feux de circulation, souvent isolés ou inattendus (entrée de ville).' },
@@ -84,21 +84,42 @@ const SIGNS: SignData[] = [
   { id: 'B21-1', category: 'obligation', name: 'Obligation de tourner à droite', meaning: 'Au carrefour, virage à droite obligatoire.' },
   { id: 'B21-2', category: 'obligation', name: 'Obligation de tourner à gauche', meaning: 'Au carrefour, virage à gauche obligatoire.' },
   { id: 'B21b', category: 'obligation', name: 'Contournement obligatoire', meaning: 'Obligation de contourner l\'obstacle ou le refuge par le côté droit.' },
+  { id: 'B21c1', category: 'obligation', name: 'Direction obligatoire tout droit', meaning: 'Obligation de continuer tout droit à la prochaine intersection.' },
+  { id: 'B21c2', category: 'obligation', name: 'Direction obligatoire à droite', meaning: 'Obligation de tourner à droite à la prochaine intersection.' },
+  { id: 'B21d1', category: 'obligation', name: 'Direction obligatoire à gauche ou à droite', meaning: 'Obligation de tourner à gauche ou à droite à la prochaine intersection.' },
+  { id: 'B21e', category: 'obligation', name: 'Direction obligatoire tout droit ou à droite', meaning: 'Obligation de continuer tout droit ou de tourner à droite à la prochaine intersection.' },
   { id: 'B22a', category: 'obligation', name: 'Piste cyclable', meaning: 'Voie obligatoire pour les cyclistes (interdite aux piétons et motorisés).' },
+  { id: 'B22b', category: 'obligation', name: 'Chemin obligatoire pour piétons', meaning: 'Voie réservée exclusivement à la circulation des piétons. Interdit à tout véhicule.' },
+  { id: 'B22c', category: 'obligation', name: 'Chemin obligatoire pour cavaliers', meaning: 'Voie réservée exclusivement aux personnes circulant à cheval.' },
   { id: 'B25', category: 'obligation', name: 'Vitesse minimale obligatoire (30)', meaning: 'Interdiction de circuler à une vitesse inférieure à 30 km/h (sauf encombrement).' },
+  { id: 'B26', category: 'obligation', name: 'Chaînes à neige obligatoires', meaning: 'Obligation de circuler avec des chaînes à neige sur au moins deux roues motrices.' },
   { id: 'B27a', category: 'obligation', name: 'Voie réservée aux bus', meaning: 'Voie réservée exclusivement aux transports en commun de passagers.' },
-  { id: 'B29', category: 'obligation', name: 'Fin de piste cyclable', meaning: 'Fin de la bande ou piste cyclable obligatoire.' },
+  { id: 'B27b', category: 'obligation', name: 'Voie réservée aux tramways', meaning: 'Voie réservée exclusivement à la circulation des tramways.' },
+  { id: 'B29', category: 'obligation', name: 'Allumez vos feux', meaning: 'Obligation d\'allumer les feux de croisement (ex: entrée de tunnel).' },
+  { id: 'B45a', category: 'obligation', name: 'Fin d\'obligation d\'allumer les feux', meaning: 'Indique la fin de l\'obligation d\'allumer les feux de croisement.' },
 
   // ================= INDICATION (Carrés bleus) =================
-  { id: 'C1a', category: 'indication', name: 'Parking', meaning: 'Lieu aménagé pour le stationnement des véhicules.' },
+  { id: 'C1a', category: 'indication', name: 'Parking', meaning: 'Lieu aménagement pour le stationnement des véhicules.' },
+  { id: 'C1b', category: 'indication', name: 'Parking payant', meaning: 'Lieu de stationnement payant réglementé par horodateur.' },
+  { id: 'C1c', category: 'indication', name: 'Parking zone bleue', meaning: 'Stationnement gratuit mais limité en temps, nécessitant l\'utilisation d\'un disque.' },
   { id: 'C4a', category: 'indication', name: 'Vitesse conseillée (50)', meaning: 'Il est conseillé de rouler à 50 km/h sous de bonnes conditions.' },
+  { id: 'C4b_50', category: 'indication', name: 'Fin de vitesse conseillée (50)', meaning: 'Indique la fin de la vitesse conseillée de 50 km/h.' },
+  { id: 'C8', category: 'indication', name: 'Hôpital', meaning: 'Indique la proximité d\'un hôpital. Évitez les bruits et klaxons inutiles.' },
   { id: 'C12', category: 'indication', name: 'Sens unique', meaning: 'Circulation à sens unique. Interdiction de faire demi-tour ou de rouler à contre-sens.' },
+  { id: 'C13a', category: 'indication', name: 'Impasse', meaning: 'Indique une rue sans issue pour les véhicules automobiles.' },
+  { id: 'C13c', category: 'indication', name: 'Impasse avec issue piéton / cycle', meaning: 'Impasse pour les voitures, mais débouchant sur un cheminement piétons et cyclistes.' },
   { id: 'C20a', category: 'indication', name: 'Passage piéton', meaning: 'Indique l\'emplacement d\'un passage pour piétons.' },
   { id: 'C50', category: 'indication', name: 'Zone piétonne', meaning: 'Entrée d\'une zone réservée aux piétons. Véhicules exceptionnels admis au pas.' },
   { id: 'C107', category: 'indication', name: 'Route à accès réglementé', meaning: 'Début d\'une voie rapide (110 km/h). Interdit aux piétons, vélos, et usagers lents.' },
   { id: 'C207', category: 'indication', name: 'Autoroute', meaning: 'Début d\'une section d\'autoroute (130 km/h). Règles de sécurité strictes.' },
   { id: 'C107_end', category: 'indication', name: 'Fin de voie rapide', meaning: 'Fin d\'une route à accès réglementé.' },
   { id: 'C207_end', category: 'indication', name: 'Fin d\'autoroute', meaning: 'Fin de la section d\'autoroute.' },
+  { id: 'C111', category: 'indication', name: 'Entrée de tunnel', meaning: 'Début d\'une section de route traversant un tunnel. Allumage des feux obligatoire.' },
+  { id: 'C112', category: 'indication', name: 'Sortie de tunnel', meaning: 'Fin de la section de tunnel.' },
+  { id: 'C115', category: 'indication', name: 'Début de voie verte', meaning: 'Début d\'une voie réservée exclusivement aux piétons et cyclistes.' },
+  { id: 'C116', category: 'indication', name: 'Fin de voie verte', meaning: 'Indique la fin de la voie verte réservée aux piétons et cyclistes.' },
+  { id: 'C24a', category: 'indication', name: 'Début de zone de rencontre', meaning: 'Entrée d\'une zone de rencontre. Vitesse limitée à 20 km/h, priorité aux piétons.' },
+  { id: 'C24b', category: 'indication', name: 'Fin de zone de rencontre', meaning: 'Indique la fin de la zone de rencontre.' },
 
   // ================= PRIORITÉ (Formes spéciales) =================
   { id: 'AB1', category: 'priorite', name: 'Priorité à droite', meaning: 'Intersection où s\'applique la règle de priorité à droite par défaut.' },
@@ -109,6 +130,21 @@ const SIGNS: SignData[] = [
   { id: 'AB7', category: 'priorite', name: 'Fin de route prioritaire', meaning: 'Fin de la route prioritaire. La priorité à droite redevient la règle par défaut.' },
   { id: 'B15', category: 'priorite', name: 'Priorité au sens inverse', meaning: 'Vous devez céder le passage aux usagers venant en face dans ce passage étroit.' },
   { id: 'C18', category: 'priorite', name: 'Priorité face au sens inverse', meaning: 'Vous avez la priorité de passage face aux usagers venant en sens inverse dans le passage étroit.' },
+
+  // ================= SERVICES (Carrés à listel bleu) =================
+  { id: 'CE1', category: 'services', name: 'Poste de secours', meaning: 'Indique la présence d\'un poste de secours de premier secours à proximité.' },
+  { id: 'CE2a', category: 'services', name: 'Appel d\'urgence (SOS)', meaning: 'Poste d\'appel d\'urgence relié directement aux services de secours.' },
+  { id: 'CE2b', category: 'services', name: 'Cabine téléphonique', meaning: 'Indique la présence d\'une cabine téléphonique publique.' },
+  { id: 'CE3a', category: 'services', name: 'Distributeur de billets', meaning: 'Indique la présence d\'un distributeur automatique de billets de banque (DAB).' },
+  { id: 'CE3b', category: 'services', name: 'Toilettes publiques', meaning: 'Présence de toilettes publiques ouvertes au public.' },
+  { id: 'CE4a', category: 'services', name: 'Risque d\'incendie', meaning: 'Indique une zone particulièrement sensible au risque d\'incendie de forêt.' },
+  { id: 'CE12', category: 'services', name: 'Station de gonflage', meaning: 'Indique la présence d\'un point de gonflage gratuit pour pneumatiques.' },
+  { id: 'CE14', category: 'services', name: 'Camping pour tentes', meaning: 'Terrain de camping aménagé pour les tentes.' },
+  { id: 'CE15a', category: 'services', name: 'Camping pour caravanes', meaning: 'Terrain de camping et de stationnement pour caravanes et camping-cars.' },
+  { id: 'CE16', category: 'services', name: 'Restaurant', meaning: 'Présence d\'un restaurant ou lieu de restauration.' },
+  { id: 'CE18', category: 'services', name: 'Station-service / Recharge', meaning: 'Poste de distribution de carburant et de recharge de véhicules électriques.' },
+  { id: 'CE22', category: 'services', name: 'Accès handicapés', meaning: 'Installations et services accessibles aux personnes à mobilité réduite (PMR).' },
+  { id: 'CE23', category: 'services', name: 'Aire de covoiturage', meaning: 'Lieu aménagé spécifiquement pour le rendez-vous des usagers pratiquant le covoiturage.' },
 ];
 
 const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
@@ -150,7 +186,7 @@ const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
   'B3a': { name: 'Обгон грузовым автомобилям запрещен', meaning: 'Запрещается обгон грузовикам массой более 3,5т.' },
   'B4': { name: 'Таможня', meaning: 'Обязательная остановка у таможенного поста.' },
   'B5a': { name: 'Жандармерия', meaning: 'Обязательная остановка у контрольного поста Жандармерии.' },
-  'B5b': { name: 'Полиция', meaning: 'Обязательная остановка у контрольного поста Полиции.' },
+  'B5b': { name: 'Полиция', meaning: 'Обязательная остановка у контрольного поста .полиции.' },
   'B5c': { name: 'Плата за проезд (Пеаж)', meaning: 'Обязательная остановка для оплаты дорожной пошлины на автомагистрали.' },
   'B6a1': { name: 'Стоянка запрещена', meaning: 'Стоянка запрещена от знака до следующего перекрестка.' },
   'B6a2': { name: 'Стоянка запрещена по нечетным числам (1-15)', meaning: 'Стоянка запрещена с 1 по 15 число каждого месяца.' },
@@ -161,9 +197,9 @@ const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
   'B9a': { name: 'Движение пешеходов запрещено', meaning: 'Движение пешеходов по этому участку запрещено.' },
   'B9b': { name: 'Движение велосипедов запрещено', meaning: 'Запрещено движение велосипедов.' },
   'B9g': { name: 'Движение автобусов запрещено', meaning: 'Запрещено движение автобусов.' },
-  'B9h': { name: 'Движение мопедов запрещено', meaning: 'Запрещено движение мопедов и скутеров до 50 куб.см.' },
+  'B9h': { name: 'Движение мопедов запрещено', meaning: 'Движение мопедов и скутеров до 50 куб.см.' },
   'B11': { name: 'Ограничение высоты 3,5м', meaning: 'Запрещен проезд ТС выше 3,5 метров.' },
-  'B12': { name: 'Ограничение ширины 2,5м', meaning: 'Запрещен проезд ТС шире 2,5 метров.' },
+  'B12': { name: 'Ограничение ширины 2,5m', meaning: 'Запрещен проезд ТС шире 2,5 метров.' },
   'B13': { name: 'Ограничение массы 5,5т', meaning: 'Запрещен проезд ТС массой более 5,5 тонн.' },
   'B14_30': { name: 'Ограничение скорости 30', meaning: 'Максимально разрешенная скорость: 30 км/ч.' },
   'B14_50': { name: 'Ограничение скорости 50', meaning: 'Максимально разрешенная скорость: 50 км/ч.' },
@@ -173,25 +209,46 @@ const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
   'B31': { name: 'Конец всех ограничений', meaning: 'Конец действия всех ранее установленных знаками ограничений.' },
   'B33': { name: 'Конец зоны запрещения обгона', meaning: 'Разрешается обгон при соблюдении безопасности.' },
   'B34_50': { name: 'Конец ограничения скорости 50', meaning: 'Конец действия ограничения скорости 50 км/ч.' },
-  'B34_80': { name: 'Конец ограничения скорости 80', meaning: 'Конец действия ограничения скорости 80 км/ч.' },
+  'B34_80': { name: 'Конец ограничения скорости 80', meaning: 'Конец действия ограничения скорости 80 km/h.' },
 
   'B21-1': { name: 'Обязательный поворот направо', meaning: 'На перекрестке обязателен поворот направо.' },
   'B21-2': { name: 'Обязательный поворот налево', meaning: 'На перекрестке обязателен поворот налево.' },
   'B21b': { name: 'Обязательный объезд препятствия', meaning: 'Обязательный объезд препятствия справа.' },
+  'B21c1': { name: 'Обязательное направление: прямо', meaning: 'Обязательное движение прямо на следующем перекрестке.' },
+  'B21c2': { name: 'Обязательное направление: направо', meaning: 'Обязательный поворот направо на следующем перекрестке.' },
+  'B21d1': { name: 'Обязательное направление: налево/направо', meaning: 'Обязательный поворот налево или направо на следующем перекрестке.' },
+  'B21e': { name: 'Обязательное направление: прямо/направо', meaning: 'Обязательное движение прямо или направо на следующем перекрестке.' },
   'B22a': { name: 'Велосипедная дорожка', meaning: 'Дорожка, предназначенная исключительно для велосипедистов.' },
+  'B22b': { name: 'Обязательная дорожка для пешеходов', meaning: 'Дорожка, предназначенная исключительно для движения пешеходов.' },
+  'B22c': { name: 'Обязательная дорожка для всадников', meaning: 'Дорожка, предназначенная исключительно для наездников на лошадях.' },
   'B25': { name: 'Ограничение минимальной скорости', meaning: 'Минимальная скорость движения 30 км/ч.' },
+  'B26': { name: 'Цепи противоскольжения обязательны', meaning: 'Обязательное использование цепей противоскольжения как минимум на двух ведущих колесах.' },
   'B27a': { name: 'Полоса для автобусов', meaning: 'Полоса движения, предназначенная только для общественного транспорта.' },
-  'B29': { name: 'Конец велосипедной дорожки', meaning: 'Конец дорожки для велосипедистов.' },
+  'B27b': { name: 'Полоса для трамвая', meaning: 'Полоса движения, предназначенная только для трамваев.' },
+  'B29': { name: 'Обязательное включение фар', meaning: 'Обязательное включение ближнего света фар (например, при въезде в тоннель).' },
+  'B45a': { name: 'Конец обязательного включения фар', meaning: 'Указывает на конец зоны обязательного включения ближнего света фар.' },
 
   'C1a': { name: 'Парковка', meaning: 'Место, предназначенное для стоянки автомобилей.' },
-  'C4a': { name: 'Рекомендуемая скорость', meaning: 'Рекомендуется двигаться со скоростью 70 км/ч.' },
+  'C1b': { name: 'Платная парковка', meaning: 'Зона платной парковки, регулируемая паркоматом.' },
+  'C1c': { name: 'Парковка с синей зоной', meaning: 'Бесплатная парковка с ограничением по времени (требуется парковочный диск).' },
+  'C4a': { name: 'Рекомендуемая скорость', meaning: 'Рекомендуется двигаться со скоростью 50 км/ч.' },
+  'C4b_50': { name: 'Конец рекомендуемой скорости', meaning: 'Указывает на конец рекомендуемой скорости 50 км/ч.' },
+  'C8': { name: 'Больница', meaning: 'Близость лечебного учреждения. Избегайте лишнего шума.' },
   'C12': { name: 'Одностороннее движение', meaning: 'Движение по дороге с односторонним движением.' },
+  'C13a': { name: 'Тупик', meaning: 'Указывает на дорогу без сквозного проезда для автомобилей.' },
+  'C13c': { name: 'Тупик с проходом для пешеходов/велосипедов', meaning: 'Тупик для автомобилей, но с проходом для пешеходов и проездом для велосипедов.' },
   'C20a': { name: 'Пешеходный переход', meaning: 'Указывает точное расположение пешеходного перехода.' },
   'C50': { name: 'Пешеходная зона', meaning: 'Вход в пешеходную зону.' },
   'C107': { name: 'Дорога для автомобилей', meaning: 'Начало скоростной дороги для автомобилей.' },
   'C207': { name: 'Автомагистраль', meaning: 'Начало участка автомагистрали.' },
   'C107_end': { name: 'Конец дороги для автомобилей', meaning: 'Конец действия скоростной дороги.' },
   'C207_end': { name: 'Конец автомагистрали', meaning: 'Конец действия автомагистрали.' },
+  'C111': { name: 'Въезд в тоннель', meaning: 'Начало участка дороги в тоннеле. Обязательно включение фар.' },
+  'C112': { name: 'Выезд из тоннеля', meaning: 'Конец проезда по тоннелю.' },
+  'C115': { name: 'Начало зеленой зоны', meaning: 'Начало дорожки для пешеходов и велосипедистов.' },
+  'C116': { name: 'Конец зеленой зоны', meaning: 'Конец действия дорожки для пешеходов и велосипедистов.' },
+  'C24a': { name: 'Начало жилой зоны', meaning: 'Жилая зона со скоростью до 20 км/ч. Пешеходы имеют приоритет.' },
+  'C24b': { name: 'Конец жилой зоны', meaning: 'Конец действия жилой зоны.' },
 
   'AB4': { name: 'Стоп', meaning: 'Обязательная полная остановка у стоп-линии или края перекрестка.' },
   'AB3a': { name: 'Уступите дорогу', meaning: 'Уступите дорогу транспортным средствам на пересекаемой дороге.' },
@@ -201,6 +258,20 @@ const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
   'AB7': { name: 'Конец главной дороги', meaning: 'Конец преимущества проезда перекрестков.' },
   'B15': { name: 'Преимущество встречного движения', meaning: 'Необходимо уступить дорогу встречным транспортным средствам.' },
   'C18': { name: 'Преимущество перед встречным движением', meaning: 'Вы имеете преимущество проезда узкого участка.' },
+
+  'CE1': { name: 'Пункт первой помощи', meaning: 'Указывает на наличие пункта первой медицинской помощи.' },
+  'CE2a': { name: 'Экстренный вызов (SOS)', meaning: 'Пункт экстренной связи, подключенный напрямую к спасательным службам.' },
+  'CE2b': { name: 'Таксофон', meaning: 'Наличие общественного телефона-автомата.' },
+  'CE3a': { name: 'Банкомат', meaning: 'Наличие банкомата для снятия наличных денег.' },
+  'CE3b': { name: 'Общественные туалеты', meaning: 'Наличие общественных туалетов, открытых для всех.' },
+  'CE4a': { name: 'Пожароопасность', meaning: 'Зона с повышенным риском возникновения лесных пожаров.' },
+  'CE12': { name: 'Подкачка шин', meaning: 'Бесплатный пункт подкачки автомобильных шин.' },
+  'CE14': { name: 'Кемпинг для палаток', meaning: 'Место, предназначенное для установки палаток.' },
+  'CE15a': { name: 'Кемпинг для автодомов', meaning: 'Место для стоянки и кемпинга автодомов и жилых прицепов.' },
+  'CE16': { name: 'Ресторан', meaning: 'Наличие ресторана или кафе.' },
+  'CE18': { name: 'Заправка / Зарядка электромобилей', meaning: 'Заправочная станция и пункт зарядки электрических транспортных средств.' },
+  'CE22': { name: 'Доступ для инвалидов', meaning: 'Услуги и объекты, адаптированные для лиц с ограниченными физическими возможностями.' },
+  'CE23': { name: 'Зона карпулинга', meaning: 'Специально оборудованное место встречи участников совместных поездок.' },
 };
 
 const getSignSvgUrl = (id: string) => {
@@ -274,21 +345,42 @@ const getSignSvgUrl = (id: string) => {
     "B21-1": "France_road_sign_B21-1.svg",
     "B21-2": "France_road_sign_B21-2.svg",
     "B21b": "France_road_sign_B21b.svg",
+    "B21c1": "France_road_sign_B21c1.svg",
+    "B21c2": "France_road_sign_B21c2.svg",
+    "B21d1": "France_road_sign_B21d1.svg",
+    "B21e": "France_road_sign_B21e.svg",
     "B22a": "France_road_sign_B22a.svg",
+    "B22b": "France_road_sign_B22b.svg",
+    "B22c": "France_road_sign_B22c.svg",
     "B25": "France_road_sign_B25_%2830%29.svg",
+    "B26": "France_road_sign_B26.svg",
     "B27a": "France_road_sign_B27a.svg",
+    "B27b": "France_road_sign_B27b.svg",
     "B29": "France_road_sign_B29.svg",
+    "B45a": "France_road_sign_B45a.svg",
     
     // Indications
     "C1a": "France_road_sign_C1a.svg",
+    "C1b": "France_road_sign_C1b.svg",
+    "C1c": "France_road_sign_C1c.svg",
     "C4a": "France_road_sign_C4a_%2850%29.svg",
+    "C4b_50": "France_road_sign_C4b_%2850%29.svg",
+    "C8": "France_road_sign_C8.svg",
     "C12": "France_road_sign_C12.svg",
+    "C13a": "France_road_sign_C13a.svg",
+    "C13c": "France_road_sign_C13c.svg",
     "C20a": "France_road_sign_C20a.svg",
     "C50": "France_road_sign_C50.svg",
     "C107": "France_road_sign_C107.svg",
     "C207": "France_road_sign_C207.svg",
     "C107_end": "France_road_sign_C108.svg",
     "C207_end": "France_road_sign_C208.svg",
+    "C111": "France_road_sign_C111.svg",
+    "C112": "France_road_sign_C112.svg",
+    "C115": "France_road_sign_C115.svg",
+    "C116": "France_road_sign_C116.svg",
+    "C24a": "France_road_sign_C24a.svg",
+    "C24b": "France_road_sign_C24b.svg",
     
     // Priorités
     "AB1": "France_road_sign_AB1.svg",
@@ -298,7 +390,22 @@ const getSignSvgUrl = (id: string) => {
     "AB6": "France_road_sign_AB6.svg",
     "AB7": "France_road_sign_AB7.svg",
     "B15": "France_road_sign_B15.svg",
-    "C18": "France_road_sign_C18.svg"
+    "C18": "France_road_sign_C18.svg",
+
+    // Services
+    "CE1": "France_road_sign_CE1.svg",
+    "CE2a": "France_road_sign_CE2a.svg",
+    "CE2b": "France_road_sign_CE2b.svg",
+    "CE3a": "France_road_sign_CE3a.svg",
+    "CE3b": "France_road_sign_CE3b.svg",
+    "CE4a": "France_road_sign_CE4a.svg",
+    "CE12": "France_road_sign_CE12.svg",
+    "CE14": "France_road_sign_CE14.svg",
+    "CE15a": "France_road_sign_CE15a.svg",
+    "CE16": "France_road_sign_CE16.svg",
+    "CE18": "France_road_sign_CE18.svg",
+    "CE22": "France_road_sign_CE22.svg",
+    "CE23": "France_road_sign_CE23.svg",
   };
   
   const filename = mapping[id] || `France_road_sign_${id}.svg`;
@@ -364,7 +471,7 @@ export default function SignLexicon() {
           </div>
 
           <div className="flex flex-wrap gap-2 justify-center">
-            {(['all', 'danger', 'interdiction', 'obligation', 'indication', 'priorite'] as const).map((cat) => (
+            {(['all', 'danger', 'interdiction', 'obligation', 'indication', 'priorite', 'services'] as const).map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -380,6 +487,7 @@ export default function SignLexicon() {
                 {cat === 'obligation' && (language === 'ru' ? 'Предписание' : 'Obligation')}
                 {cat === 'indication' && (language === 'ru' ? 'Указание' : 'Indication')}
                 {cat === 'priorite' && (language === 'ru' ? 'Приоритет' : 'Priorité')}
+                {cat === 'services' && (language === 'ru' ? 'Сервис' : 'Services')}
               </button>
             ))}
           </div>
