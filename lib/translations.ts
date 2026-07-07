@@ -572,24 +572,144 @@ export const translations: Record<Language | string, any> = {
       priorites: {
         badge: "Module 2",
         label: "Les priorités",
-        title: "Les priorités",
-        description: "Comprendre qui a la priorité pour éviter les accidents aux intersections.",
+        title: "Les priorités & Intersections",
+        description: "Maîtriser les règles de priorité est vital : 30% des accidents mortels surviennent aux intersections. Apprenez à décoder chaque situation.",
         footer_title: "Maîtrisez les priorités",
         footer_desc: "Vous avez complété la base des priorités. Prêt pour la suite ?",
         btn_test: "Quiz Priorités",
         sections: [
           {
-            id: "objectif",
-            title: "🎯 Objectif",
-            desc: "Comprendre qui a la priorité pour éviter les accidents aux intersections.",
+            id: "prio_droite",
+            title: "1. La Priorité à Droite — La règle de base",
+            desc: "En l'ABSENCE de tout panneau ou marquage, la règle par défaut en France est la priorité à droite. Tout véhicule venant de votre droite est prioritaire sur vous, quelle que soit la taille de la rue.",
             rules: [
-              { title: "Définition", text: "La priorité détermine quel usager doit passer en premier." }
+              { title: "Principe fondamental", text: "Sans signalisation : le véhicule venant de votre DROITE a toujours la priorité." },
+              { title: "Où s'applique-t-elle ?", text: "Dans toutes les rues sans panneau, y compris les petites voies qui semblent secondaires." },
+              { title: "Exception importante", text: "La priorité à droite est ANNULÉE si un panneau 'route prioritaire' (jaune et noir) ou 'cédez le passage' est présent." },
+              { title: "Piège de l'examen", text: "Une grande avenue sans panneau est soumise à la priorité à droite. La taille de la route ne change rien." }
             ],
-            examples: ["Sécurité", "Règle commune"],
-            color: "border-blue-500",
-            bgBadge: "bg-blue-500 text-white",
-            bgLight: "bg-blue-50"
+            examples: ["Deux rues se croisent sans panneau : vous venez de gauche, l'autre arrive de droite → vous cédez", "En ville, quartier résidentiel sans marquage : toujours regarder à droite avant de traverser", "Sur une voie rapide avec panneau 'route prioritaire' : les véhicules des rues latérales vous cèdent le passage"],
+            color: "border-yellow-500",
+            bgBadge: "bg-yellow-500 text-white",
+            bgLight: "bg-yellow-50"
           },
+          {
+            id: "stop",
+            title: "2. Le Panneau STOP — Arrêt absolu",
+            desc: "Le panneau STOP (octogone rouge, lettres blanches) impose un ARRÊT COMPLET ET TOTAL. Ce n'est pas un 'ralentissez', c'est un arrêt physique jusqu'à l'immobilisation totale du véhicule.",
+            rules: [
+              { title: "Obligation légale", text: "Marquer un arrêt complet, même si la route semble totalement dégagée. L'arrêt roue immobile est obligatoire." },
+              { title: "Ligne d'arrêt", text: "S'arrêter AVANT la ligne blanche au sol. Si aucune ligne : s'arrêter avant le panneau." },
+              { title: "Après l'arrêt", text: "Vérifier la visibilité dans les deux sens PUIS céder le passage à tous les usagers avant de repartir." },
+              { title: "Sanction", text: "Ne pas marquer l'arrêt = contravention de 4e classe : 135 € d'amende + retrait de 4 points sur le permis." }
+            ],
+            examples: ["Même à 3h du matin avec route vide : arrêt obligatoire", "Artère commerçante animée : arrêt + attendre que la voie soit libre", "Glissement lent sans immobilisation totale = infraction au STOP"],
+            color: "border-red-600",
+            bgBadge: "bg-red-600 text-white",
+            bgLight: "bg-red-50"
+          },
+          {
+            id: "cedez",
+            title: "3. Cédez le Passage — Ralentir et laisser passer",
+            desc: "Le panneau 'Cédez le passage' (triangle pointe en bas, bord rouge) impose de CÉDER la priorité sans nécessairement s'arrêter — sauf si un véhicule arrive.",
+            rules: [
+              { title: "Obligation", text: "Ralentir suffisamment pour pouvoir s'arrêter si un véhicule arrive. Pas d'arrêt obligatoire si la voie est libre." },
+              { title: "Différence avec STOP", text: "STOP = arrêt dans tous les cas. Cédez le passage = arrêt seulement si nécessaire." },
+              { title: "Ligne au sol", text: "Ligne blanche discontinue (tirets) au sol devant le panneau. Ne pas la franchir si un véhicule approche." },
+              { title: "Rond-point", text: "À l'entrée d'un carrefour giratoire avec panneau 'cédez le passage' : priorité aux véhicules DÉJÀ engagés sur l'anneau." }
+            ],
+            examples: ["Entrée sur une voie rapide (bretelle) : cédez le passage aux véhicules déjà sur la route", "Rond-point : vous entrez, un véhicule circule sur l'anneau → vous cédez", "Si la voie est libre au cédez le passage : pas d'arrêt obligatoire, vous passez"],
+            color: "border-orange-500",
+            bgBadge: "bg-orange-500 text-white",
+            bgLight: "bg-orange-50"
+          },
+          {
+            id: "route_prioritaire",
+            title: "4. Route Prioritaire — Vous avez l'avantage",
+            desc: "Le panneau 'Route Prioritaire' (jaune et noir, en losange) signifie que VOUS avez la priorité sur tous les véhicules venant des rues latérales. La priorité à droite est ANNULÉE sur votre axe.",
+            rules: [
+              { title: "Validité", text: "Vous êtes prioritaire à toutes les intersections jusqu'au panneau de fin de priorité (losange barré)." },
+              { title: "Les autres usagers", text: "Les véhicules venant des rues latérales ont un panneau STOP ou Cédez le passage face à vous." },
+              { title: "Ne pas en abuser", text: "Être prioritaire ne signifie pas passer à toute vitesse. Si quelqu'un ne respecte pas la priorité, évitez l'accident." },
+              { title: "Fin de priorité", text: "Le panneau losange barré ou un panneau STOP face à vous signale la fin de votre priorité." }
+            ],
+            examples: ["Nationale ou départementale balisée : vous avez la priorité aux carrefours", "En ville sur axe prioritaire : les rues perpendiculaires sont équipées de STOP ou Cédez le passage"],
+            color: "border-green-600",
+            bgBadge: "bg-green-600 text-white",
+            bgLight: "bg-green-50"
+          },
+          {
+            id: "rond_point",
+            title: "5. Le Rond-Point — Priorité aux véhicules engagés",
+            desc: "En France, TOUS les ronds-points modernes sont équipés d'un panneau 'Cédez le passage' à l'entrée. La règle est donc : priorité aux véhicules déjà sur l'anneau, PAS à ceux qui entrent.",
+            rules: [
+              { title: "Règle principale", text: "Priorité aux véhicules circulant DÉJÀ sur l'anneau. Vous devez céder en entrant." },
+              { title: "Exception historique", text: "Les très anciens ronds-points (avant 1984, sans panneau) appliquaient la priorité à droite. Ils sont rarissimes." },
+              { title: "Clignotant de sortie", text: "Mettre le clignotant DROIT avant de quitter l'anneau pour signaler sa sortie aux autres." },
+              { title: "Placement", text: "Pour tourner à droite : rester à droite sur l'anneau. Pour aller tout droit ou à gauche : voie centrale ou gauche." }
+            ],
+            examples: ["Vous entrez dans le rond-point : une voiture circule déjà sur l'anneau → vous cédez obligatoirement", "Clignotant droit avant la dernière sortie avant la vôtre"],
+            color: "border-purple-600",
+            bgBadge: "bg-purple-600 text-white",
+            bgLight: "bg-purple-50"
+          },
+          {
+            id: "pietons_tram",
+            title: "6. Piétons & Tramways — Priorités absolues",
+            desc: "Certains usagers ont une priorité ABSOLUE que rien ne peut remettre en question.",
+            rules: [
+              { title: "Piéton engagé", text: "Un piéton qui traverse ou manifeste l'intention de traverser sur un passage piéton = PRIORITÉ ABSOLUE. Arrêt obligatoire." },
+              { title: "Piéton hors passage", text: "Même hors passage piéton, si un piéton est engagé, vous devez lui céder le passage." },
+              { title: "Tramway", text: "Le tramway est TOUJOURS prioritaire sur tous les autres usagers en raison de sa masse et de son incapacité à dévier." },
+              { title: "Véhicules d'urgence", text: "Gyrophare et sirène = priorité absolue. Se rabattre à droite et laisser le passage immédiatement." }
+            ],
+            examples: ["Passage piéton : une personne attend sur le trottoir → s'arrêter et lui faire signe de traverser", "Tramway arrivant en ville → ne jamais lui couper la route même si vous semblez avoir la priorité"],
+            color: "border-teal-500",
+            bgBadge: "bg-teal-500 text-white",
+            bgLight: "bg-teal-50"
+          },
+          {
+            id: "hierarchie",
+            title: "7. Hiérarchie des Règles de Priorité",
+            desc: "Quand plusieurs règles s'appliquent simultanément, voici l'ordre de priorité à respecter :",
+            rules: [
+              { title: "Niveau 1 — Agent de police", text: "Les gestes d'un policier ou d'un agent de circulation PRIMENT sur tous les panneaux et feux. Toujours obéir." },
+              { title: "Niveau 2 — Feux tricolores", text: "Les feux rouges, oranges et verts priment sur les panneaux fixes." },
+              { title: "Niveau 3 — Panneaux", text: "Les panneaux routiers (STOP, Cédez le passage, Route prioritaire) s'appliquent hors présence de feux." },
+              { title: "Niveau 4 — Marquage au sol", text: "Lignes blanches, flèches, etc. En l'absence de tout autre signal." },
+              { title: "Niveau 5 — Priorité à droite", text: "La règle par défaut quand aucun des niveaux précédents n'est présent." }
+            ],
+            examples: ["Agent fait signe de passer malgré feu rouge → vous obéissez à l'agent", "Panneau STOP devant un feu vert → vous devez quand même marquer l'arrêt"],
+            color: "border-indigo-600",
+            bgBadge: "bg-indigo-600 text-white",
+            bgLight: "bg-indigo-50"
+          }
+        ],
+        quiz_section: {
+          title: "🧪 Questions type examen",
+          intro: "Testez vos connaissances sur les priorités.",
+          questions: [
+            {
+              question: "Sans panneau, qui est prioritaire ?",
+              options: ["Gauche", "Droite", "Moi", "Personne"],
+              answer: 1,
+              explanation: "Sans signalisation, la règle par défaut est la priorité à droite."
+            },
+            {
+              question: "Au STOP :",
+              options: ["Je ralentis", "Je passe", "Je m'arrête totalement", "J'accélère"],
+              answer: 2,
+              explanation: "Le panneau STOP oblige formellement à marquer un arrêt COMPLET jusqu'à l'immobilisation totale des roues, sous peine de 135€ et -4 points."
+            },
+            {
+              question: "Dans un rond-point moderne :",
+              options: ["Je suis prioritaire", "Priorité à droite", "Priorité à ceux déjà engagés sur l'anneau", "Aucun"],
+              answer: 2,
+              explanation: "Tous les ronds-points modernes sont équipés du panneau 'Cédez le passage' : priorité aux véhicules déjà sur l'anneau."
+            }
+          ]
+        }
+      },
           {
             id: "prio_droite",
             title: "1. Priorité à droite",
@@ -741,135 +861,128 @@ export const translations: Record<Language | string, any> = {
       vitesse: {
         badge: "Module 4",
         label: "La Vitesse",
-        title: "La Vitesse",
-        description: "Adapter sa vitesse pour rouler en sécurité.",
+        title: "Vitesse & Limitations",
+        description: "La vitesse est impliquée dans 1 accident mortel sur 3. Connaître les limites exactes et savoir adapter son allure est une compétence de survie.",
         footer_title: "Maîtrisez la vitesse",
         footer_desc: "Vous avez complété la base de la vitesse. Prêt pour la suite ?",
         btn_test: "Quiz Vitesse",
         sections: [
           {
-            id: "objectif",
-            title: "🎯 Objectif",
-            desc: "Adapter sa vitesse pour rouler en sécurité.",
+            id: "tableau_limitations",
+            title: "1. Tableau Complet des Limitations de Vitesse",
+            desc: "Les limitations varient selon le type de route ET les conditions météo. Connaître ce tableau par cœur est indispensable pour l'examen ETG.",
             rules: [
-              { title: "Sécurité", text: "La vitesse détermine le temps de réaction et la force de l'impact." }
+              { title: "Agglomération (toutes conditions)", text: "50 km/h — sauf indication contraire (Zone 30, Zone 20, Zone de rencontre 20 km/h)." },
+              { title: "Route bidirectionnelle (temps sec)", text: "80 km/h — sur routes à double sens sans séparateur central." },
+              { title: "Route à chaussées séparées (temps sec)", text: "110 km/h — routes à 2×2 voies séparées par un terre-plein." },
+              { title: "Autoroute (temps sec)", text: "130 km/h — limite maximale absolue." }
             ],
-            examples: ["Survie", "Anticipation"],
-            color: "border-blue-500",
-            bgBadge: "bg-blue-500 text-white",
-            bgLight: "bg-blue-50"
-          },
-          {
-            id: "limitations",
-            title: "1. Limitations générales",
-            desc: "Règles par défaut.",
-            imageUrl: "/images/cours/limitation_vitesse.png",
-            rules: [
-              { title: "Ville", text: "50 km/h" },
-              { title: "Route", text: "80 km/h" },
-              { title: "Autoroute", text: "130 km/h" }
+            examples: [
+              "Permis probatoire (3 ans) : 80 km/h sur route, 100 km/h sur voie rapide, 110 km/h sur autoroute",
+              "Par temps de pluie : 50 km/h agglomération (inchangé), 80 km/h route, 100 km/h voie rapide, 110 km/h autoroute",
+              "Visibilité inférieure à 50 m (brouillard dense) : 50 km/h PARTOUT sur tout le réseau"
             ],
-            examples: ["Panneau 50", "Panneau 130"],
             color: "border-yellow-500",
             bgBadge: "bg-yellow-500 text-white",
             bgLight: "bg-yellow-50"
           },
           {
-            id: "adapter",
-            title: "2. Adapter la vitesse",
-            desc: "La limite légale n'est pas une obligation d'allure.",
+            id: "energie_cinetique",
+            title: "2. L'Énergie Cinétique — La physique qui tue",
+            desc: "L'énergie cinétique (Ec = ½mv²) augmente avec le CARRÉ de la vitesse. Doubler sa vitesse ne double pas le danger — il le multiplie par 4. C'est la loi de la physique.",
             rules: [
-              { title: "Météo", text: "Pluie, neige, brouillard." },
-              { title: "Contexte", text: "Trafic dense, visibilité réduite." }
+              { title: "Formule à retenir", text: "Si la vitesse est multipliée par 2 → énergie cinétique multipliée par 4. Si × 3 → énergie × 9." },
+              { title: "Distance de freinage à 50 km/h", text: "~25 mètres au total (15m de réaction + 10m de freinage) sur route sèche." },
+              { title: "Distance de freinage à 90 km/h", text: "~80 mètres au total (27m de réaction + 53m de freinage) sur route sèche." },
+              { title: "Distance de freinage à 130 km/h", text: "~150 mètres au total (39m de réaction + 111m de freinage) sur route sèche." }
             ],
-            examples: ["Brouillard = 50 km/h partout"],
+            examples: [
+              "Sur route mouillée : distance de freinage DOUBLÉE (adhérence divisée par 2)",
+              "Astuce calcul réaction : chiffre des dizaines × 3 = distance de réaction en mètres (ex : 90 km/h → 9×3 = 27m)",
+              "Sur route verglacée : distance de freinage multipliée par 4 à 7 selon la température"
+            ],
+            color: "border-red-500",
+            bgBadge: "bg-red-500 text-white",
+            bgLight: "bg-red-50"
+          },
+          {
+            id: "adapter_vitesse",
+            title: "3. Adapter sa Vitesse — Les circonstances qui imposent de ralentir",
+            desc: "La limite légale est un PLAFOND, jamais une obligation d'allure. Le conducteur doit TOUJOURS adapter sa vitesse aux conditions réelles, même en deçà du panneau.",
+            rules: [
+              { title: "Météo dégradée", text: "Pluie, neige, verglas, brouillard → réduire obligatoirement. En dessous de 50m de visibilité : 50 km/h partout." },
+              { title: "Trafic dense", text: "Embouteillage, véhicule lent, travaux : adapter l'allure et augmenter les distances." },
+              { title: "Environnement scolaire", text: "Abords d'écoles, zones 30, parcs : enfants imprévisibles, réflexes limités." },
+              { title: "Nuit ou faible visibilité", text: "Réduire la vitesse pour s'arrêter dans le champ de vision des phares." }
+            ],
+            examples: [
+              "Autoroute sous pluie : 130 → 110 km/h obligatoirement",
+              "Brouillard épais (visibilité 30m) : 50 km/h même sur autoroute",
+              "Zone 30 en ville : limite à 30 km/h, priorité aux piétons sur les trottoirs"
+            ],
             color: "border-orange-500",
             bgBadge: "bg-orange-500 text-white",
             bgLight: "bg-orange-50"
           },
           {
-            id: "distance_secu",
-            title: "3. Distance de sécurité",
-            desc: "Prévoir l'arrêt.",
-            imageUrl: "/images/cours/distance_securite.png",
+            id: "distance_securite",
+            title: "4. La Distance de Sécurité — Règle des 2 secondes",
+            desc: "La distance de sécurité est l'espace minimum à maintenir avec le véhicule devant vous pour pouvoir freiner si il s'arrête brusquement. En France, la règle légale est de 2 secondes minimum.",
             rules: [
-              { title: "Règle", text: "2 secondes d'intervalle minimum." }
+              { title: "Règle des 2 secondes", text: "Choisissez un point fixe (poteau, marquage). Le véhicule devant le passe : comptez 'un-mille-un, un-mille-deux'. Vous devez passer ce point APRÈS." },
+              { title: "Sur autoroute", text: "Repère visuel = 2 traits de la bande d'arrêt d'urgence (BAU), soit environ 90 mètres à 130 km/h." },
+              { title: "Pluie ou mauvais temps", text: "Doubler la distance : passer à 4 secondes minimum, car la distance de freinage double." },
+              { title: "Infraction", text: "Distance insuffisante (moins de 2 secondes) = contravention + retrait de points." }
             ],
-            examples: ["2 traits sur l'autoroute", "Compter 'un crocodile, deux crocodiles'"],
-            color: "border-red-600",
-            bgBadge: "bg-red-600 text-white",
-            bgLight: "bg-red-50"
+            examples: [
+              "À 130 km/h, 2 secondes = environ 72 mètres → l'équivalent de 2 traits de BAU",
+              "En cas de freinage brusque du véhicule devant : 1 sec de réaction + distance de freinage = raison des 2 sec"
+            ],
+            color: "border-blue-500",
+            bgBadge: "bg-blue-500 text-white",
+            bgLight: "bg-blue-50"
           },
           {
-            id: "erreurs",
-            title: "❌ Erreurs fréquentes",
-            desc: "Fautes lourdes de sens.",
+            id: "sanctions_vitesse",
+            title: "5. Sanctions pour Excès de Vitesse",
+            desc: "Les radars sont actifs 24h/24. Les sanctions sont immédiates et proportionnelles à l'écart constaté.",
             rules: [
-              { title: "Excès", text: "Rouler trop vite et ne pas adapter son allure aux conditions." }
+              { title: "Moins de 20 km/h de dépassement", text: "Contravention : 68 € (minoré) à 135 € (majoré) + 1 point retiré." },
+              { title: "De 20 à 30 km/h de dépassement", text: "135 € + 2 points retirés." },
+              { title: "De 30 à 40 km/h de dépassement", text: "135 € + 3 points retirés + suspension possible." },
+              { title: "De 40 à 50 km/h de dépassement", text: "135 € + 4 points retirés + suspension jusqu'à 3 ans." },
+              { title: "Plus de 50 km/h de dépassement", text: "DÉLIT : jusqu'à 1500 € + 6 points retirés + suspension jusqu'à 3 ans + immobilisation du véhicule." }
             ],
-            examples: ["Coller la voiture de devant (distances)"],
-            color: "border-rose-600",
-            bgBadge: "bg-rose-600 text-white",
-            bgLight: "bg-rose-50"
-          },
-          {
-            id: "cas_concret",
-            title: "🚗 Cas concret",
-            desc: "La route est mouillée :",
-            rules: [
-              { title: "Action", text: "Pluie = ralentir (ex: 130 -> 110)." }
+            examples: [
+              "Radar à 90 km/h : vous roulez à 110 km/h → 20 km/h de dépassement = 135€ + 2 points",
+              "Permis probatoire : 6 points au départ. Un excès de 50+ km/h = permis invalidé en une fois"
             ],
-            examples: ["Route inondée"],
-            color: "border-cyan-600",
-            bgBadge: "bg-cyan-600 text-white",
-            bgLight: "bg-cyan-50"
-          },
-          {
-            id: "astuce",
-            title: "🧠 Astuce",
-            desc: "À garder en tête.",
-            rules: [
-              { title: "Principe", text: "\"Plus vite = plus de danger\"." }
-            ],
-            examples: ["Augmentation exponentielle du freinage"],
-            color: "border-indigo-600",
-            bgBadge: "bg-indigo-600 text-white",
-            bgLight: "bg-indigo-50"
-          },
-          {
-            id: "conclusion",
-            title: "🎯 Conclusion",
-            desc: "Respectez l'énergie cinétique.",
-            rules: [
-              { title: "Maîtrise", text: "La vitesse doit toujours être adaptée." }
-            ],
-            examples: ["La vitesse adaptée sauve des vies"],
-            color: "border-teal-600",
-            bgBadge: "bg-teal-600 text-white",
-            bgLight: "bg-teal-50"
+            color: "border-purple-600",
+            bgBadge: "bg-purple-600 text-white",
+            bgLight: "bg-purple-50"
           }
         ],
         quiz_section: {
           title: "🧪 Questions",
-          intro: "C'est l'heure du quiz concernant la Vitesse.",
+          intro: "Testez vos connaissances sur les vitesses légales et les distances.",
           questions: [
             {
-              question: "En ville :",
-              options: ["30", "50", "80", "100"],
+              question: "En ville, la limitation par défaut est de :",
+              options: ["30 km/h", "50 km/h", "80 km/h", "110 km/h"],
               answer: 1,
-              explanation: "Sauf indications contraires (Zone 30), la limite en agglomération est fixée à 50 km/h."
+              explanation: "Sauf indication contraire (Zone 30, Zone 20), la limite en agglomération est 50 km/h."
             },
             {
-              question: "Distance de sécurité minimum idéale :",
-              options: ["1 sec", "2 sec", "5 sec", "10 sec"],
+              question: "Distance de sécurité minimum recommandée :",
+              options: ["1 seconde", "2 secondes", "5 secondes", "10 secondes"],
               answer: 1,
-              explanation: "Il faut conserver un intervalle d'au moins 2 secondes avec le véhicule qui vous précède."
+              explanation: "La règle des 2 secondes : laisser passer 2 secondes entre le passage du véhicule devant et le vôtre devant un point fixe."
             },
             {
-              question: "Sous la pluie :",
-              options: ["Accélérer", "Ralentir", "Klaxonner", "Doubler"],
-              answer: 1,
-              explanation: "La pluie augmente la distance de freinage et réduit la visibilité. Ralentir est impératif."
+              question: "Sur autoroute par temps de pluie, la vitesse maximum est :",
+              options: ["130 km/h", "120 km/h", "110 km/h", "100 km/h"],
+              answer: 2,
+              explanation: "Par temps de pluie, la limite sur autoroute passe de 130 à 110 km/h."
             }
           ]
         }
@@ -1089,59 +1202,99 @@ export const translations: Record<Language | string, any> = {
         badge: "Module 07",
         label: "Vital & Décisif",
         title: "Sécurité Routière",
-        description: "La différence entre un simple choc matériel et une tragédie repose sur la ceinture, les distances et la vigilance.",
+        description: "La sécurité routière est une science exacte. Chaque chiffre de ce module a été établi par des chercheurs et figure dans les textes officiels. Mémorisez-les.",
         sections: [
           {
             id: "ceinture",
-            title: "1. La Ceinture de Sécurité",
-            desc: "Élément de sécurité passive fondamental.",
+            title: "1. La Ceinture de Sécurité — Obligatoire pour TOUS",
+            desc: "La ceinture de sécurité réduit le risque de décès de 50% en cas d'accident grave. Elle est obligatoire pour TOUS les occupants du véhicule, à l'avant ET à l'arrière, en toutes circonstances.",
             rules: [
-              { title: "Obligation", text: "Obligatoire pour TOUS les occupants, à l'avant comme à l'arrière." },
-              { title: "Responsabilité", text: "Le conducteur est responsable des passagers MINEURS (-18 ans). Amende de 135€ et -3 points." },
-              { title: "Ajustement", text: "À plat, sur l'épaule et l'os du bassin. L'airbag complète, ne remplace pas." },
-              { title: "Grossesse", text: "Obligatoire. Sangle abdominale SOUS l'abdomen." }
+              { title: "Obligation absolue", text: "Tous les passagers, quel que soit leur âge, doivent être attachés. Pas d'exception (sauf dispense médicale)." },
+              { title: "Responsabilité du conducteur", text: "Le conducteur est responsable du port de la ceinture des MINEURS (-18 ans) à bord. Amende 135 € + retrait de 3 points par mineur non attaché." },
+              { title: "Passager majeur non attaché", text: "Un adulte non attaché est verbalisé lui-même : 135 € + retrait de 3 points sur son propre permis." },
+              { title: "Siège enfant obligatoire", text: "Enfant de moins de 10 ans : siège homologué adapté à son poids, à l'arrière de préférence. Dos à la route si moins de 13 kg (environ 18 mois)." }
             ],
             examples: [
-              "Passager majeur non attaché = il paie l'amende lui-même.",
-              "Impact à 50 km/h = projectile d'1,5 tonne sans ceinture."
+              "Impact à 50 km/h sans ceinture : le corps est projeté avec une force équivalente à une chute du 4e étage.",
+              "Airbag seul sans ceinture : l'airbag peut tuer au lieu de protéger (choc violent du sac sur le thorax).",
+              "Grossesse : ceinture obligatoire. Sangle abdominale passée SOUS l'abdomen, sangle thoracique entre les seins."
             ],
             color: "border-rose-500",
             bgBadge: "bg-rose-500 text-white",
             bgLight: "bg-rose-50"
           },
           {
-            id: "distance",
-            title: "2. Les Distances de Sécurité",
-            desc: "Maintenir un intervalle vital avec le véhicule devant.",
+            id: "distance_reaction",
+            title: "2. Temps de Réaction & Distance d'Arrêt",
+            desc: "La distance d'arrêt totale = Distance de réaction + Distance de freinage. Le temps de réaction moyen d'un conducteur VIGILANT est de 1 seconde. Alcool, fatigue ou distracteurs peuvent le doubler ou tripler.",
             rules: [
-              { title: "Règle des 2 secondes", text: "Maintenir au moins 2 secondes d'écart (1s réaction + 1s sécurité)." },
-              { title: "Tunnel", text: "Distance d'urgence via 2 diodes bleues, même à l'arrêt." },
-              { title: "Mauvais temps", text: "Pluie = distance de freinage accrue de 50%. Augmenter les espaces." },
-              { title: "Calcul", text: "Dizaine x 3 = 1 seconde de réaction. x 2 pour la sécurité." }
+              { title: "Distance de réaction — calcul rapide", text: "Chiffre des dizaines de la vitesse × 3 = distance de réaction en mètres. Ex : 90 km/h → 9 × 3 = 27 mètres parcourus avant même d'appuyer sur le frein." },
+              { title: "Distance totale d'arrêt sur sol sec", text: "50 km/h : ~25m total | 90 km/h : ~80m total | 130 km/h : ~150m total." },
+              { title: "Sur sol mouillé", text: "Distance de freinage DOUBLÉE. L'adhérence est réduite de moitié. À 90 km/h : environ 120m au lieu de 80m." },
+              { title: "Énergie cinétique", text: "L'énergie cinétique augmente avec le CARRÉ de la vitesse. Vitesse × 2 → énergie × 4 → distance de freinage × 4." }
             ],
             examples: [
-              "En tunnel, garder 50m d'écart même en cas d'embouteillage."
+              "À 130 km/h, 1 seconde de distraction (SMS) = 36 mètres parcourus en aveugle.",
+              "Avec alcool (0,5 g/L) : temps de réaction peut passer à 1,5-2 sec → distance de réaction doublée.",
+              "Sur verglas : coefficient d'adhérence divisé par 4 à 7 → distance de freinage ×4 à ×7."
             ],
             color: "border-red-600",
             bgBadge: "bg-red-600 text-white",
             bgLight: "bg-red-50"
           },
           {
-            id: "fatigue",
-            title: "3. La Fatigue",
-            desc: "Principale cause de décès sur longs trajets.",
+            id: "vision",
+            title: "3. Le Champ de Vision & les Angles Morts",
+            desc: "La vitesse rétrécit le champ de vision. À grande vitesse, le conducteur ne voit plus que ce qui est devant lui (effet tunnel). Les angles morts sont des zones invisibles depuis le siège du conducteur.",
             rules: [
-              { title: "Signaux", text: "Picotements, nuque raide, gesticulations = arrêt immédiat." },
-              { title: "Faux remèdes", text: "Musique forte, café ou vent n'empêchent pas l'endormissement." },
-              { title: "Solution", text: "Se garer et faire une micro-sieste de 15-20 min." },
-              { title: "Pics de danger", text: "Entre 02h-05h et 13h-15h (post-repas)." }
+              { title: "Champ de vision selon la vitesse", text: "À 30 km/h : vision à 180°. À 100 km/h : vision réduite à ~100°. À 130 km/h : vision réduite à ~30° (vision tunnel prononcée)." },
+              { title: "Angles morts du véhicule", text: "Zones non couvertes par les rétroviseurs, situées en diagonale arrière de chaque côté. Vérification par rotation de la tête obligatoire avant tout changement de voie." },
+              { title: "Angles morts d'un poids lourd", text: "Un camion a des angles morts DEVANT, DERRIÈRE et sur les deux côtés. Ne jamais rester dans ces zones." },
+              { title: "Rétroviseurs", text: "Régler avant de démarrer. Rétroviseur central (lunette arrière) + 2 rétroviseurs latéraux. Vérifier toutes les 5 secondes environ en circulation." }
             ],
             examples: [
-              "4 secondes d'absence à 130 km/h = 140 mètres sans contrôle."
+              "Changement de voie sur autoroute : clignotant → rétro → angle mort (tête) → action. Dans cet ordre.",
+              "Cycliste dans l'angle mort de droite : invisible dans les rétros. Toujours regarder avant d'ouvrir la portière."
+            ],
+            color: "border-pink-500",
+            bgBadge: "bg-pink-500 text-white",
+            bgLight: "bg-pink-50"
+          },
+          {
+            id: "fatigue",
+            title: "4. La Fatigue au Volant — Le tueur invisible",
+            desc: "La somnolence au volant est responsable d'environ 1 accident mortel sur 3 sur autoroute. Contrairement à l'alcool, elle est difficile à prévoir. Les effets sont semblables à 0,5 g/L d'alcool après 20h sans dormir.",
+            rules: [
+              { title: "Signaux d'alerte à reconnaître", text: "Picotements des yeux, paupières lourdes, tête qui tombe, difficulté à maintenir la trajectoire, oubli des derniers kilomètres." },
+              { title: "Faux remèdes (inutiles)", text: "Ouvrir la fenêtre, monter la musique, café : retardent de 30 minutes maximum. Ils ne suppriment pas la fatigue." },
+              { title: "Seule solution efficace", text: "S'arrêter (aire de repos, parking) et dormir 15 à 20 minutes. Une micro-sieste restaure l'efficacité pendant 2 heures." },
+              { title: "Pauses obligatoires recommandées", text: "Au moins 15 minutes de pause toutes les 2 heures de conduite. Conseillé par la sécurité routière française." },
+              { title: "Pics de somnolence", text: "02h00 – 05h00 (nuit profonde) et 13h00 – 15h00 (somnolence post-repas). Éviter de conduire dans ces créneaux si fatigué." }
+            ],
+            examples: [
+              "4 secondes d'absence à 130 km/h = 144 mètres parcourus sans aucun contrôle du véhicule.",
+              "Conducteur après 20h sans sommeil : réflexes équivalents à 0,5 g/L d'alcool dans le sang."
             ],
             color: "border-pink-600",
             bgBadge: "bg-pink-600 text-white",
             bgLight: "bg-pink-50"
+          },
+          {
+            id: "systemes_aide",
+            title: "5. Les Systèmes d'Aide à la Conduite (ABS, ESP, ABS)",
+            desc: "Les aides électroniques réduisent les risques mais ne les suppriment pas. Il faut comprendre leur fonctionnement pour ne pas les contourner.",
+            rules: [
+              { title: "ABS (Anti-Blocage des freins)", text: "Empêche les roues de se bloquer au freinage d'urgence. Permet de DIRIGER tout en freinant fort. À utiliser : appuyer fort et maintenir la pression." },
+              { title: "ESP (Contrôle électronique de la trajectoire)", text: "Détecte et corrige les dérapages en freinant sélectivement les roues. Actif automatiquement. Ne pas désactiver sur routes normales." },
+              { title: "Aide à la conduite ≠ permis de faire n'importe quoi", text: "Ces systèmes ont des limites physiques. Sur verglas ou aquaplaning à haute vitesse, ils ne peuvent rien. La vitesse adaptée reste la meilleure protection." }
+            ],
+            examples: [
+              "ABS : en cas de freinage d'urgence, vous sentez des vibrations dans la pédale → c'est normal, ne relâchez pas.",
+              "Sans ABS, roues bloquées = trajectoire rectiligne impossible. Avec ABS : vous pouvez encore éviter l'obstacle."
+            ],
+            color: "border-blue-600",
+            bgBadge: "bg-blue-600 text-white",
+            bgLight: "bg-blue-50"
           }
         ],
         quiz_section: {
@@ -1174,57 +1327,81 @@ export const translations: Record<Language | string, any> = {
       alcool: {
         badge: "Module 08",
         label: "Zéro Tolérance",
-        title: "Alcool, Drogues et Conduite",
-        description: "L'alcool est le premier facteur destructeur sur la route. Maîtrisez les taux légaux.",
+        title: "Alcool, Drogues & Médicaments",
+        description: "L'alcool tue 1 personne sur la route toutes les 8 heures en France. Ce module contient les données légales exactes à connaître pour votre sécurité ET pour réussir l'ETG.",
         sections: [
           {
-            id: "limites",
-            title: "1. Taux et Limites Légales",
-            desc: "La justice est extrêmement ferme sur l'altération physique.",
+            id: "taux_legaux",
+            title: "1. Les Taux Légaux — Le tableau à connaître par cœur",
+            desc: "Les taux d'alcoolémie autorisés dépendent du type de permis. Ces chiffres sont des données légales issues du Code de la route (Article R234-1). Source : securite-routiere.gouv.fr & service-public.fr",
             rules: [
-              { title: "Novice (Probatoire)", text: "Limite 0,20 g/L de sang (soit ZÉRO VERRE). Un verre suffit à dépasser." },
-              { title: "Expérimenté", text: "Limite 0,50 g/L de sang (~2 verres dose bar)." },
-              { title: "Stupéfiants", text: "Tolérance ZÉRO. La moindre trace est un délit." },
-              { title: "Élimination", text: "0,10 à 0,15 g/h. Rien n'accélère le processus." }
+              { title: "Conducteur expérimenté (permis classique)", text: "Seuil légal : 0,50 g/L de sang (= 0,25 mg/L d'air expiré). Environ 2 verres 'bar' pour une personne de taille moyenne." },
+              { title: "Conducteur novice (permis probatoire)", text: "Seuil légal : 0,20 g/L de sang (= 0,10 mg/L d'air expiré). UN SEUL verre suffit généralement à dépasser ce seuil. Valable 3 ans après l'obtention du permis (ou 2 ans si conduite accompagnée AAC)." },
+              { title: "1 verre standard = combien ?", text: "Un verre 'bar' standard (bière 25cl, verre de vin 12cl, shot de spiritueux) = environ +0,20 à 0,25 g/L dans le sang. Pour un novice : 1 verre = dépassement quasi assuré." },
+              { title: "Élimination de l'alcool", text: "Le foie élimine l'alcool à 0,10 à 0,15 g/L par heure. RIEN n'accélère ce processus : ni le café, ni l'eau, ni l'air frais, ni le sport. Seul le temps compte." }
             ],
             examples: [
-              "Jeune conducteur : un seul verre = positif.",
-              "Refuser de souffler = délit le plus grave d'office."
+              "Un novice boit 2 verres à 20h. Taux estimé : ~0,40-0,50 g/L. Élimination à 0,15/h : retour sous 0,20 g/L vers 23h30 environ.",
+              "Un conducteur expérimenté boit 4 verres en 2h : taux ~0,80 g/L = délit immédiat.",
+              "Refus de souffler dans l'éthylotest = automatiquement traité comme un taux DÉLICTUEL (≥ 0,80 g/L)."
             ],
             color: "border-purple-500",
             bgBadge: "bg-purple-500 text-white",
             bgLight: "bg-purple-50"
           },
           {
-            id: "effets",
-            title: "2. Effets sur la Conduite",
-            desc: "Le cerveau perd la perception des risques.",
+            id: "effets_conduite",
+            title: "2. Effets de l'Alcool sur la Conduite",
+            desc: "L'alcool modifie le comportement sans que le conducteur en soit conscient. C'est le piège principal : on se croit capable alors qu'on ne l'est plus.",
             rules: [
-              { title: "Désinhibition", text: "Confiance illusoire, vitesse accrue, réflexes ralentis." },
-              { title: "Champ visuel", text: "Vision 'tunnel' : on ne voit plus les côtés de la chaussée." },
-              { title: "Drogues", text: "Désir de sommeil, mauvaise perception des distances." },
-              { title: "Médicaments", text: "Vignette rouge (Niveau 3) = interdiction absolue de conduire." }
+              { title: "Désinhibition et excès de confiance", text: "L'alcool réduit l'autoévaluation du risque. Le conducteur se croit meilleur alors que ses réflexes sont ralentis." },
+              { title: "Champ visuel réduit (vision tunnel)", text: "L'alcool rétrécit le champ de vision latéral. On ne perçoit plus ce qui se passe sur les côtés de la route." },
+              { title: "Éblouissement accentué", text: "L'œil sous l'effet de l'alcool est plus sensible à la lumière des phares : risque accru la nuit." },
+              { title: "Temps de réaction allongé", text: "Le temps de réaction normal (1 sec) peut doubler ou tripler. À 90 km/h, 2 secondes = 50 mètres parcourus sans réagir." }
             ],
             examples: [
-              "Alcool + Cannabis = risque mortel multiplié par 29.",
-              "L'alcool rend l'œil très sensible à l'éblouissement."
+              "À 0,5 g/L (seuil légal pour permis classique) : le risque d'accident est déjà DOUBLÉ par rapport à 0 g/L.",
+              "À 0,8 g/L (seuil délictuel) : risque d'accident multiplié par 10.",
+              "Nuit blanche sans alcool = effets comparables à 0,5 g/L d'alcool sur les réflexes."
             ],
             color: "border-indigo-600",
             bgBadge: "bg-indigo-600 text-white",
             bgLight: "bg-indigo-50"
           },
           {
-            id: "sanctions",
-            title: "3. Sanctions",
-            desc: "Des peines lourdes pour protéger la communauté.",
+            id: "drogues_medicaments",
+            title: "3. Drogues & Médicaments — Tolérance zéro",
+            desc: "Les stupéfiants sont détectés par test salivaire. Tout résultat positif est un délit, quelle que soit la quantité. Les médicaments ont un système de pictogrammes colorés obligatoire.",
             rules: [
-              { title: "Contravention", text: "0,5 à 0,79 g/L = 135€ et -6 points (permis annulé si novice)." },
-              { title: "Délit", text: "Dès 0,80 g/L ou test drogue positif = Tribunal." },
-              { title: "Peines pénales", text: "Prison, 4500€ d'amende, suspension/annulation du permis." },
-              { title: "Confiscation", text: "Saisie définitive du véhicule possible en cas de récidive." }
+              { title: "Stupéfiants (cannabis, cocaïne, etc.)", text: "TOLÉRANCE ZÉRO. La moindre trace dans la salive ou le sang est un délit pénal, même si vous 'vous sentez bien'." },
+              { title: "Cocktail meurtrier", text: "Alcool + Cannabis = risque d'accident MULTIPLIÉ PAR 29 (vs un conducteur sobre). C'est la combinaison la plus mortelle identifiée par les études de sécurité routière." },
+              { title: "Médicaments — Niveau 1 (jaune)", text: "Soyez prudent. Conduire avec précaution. Vérifiez votre tolérance." },
+              { title: "Médicaments — Niveau 2 (orange)", text: "Soyez très prudent. Ne conduisez pas sans avis médical ou sans vérifier vos capacités." },
+              { title: "Médicaments — Niveau 3 (rouge)", text: "DANGER : Ne pas conduire. Les effets sont incompatibles avec la conduite d'un véhicule. Pictogramme obligatoire sur la boîte." }
             ],
             examples: [
-              "Novice avec 6 points testé positif = Permis détruit immédiatement."
+              "Cannabis : détectable dans la salive jusqu'à 4-6h après consommation, dans le sang jusqu'à 24-48h.",
+              "Certains antihistaminiques (anti-allergiques), somnifères, anxiolytiques : niveau 2 ou 3.",
+              "Dépistage salivaire systématique sur tout accident corporel depuis 2017."
+            ],
+            color: "border-rose-600",
+            bgBadge: "bg-rose-600 text-white",
+            bgLight: "bg-rose-50"
+          },
+          {
+            id: "sanctions_alcool",
+            title: "4. Tableau des Sanctions",
+            desc: "Les peines sont graduées selon le taux constaté. Source : service-public.fr / Code de la route Article L234-1.",
+            rules: [
+              { title: "0,20 à 0,49 g/L (novice seulement) — Contravention", text: "135 € d'amende + retrait de 6 points + immobilisation du véhicule possible. Si solde = 0 point : permis invalidé." },
+              { title: "0,50 à 0,79 g/L — Contravention 4e classe", text: "135 € d'amende + retrait de 6 points + risque de suspension du permis." },
+              { title: "≥ 0,80 g/L — DÉLIT", text: "Tribunal correctionnel + jusqu'à 4 500 € d'amende + jusqu'à 2 ans de prison + retrait de 6 points + suspension jusqu'à 3 ans." },
+              { title: "Refus de se soumettre au test", text: "Traité automatiquement comme un délit de conduite en état d'ivresse manifeste (peines maximales)." },
+              { title: "Récidive", text: "Peines doublées : jusqu'à 9 000 € + 4 ans de prison + annulation du permis avec interdiction de le repasser." }
+            ],
+            examples: [
+              "Permis probatoire (6 points) + contrôle à 0,25 g/L = retrait de 6 points = permis invalidé en une seule infraction.",
+              "Accident mortel sous alcool + vitesse excessive : cumul des peines possibles, emprisonnement ferme."
             ],
             color: "border-violet-600",
             bgBadge: "bg-violet-600 text-white",
