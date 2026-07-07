@@ -91,7 +91,7 @@ const SIGNS: SignData[] = [
 
   // ================= INDICATION (Carrés bleus) =================
   { id: 'C1a', category: 'indication', name: 'Parking', meaning: 'Lieu aménagé pour le stationnement des véhicules.' },
-  { id: 'C4a', category: 'indication', name: 'Vitesse conseillée (70)', meaning: 'Il est conseillé de rouler à 70 km/h sous de bonnes conditions.' },
+  { id: 'C4a', category: 'indication', name: 'Vitesse conseillée (50)', meaning: 'Il est conseillé de rouler à 50 km/h sous de bonnes conditions.' },
   { id: 'C12', category: 'indication', name: 'Sens unique', meaning: 'Circulation à sens unique. Interdiction de faire demi-tour ou de rouler à contre-sens.' },
   { id: 'C20a', category: 'indication', name: 'Passage piéton', meaning: 'Indique l\'emplacement d\'un passage pour piétons.' },
   { id: 'C50', category: 'indication', name: 'Zone piétonne', meaning: 'Entrée d\'une zone réservée aux piétons. Véhicules exceptionnels admis au pas.' },
@@ -266,22 +266,22 @@ const getSignSvgUrl = (id: string) => {
     "B14_110": "France_road_sign_B14_%28110%29.svg",
     "B14_130": "France_road_sign_B14_%28130%29.svg",
     "B31": "France_road_sign_B31.svg",
-    "B33": "France_road_sign_B33.svg",
-    "B34_50": "France_road_sign_B34_%2850%29.svg",
-    "B34_80": "France_road_sign_B34_%2880%29.svg",
+    "B33": "France_road_sign_B34.svg",
+    "B34_50": "France_road_sign_B33_%2850%29.svg",
+    "B34_80": "France_road_sign_B33_%2890%29.svg",
     
     // Obligations
     "B21-1": "France_road_sign_B21-1.svg",
     "B21-2": "France_road_sign_B21-2.svg",
     "B21b": "France_road_sign_B21b.svg",
     "B22a": "France_road_sign_B22a.svg",
-    "B25": "France_road_sign_B25.svg",
+    "B25": "France_road_sign_B25_%2830%29.svg",
     "B27a": "France_road_sign_B27a.svg",
     "B29": "France_road_sign_B29.svg",
     
     // Indications
     "C1a": "France_road_sign_C1a.svg",
-    "C4a": "France_road_sign_C4a.svg",
+    "C4a": "France_road_sign_C4a_%2850%29.svg",
     "C12": "France_road_sign_C12.svg",
     "C20a": "France_road_sign_C20a.svg",
     "C50": "France_road_sign_C50.svg",
