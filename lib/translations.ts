@@ -332,227 +332,177 @@ export const translations: Record<Language | string, any> = {
         btn_test: "Quiz Signalisation",
         sections: [
           {
-            id: "objectif",
-            title: "🎯 OBJECTIF",
-            desc: "La signalisation routière permet d'organiser l'espace public.",
-            rules: [
-              { title: "Rôles", text: "Informer les usagers, prévenir les dangers, organiser la circulation et imposer des règles." },
-              { title: "Règle d'or", text: "Elle est OBLIGATOIRE à respecter sans exception." }
-            ],
-            examples: ["Informer", "Prévenir", "Organiser", "Imposer"],
-            color: "border-blue-500",
-            bgBadge: "bg-blue-500 text-white",
-            bgLight: "bg-blue-50"
-          },
-          {
             id: "danger",
-            title: "1. Les panneaux de danger",
-            desc: "Ils annoncent un danger à venir pour permettre au conducteur d'anticiper.",
+            title: "1. Les Panneaux de Danger — Triangle rouge",
+            desc: "Ils annoncent un danger à venir et obligent le conducteur à adapter son allure. En agglomération, implantés à ~50m du danger. Hors agglomération : à 150m du danger. Exception : le panneau double sens de circulation s'applique immédiatement.",
             imageUrl: "/images/cours/panneau_danger.png",
             rules: [
-              { title: "Caractéristiques", text: "Forme triangulaire, bord rouge, fond blanc." },
-              { title: "Comportement", text: "Adapter sa vitesse et être prêt à réagir immédiatement." }
+              { title: "Forme & couleur", text: "Triangle équilatéral, bord rouge, fond blanc réfléchissant. Immédiatement reconnaissable de loin." },
+              { title: "Comportement obligatoire", text: "Réduire la vitesse AVANT d'atteindre le danger, se positionner correctement, être prêt à freiner." },
+              { title: "Distances d'implantation", text: "50 mètres en agglomération, 150 mètres hors agglomération. Le panneau 'double sens' s'applique immédiatement à son niveau." },
+              { title: "Attention : panonceau de distance", text: "Un panonceau sous le triangle précise la distance exacte du danger s'il déroge à la règle (ex : '50m' = le danger est à 50 mètres)." }
             ],
-            examples: ["Virage dangereux", "Chaussée glissante", "Passage piéton", "Travaux", "Intersection dangereuse"],
+            examples: [
+              "Panneau 'chaussée glissante' + pluie = réduire sa vitesse de 20 km/h minimum par mesure de sécurité.",
+              "Panneau 'passage à niveau sans barrière' = ralentir fortement, regarder des deux côtés, ne jamais s'engager si un train approche.",
+              "Piège examen : le panneau de double sens de circulation A180 est le seul panneau de danger qui s'applique de manière immédiate."
+            ],
             color: "border-red-500",
             bgBadge: "bg-red-500 text-white",
             bgLight: "bg-red-50"
           },
           {
-            id: "obligation",
-            title: "2. Les panneaux d’obligation",
-            desc: "Ils imposent un comportement précis à adopter obligatoirement.",
-            rules: [
-              { title: "Caractéristiques", text: "Forme ronde, fond bleu." },
-              { title: "Consigne", text: "Vous DEVEZ suivre l’indication sous peine de sanction." }
-            ],
-            examples: ["Tourner à droite", "Piste cyclable", "Chaînes neige"],
-            color: "border-blue-600",
-            bgBadge: "bg-blue-600 text-white",
-            bgLight: "bg-blue-50"
-          },
-          {
             id: "interdiction",
-            title: "3. Les panneaux d’interdiction",
-            desc: "Ils signalent ce qui est défendu de faire à partir du panneau.",
+            title: "2. Les Panneaux d'Interdiction — Rond rouge",
+            desc: "Ils interdisent formellement une action à partir du point d'implantation du panneau. L'infraction est immédiatement sanctionnable.",
             imageUrl: "/images/cours/panneau_interdiction.png",
             rules: [
-              { title: "Caractéristiques", text: "Forme ronde, bord rouge, fond blanc." },
-              { title: "Règle", text: "Toute infraction est sanctionnée (amende, points)." }
+              { title: "Forme & couleur", text: "Disque, bordure rouge épaisse, fond blanc. Parfois une barre rouge en diagonale sur un pictogramme." },
+              { title: "Portée de l'interdiction", text: "S'applique dès le panneau et jusqu'au panneau de fin d'interdiction ou jusqu'à la prochaine intersection rencontrée." },
+              { title: "Panneaux critiques à connaître", text: "B1 Sens interdit (demi-cercle rouge = absolu), B2a Accès interdit, B14 Vitesse max, B16 Dépassement interdit." },
+              { title: "Fin d'interdiction", text: "Un panneau rond gris avec une barre noire oblique annule l'interdiction précédente (ex : fin de limitation de vitesse ou de dépassement)." }
             ],
-            examples: ["Sens interdit", "Limitation de vitesse", "Interdiction de dépasser"],
+            examples: [
+              "B14 '50' sur une route à l'air dégagé = l'interdiction reste absolue, même si vous vous sentez en sécurité à 70 km/h.",
+              "B1 Sens interdit : seules les exceptions marquées sur un panonceau sous le panneau sont autorisées (ex : 'sauf cyclistes').",
+              "Franchir une ligne continue (B26) : 135€ d'amende + retrait de 3 points sur le permis."
+            ],
             color: "border-rose-600",
             bgBadge: "bg-rose-600 text-white",
             bgLight: "bg-rose-50"
           },
           {
-            id: "indication",
-            title: "4. Les panneaux d’indication",
-            desc: "Ils servent à donner des informations utiles pour la conduite.",
+            id: "obligation",
+            title: "3. Les Panneaux d'Obligation — Rond bleu",
+            desc: "Ils imposent un comportement précis et obligatoire. Le non-respect est une infraction de 4e classe sanctionnée d'une amende de 135€.",
             rules: [
-              { title: "Caractéristiques", text: "Forme carrée ou rectangulaire, fond bleu." },
-              { title: "Rôle", text: "Faciliter le trajet et repérer les services." }
+              { title: "Forme & couleur", text: "Disque bleu avec pictogramme blanc. À distinguer impérativement des panneaux d'indication (carrés bleus)." },
+              { title: "Panneaux clés", text: "B21a Direction obligatoire tout droit, B21b Tourner à droite, B22a Voie réservée aux transports en commun, B26 Chaînes à neige obligatoires (loi Montagne)." },
+              { title: "Attention aux confusions", text: "Le panneau d'obligation (rond bleu) oblige à agir. Le panneau d'indication (carré bleu) conseille ou informe d'une commodité." }
             ],
-            examples: ["Parking", "Hôpital", "Autoroute", "Station-service"],
+            examples: [
+              "B21a 'Tout droit obligatoire' : vous ne pouvez pas tourner, même si votre GPS ou un passager vous le demande.",
+              "Piste cyclable obligatoire (B22a) : les voitures, motos et piétons n'ont pas le droit d'y circuler ou de s'y arrêter."
+            ],
+            color: "border-blue-600",
+            bgBadge: "bg-blue-600 text-white",
+            bgLight: "bg-blue-50"
+          },
+          {
+            id: "indication",
+            title: "4. Les Panneaux d'Indication — Carré/Rectangle bleu",
+            desc: "Ils informent sans imposer d'obligation immédiate. Ils signalent des services, des zones spéciales ou des informations utiles pour la conduite.",
+            rules: [
+              { title: "Forme & couleur", text: "Carré ou rectangle, fond bleu, pictogramme blanc. Pas de bord rouge ni bleu d'obligation." },
+              { title: "Zones réglementées à reconnaître", text: "EB10 Zone 30 (limite 30 km/h), EB12 Zone de rencontre (20 km/h, piétons prioritaires partout), EB50 Zone piétonne, CE8 Autoroute." },
+              { title: "Services signalés", text: "Hôpital, station-service, parking, aire de repos. Ces infos ne créent pas d'obligation mais guident le conducteur." }
+            ],
+            examples: [
+              "Panneau EB10 'Zone 30' : la limite de 30 km/h s'applique sur toutes les voies de la zone jusqu'au panneau de fin de zone.",
+              "Panneau 'Aire de repos' sur autoroute : s'arrêter toutes les 2 heures pour lutter contre la somnolence au volant."
+            ],
             color: "border-sky-500",
             bgBadge: "bg-sky-500 text-white",
             bgLight: "bg-sky-50"
           },
           {
             id: "direction",
-            title: "5. Les panneaux de direction",
-            desc: "Ils guident les conducteurs vers leur destination.",
+            title: "5. Les Panneaux de Direction & Localisation",
+            desc: "Ils guident les conducteurs sur l'itinéraire. Leur couleur est codifiée selon le type de réseau.",
             rules: [
-              { title: "Couleurs", text: "Bleu (autoroute), Vert (grandes villes), Blanc (local)." },
-              { title: "Utilité", text: "Préparer ses changements de direction (itinéraires, sorties)." }
+              { title: "Code couleur des directions", text: "BLEU : autoroute. VERT : grandes villes et liaisons importantes. BLANC : route locale et villes proches. JAUNE : signalisation temporaire (déviation)." },
+              { title: "Anticipation des voies", text: "Les panneaux de direction permettent de se placer sur la bonne voie de sélection très tôt. Ne jamais changer de file à la dernière seconde." },
+              { title: "Panneaux de localisation d'agglomération", text: "Panneau d'entrée d'agglomération (nom de ville, fond blanc) : la limite de 50 km/h et l'usage interdit du klaxon entrent en vigueur dès le panneau." }
             ],
-            examples: ["Directions villes", "Itinéraires", "Sorties"],
+            examples: [
+              "Entrée d'agglomération = 50 km/h immédiat, même sans aucun panneau de limitation de vitesse visible.",
+              "Sortie d'agglomération (nom de la ville barré de rouge) = la limitation générale hors agglomération (80 ou 90 km/h) s'applique à nouveau."
+            ],
             color: "border-emerald-500",
             bgBadge: "bg-emerald-500 text-white",
             bgLight: "bg-emerald-50"
           },
           {
-            id: "touristique",
-            title: "6. Les panneaux touristiques",
-            desc: "Ils signalent des lieux d'intérêt culturel ou naturel.",
-            rules: [
-              { title: "Caractéristiques", text: "Fond marron, forme rectangulaire." }
-            ],
-            examples: ["Monuments historiques", "Parcs naturels", "Sites touristiques"],
-            color: "border-amber-700",
-            bgBadge: "bg-amber-700 text-white",
-            bgLight: "bg-amber-50"
-          },
-          {
             id: "temporaire",
-            title: "7. Les panneaux temporaires",
-            desc: "Ils signalent des modifications provisoires de la route.",
+            title: "6. La Signalisation Temporaire — Fond JAUNE",
+            desc: "Elle signale des modifications provisoires de la route (travaux, chantiers, accidents, déviations). Elle EST PRIORITAIRE sur la signalisation permanente.",
             rules: [
-              { title: "Caractéristiques", text: "Fond jaune." },
-              { title: "Priorité", text: "Ils sont PRIORITAIRES sur les panneaux permanents." }
+              { title: "Priorité absolue", text: "Un panneau temporaire jaune annule et remplace le panneau permanent correspondant. Exemple : limitation temporaire à 70 km/h dans une zone à 90." },
+              { title: "Balises de chantier", text: "Balises K1 (jaune-orange) : délimitent la zone de travaux. Balises K8 (chevrons) : indiquent le contournement obligatoire." },
+              { title: "Dangers des zones de travaux", text: "Le personnel de chantier travaille à proximité immédiate des voies. Réduire impérativement sa vitesse et être prêt à s'arrêter." }
             ],
-            examples: ["Travaux", "Déviation", "Chantier"],
+            examples: [
+              "Zone de travaux avec limitation temporaire à 50 km/h : 50 km/h est obligatoire jusqu'au panneau de fin de chantier.",
+              "Franchir un cône de chantier ou une balise de délinéation est passible d'une amende de 135€."
+            ],
             color: "border-yellow-500",
             bgBadge: "bg-yellow-500 text-gray-900",
             bgLight: "bg-yellow-50"
           },
           {
-            id: "marquage",
-            title: "8. Les marquages au sol",
-            desc: "La signalisation horizontale a la même valeur que les panneaux.",
+            id: "marquage_sol",
+            title: "7. Les Marquages au Sol — Signalisation horizontale",
+            desc: "La signalisation horizontale a la même valeur légale que les panneaux verticaux. Les franchir sans autorisation est une infraction immédiatement sanctionnée.",
             rules: [
-              { title: "Types", text: "Lignes continues (interdit), discontinues (autorisé), flèches, passages piétons." },
-              { title: "Sanction", text: "Les franchir indûment est une infraction grave." }
+              { title: "Ligne axiale continue", text: "Sépare les deux sens de circulation. Interdiction absolue de la franchir ou de l'empiéter. Sanction : 135€ d'amende + retrait de 3 points." },
+              { title: "Ligne axiale discontinue", text: "Dépassement et changement de voie autorisés si la sécurité le permet. Les pointillés sont espacés." },
+              { title: "Ligne mixte", text: "Ligne continue doublée d'une ligne discontinue. Seul le côté de la ligne discontinue permet le franchissement pour le dépassement." },
+              { title: "Zébras (hachurage)", text: "Zones quadrillées au sol : interdiction d'y rouler, de s'y arrêter ou d'y stationner." }
             ],
-            examples: ["Ligne continue", "Zebra", "Flèche directionnelle"],
+            examples: [
+              "Route à double sens avec ligne mixte : si la ligne discontinue est de mon côté, je peux dépasser.",
+              "Ligne continue franchie : amende de 135€ et retrait de 3 points (ou 1 point si simple empiétement)."
+            ],
             color: "border-gray-400",
             bgBadge: "bg-gray-400 text-white",
             bgLight: "bg-gray-50"
           },
           {
             id: "feux",
-            title: "9. Les feux tricolores",
-            desc: "Ils régulent la circulation aux carrefours.",
+            title: "8. Les Feux de Signalisation",
+            desc: "Ils régulent le trafic aux carrefours. Le non-respect d'un feu rouge est une infraction grave.",
             imageUrl: "/images/cours/feux_tricolores.png",
             rules: [
-              { title: "Rouge", text: "Arrêt absolu et obligatoire." },
-              { title: "Orange", text: "Arrêt requis sauf danger immédiat par l'arrière." },
-              { title: "Vert", text: "Passage autorisé si la voie est dégagée." }
+              { title: "Feu ROUGE fixe", text: "Arrêt absolu et obligatoire avant la ligne d'arrêt. Sanction : 135€ + retrait de 4 points + suspension de permis possible." },
+              { title: "Feu ORANGE fixe", text: "Arrêt obligatoire sauf si le conducteur est trop proche pour s'arrêter en toute sécurité sans risque d'accident par l'arrière." },
+              { title: "Feu JAUNE/ORANGE clignotant", text: "Signale une intersection où la règle de priorité par défaut (souvent priorité à droite) s'applique, ou un danger particulier. Ralentir et passer avec vigilance." }
             ],
-            examples: ["Feu Rouge", "Feu Orange", "Feu Vert"],
+            examples: [
+              "Feu orange fixe : vous devez vous arrêter, sauf si une voiture vous colle de trop près à l'arrière.",
+              "Feu rouge grillé : sanction automatique par radar de feu possible."
+            ],
             color: "border-orange-500",
             bgBadge: "bg-orange-500 text-white",
             bgLight: "bg-orange-50"
           },
           {
-            id: "pietons",
-            title: "10. Signalisation Piétons",
-            desc: "La sécurité des usagers vulnérables est prioritaire.",
-            rules: [
-              { title: "Priorité", text: "Toujours céder le passage aux piétons engagés." },
-              { title: "Zones", text: "Zone piétonne, passage protégé." }
-            ],
-            examples: ["Passage piéton", "Zone de rencontre"],
-            color: "border-teal-500",
-            bgBadge: "bg-teal-500 text-white",
-            bgLight: "bg-teal-50"
-          },
-          {
             id: "hierarchie",
-            title: "11. Hiérarchie des Signes",
-            desc: "À connaître absolument pour l'examen !",
+            title: "9. La Hiérarchie des Signaux — L'ordre absolu",
+            desc: "Quand plusieurs types de signaux coexistent, il y a un ordre de priorité strict à connaître par cœur pour l'examen ETG.",
             rules: [
-              { title: "Ordre de priorité", text: "1. Agent 👮, 2. Feux 🚦, 3. Panneaux 🚧, 4. Marquage 🛣️." }
+              { title: "Niveau 1 — L'agent de police", text: "Ses ordres et gestes priment sur tous les autres signaux (feux, panneaux, marquage)." },
+              { title: "Niveau 2 — Les feux tricolores", text: "Ils priment sur les panneaux de priorité et le marquage au sol." },
+              { title: "Niveau 3 — Les panneaux verticaux", text: "Ils priment sur la règle générale (comme la priorité à droite) et sur les marquages au sol simples." },
+              { title: "Niveau 4 — La règle générale", text: "La priorité à droite s'applique en l'absence de tout signal." }
             ],
-            examples: ["Agent de police", "Feux tricolores", "Panneaux"],
+            examples: [
+              "Carrefour avec feu rouge + agent qui vous fait signe de passer → vous devez passer (l'agent prime).",
+              "Carrefour avec feu jaune clignotant en bas + panneau STOP → vous devez faire l'arrêt au STOP (le panneau s'applique car le feu est défaillant/clignotant)."
+            ],
             color: "border-indigo-600",
             bgBadge: "bg-indigo-600 text-white",
             bgLight: "bg-indigo-50"
-          },
-          {
-            id: "erreurs",
-            title: "12. Erreurs Fréquentes",
-            desc: "Attention aux pièges classiques.",
-            rules: [
-              { title: "Confusions", text: "Confondre obligation (rond bleu) et indication (carré bleu)." },
-              { title: "Oublis", text: "Ignorer un panneau temporaire (jaune) ou mal interpréter une priorité." }
-            ],
-            examples: ["Panneau Stop ignoré", "Mauvaise priorité"],
-            color: "border-red-700",
-            bgBadge: "bg-red-700 text-white",
-            bgLight: "bg-red-100"
-          },
-          {
-            id: "cas_concrets",
-            title: "13. Cas Concrets",
-            desc: "Analysons des situations réelles de conduite.",
-            rules: [
-              { title: "Situation 1", text: "Panneau STOP : Arrêt obligatoire même si la route semble vide." },
-              { title: "Situation 2", text: "Ligne Continue : Interdiction absolue de dépasser." },
-              { title: "Situation 3", text: "Feu Orange : Arrêt obligatoire sauf si cela présente un danger immédiat pour celui qui suit." }
-            ],
-            examples: ["Stop", "Ligne continue", "Feu orange"],
-            color: "border-orange-600",
-            bgBadge: "bg-orange-600 text-white",
-            bgLight: "bg-orange-50"
-          },
-          {
-            id: "astuces",
-            title: "14. Astuces Mémo",
-            desc: "Retenir les formes et couleurs simplement.",
-            rules: [
-              { title: "Formes", text: "Triangle = Danger ⚠️, Rond = Ordre (Interdit 🚫 ou Obligatoire 🔵)." },
-              { title: "Couleurs", text: "Rouge = Alerte, Bleu = Obligation/Info, Jaune = Travaux." }
-            ],
-            examples: ["Mnémonique", "Codification visuelle"],
-            color: "border-purple-600",
-            bgBadge: "bg-purple-600 text-white",
-            bgLight: "bg-purple-50"
-          },
-          {
-            id: "conclusion",
-            title: "15. Conclusion",
-            desc: "La signalisation est la base d'une conduite sûre et sereine.",
-            rules: [
-              { title: "Essentiel", text: "Elle permet d'éviter les accidents et est cruciale pour réussir l'examen." },
-              { title: "Engagement", text: "Elle doit être connue parfaitement pour assurer la sécurité de tous." }
-            ],
-            examples: ["Sécurité", "Accidents évités", "Examen réussi"],
-            color: "border-emerald-700",
-            bgBadge: "bg-emerald-700 text-white",
-            bgLight: "bg-emerald-50"
           }
         ],
         quiz_section: {
-          title: "🧪 16. Questions type examen",
+          title: "🧪 Questions type examen",
           intro: "Testez vos connaissances sur la signalisation avant de passer au module suivant.",
           questions: [
             {
-              question: "Un panneau triangulaire indique :",
+              question: "Un panneau triangulaire à bord rouge indique :",
               options: ["Une obligation", "Une interdiction", "Un danger", "Une direction"],
               answer: 2,
-              explanation: "Les triangles à bord rouge indiquent toujours un danger.",
-              imageUrl: "/images/exam/q1.png"
+              explanation: "Les triangles à bord rouge indiquent toujours un danger."
             },
             {
               question: "Un panneau bleu rond signifie :",
@@ -561,10 +511,10 @@ export const translations: Record<Language | string, any> = {
               explanation: "Les ronds bleus sont des panneaux d'obligation."
             },
             {
-              question: "Un panneau jaune signifie :",
-              options: ["Permanent", "Temporaire", "Danger", "Direction"],
+              question: "La signalisation temporaire (jaune) est :",
+              options: ["Indicative", "Prioritaire sur la signalisation permanente", "Secondaire", "Optionnelle"],
               answer: 1,
-              explanation: "La couleur jaune est réservée à la signalisation temporaire (travaux)."
+              explanation: "La signalisation temporaire sur fond jaune annule et remplace la signalisation permanente."
             }
           ]
         }
@@ -710,154 +660,7 @@ export const translations: Record<Language | string, any> = {
           ]
         }
       },
-          {
-            id: "prio_droite",
-            title: "1. Priorité à droite",
-            desc: "La règle de base s'il n'y a aucune signalisation.",
-            imageUrl: "/images/cours/priorite_droite.png",
-            rules: [
-              { title: "Sans signalisation", text: "Priorité au véhicule venant de droite." }
-            ],
-            examples: ["Croisement en ville", "Carrefour sans panneau"],
-            color: "border-yellow-500",
-            bgBadge: "bg-yellow-500 text-white",
-            bgLight: "bg-yellow-50"
-          },
-          {
-            id: "cedez",
-            title: "2. Panneau \"Cédez le passage\"",
-            desc: "Il faut ralentir et laisser passer.",
-            rules: [
-              { title: "Action", text: "Ralentir et céder la priorité aux autres." }
-            ],
-            examples: ["Entrée sur voie rapide", "Rond-point"],
-            color: "border-orange-500",
-            bgBadge: "bg-orange-500 text-white",
-            bgLight: "bg-orange-50"
-          },
-          {
-            id: "stop",
-            title: "3. Panneau STOP",
-            desc: "Arrêt strict exigé.",
-            rules: [
-              { title: "Action", text: "Arrêt OBLIGATOIRE puis céder le passage." }
-            ],
-            examples: ["Carrefour dangereux", "Ligne d'arrêt"],
-            color: "border-red-600",
-            bgBadge: "bg-red-600 text-white",
-            bgLight: "bg-red-50"
-          },
-          {
-            id: "route_prio",
-            title: "4. Route prioritaire",
-            desc: "Vous avez l'avantage.",
-            rules: [
-              { title: "Règle", text: "Vous avez la priorité à l'intersection." }
-            ],
-            examples: ["Route nationale", "Axe principal"],
-            color: "border-green-600",
-            bgBadge: "bg-green-600 text-white",
-            bgLight: "bg-green-50"
-          },
-          {
-            id: "rond_point",
-            title: "5. Rond-point",
-            desc: "Priorité à ceux engagés.",
-            imageUrl: "/images/cours/rond_point.png",
-            rules: [
-              { title: "Engagement", text: "Priorité aux véhicules déjà engagés." }
-            ],
-            examples: ["Carrefour à sens giratoire"],
-            color: "border-purple-600",
-            bgBadge: "bg-purple-600 text-white",
-            bgLight: "bg-purple-50"
-          },
-          {
-            id: "cas_dangereux",
-            title: "⚠️ Cas dangereux",
-            desc: "Soyez particulièrement attentifs.",
-            rules: [
-              { title: "Attention", text: "Mauvaise visibilité, intersections en ville, conducteurs rapides." }
-            ],
-            examples: ["Nuit", "Pluie forte", "Vitesse"],
-            color: "border-amber-600",
-            bgBadge: "bg-amber-600 text-white",
-            bgLight: "bg-amber-50"
-          },
-          {
-            id: "erreurs",
-            title: "❌ Erreurs fréquentes",
-            desc: "Les fautes à ne pas faire.",
-            rules: [
-              { title: "Fautes", text: "Ne pas regarder à droite, croire être prioritaire, ignorer un STOP." }
-            ],
-            examples: ["Refus de priorité", "Stop glissé"],
-            color: "border-rose-600",
-            bgBadge: "bg-rose-600 text-white",
-            bgLight: "bg-rose-50"
-          },
-          {
-            id: "cas_concret",
-            title: "🚗 Cas concret",
-            desc: "Vous arrivez sans panneau :",
-            rules: [
-              { title: "Action", text: "Une voiture à droite → vous cédez." }
-            ],
-            examples: ["Rue sans marquage"],
-            color: "border-cyan-600",
-            bgBadge: "bg-cyan-600 text-white",
-            bgLight: "bg-cyan-50"
-          },
-          {
-            id: "astuce",
-            title: "🧠 Astuce",
-            desc: "Mnémonique.",
-            rules: [
-              { title: "Règle", text: "\"Pas de panneau = priorité à droite\"." }
-            ],
-            examples: ["Réflexe"],
-            color: "border-indigo-600",
-            bgBadge: "bg-indigo-600 text-white",
-            bgLight: "bg-indigo-50"
-          },
-          {
-            id: "conclusion",
-            title: "🎯 Conclusion",
-            desc: "Toujours analyser la situation avant de passer.",
-            rules: [
-              { title: "La clé", text: "La priorité dépend de la signalisation et de la situation." }
-            ],
-            examples: ["Sécurité avant tout"],
-            color: "border-teal-600",
-            bgBadge: "bg-teal-600 text-white",
-            bgLight: "bg-teal-50"
-          }
-        ],
-        quiz_section: {
-          title: "🧪 Questions type examen",
-          intro: "Testez vos connaissances sur les priorités.",
-          questions: [
-            {
-              question: "Sans panneau, qui est prioritaire ?",
-              options: ["Gauche", "Droite", "Moi", "Personne"],
-              answer: 1,
-              explanation: "Sans signalisation, la règle par défaut est la priorité à droite."
-            },
-            {
-              question: "Au STOP :",
-              options: ["Je ralentis", "Je passe", "Je m’arrête", "J’accélère"],
-              answer: 2,
-              explanation: "Le panneau STOP oblige formellement à marquer un arrêt complet à la ligne."
-            },
-            {
-              question: "Dans un rond-point :",
-              options: ["Je suis prioritaire", "Priorité à droite", "Priorité à ceux déjà engagés", "Aucun"],
-              answer: 2,
-              explanation: "Sauf exception, on doit céder le passage à ceux déjà sur l'anneau."
-            }
-          ]
-        }
-      },
+
       vitesse: {
         badge: "Module 4",
         label: "La Vitesse",
@@ -1036,37 +839,79 @@ export const translations: Record<Language | string, any> = {
       autoroute: {
         badge: "Module 06",
         label: "Réseau Très Haute Vitesse",
-        title: "Autoroute et Voies Rapides",
-        description: "Le réseau le plus sûr mais la haute vélocité ne pardonne aucun écart.",
+        title: "Autoroute et Voies Rapides — Vitesse et sécurité",
+        description: "L'autoroute est statistiquement le réseau le plus sûr, mais la vitesse élevée (130 km/h) réduit le temps de réaction et multiplie la violence des chocs. La rigueur y est de mise.",
         entree_sortie: {
-          title: "1. L'Entrée et la Sortie",
-          desc: "Transitions codifiées pour ne pas bloquer les usagers à 130 km/h.",
-          r1_t: "Voie d'Insertion", r1_txt: "Utiliser toute sa longueur pour atteindre la vitesse du trafic.",
-          r2_t: "S'insérer", r2_txt: "Rétro dès le début. Le clignotant gauche annonce l'intention.",
-          r3_t: "Voie de Décélération", r3_txt: "Dès les panneaux bleus. Clignotant et engagement total.",
-          r4_t: "Où freiner ?", r4_txt: "JAMAIS sur la voie principale. Freiner uniquement une fois sur la voie de sortie.",
-          ex1: "Accélérer à 110 pour s'insérer devant un camion à 90.",
-          ex2: "Ne jamais s'arrêter au bout d'une voie d'insertion si le trafic coule."
+          title: "1. L'Entrée et la Sortie d'Autoroute — Manœuvres à haute vitesse",
+          desc: "S'insérer et sortir de l'autoroute exige de fortes accélérations et décélérations sur des voies dédiées pour ne pas perturber le flux principal.",
+          r1_t: "La Voie d'Insertion (Accélération)",
+          r1_txt: "Utiliser TOUTE la longueur de la voie pour atteindre la vitesse des usagers déjà engagés (généralement 90 à 110 km/h). Ne jamais s'arrêter au bout de la voie d'insertion (sauf blocage complet du trafic).",
+          r2_t: "S'insérer en sécurité",
+          r2_txt: "Vérifier les rétroviseurs et l'angle mort gauche dès le début de la voie. Indiquer son intention avec le clignotant gauche et s'insérer dans un espace libre sans forcer la priorité.",
+          r3_t: "La Voie de Décélération (Sortie)",
+          r3_txt: "Commencer à signaler son intention (clignotant droit) à l'annonce des panneaux de sortie (panneaux à 300m, 200m, 100m). S'engager dès le début de la voie de décélération.",
+          r4_t: "Où freiner ?",
+          r4_txt: "Ne JAMAIS ralentir sur la voie de circulation principale (danger de collision par l'arrière). Commencer à freiner uniquement une fois que l'ensemble du véhicule est inséré sur la voie de décélération.",
+          ex1: "Accélérer franchement en 4e rapport pour atteindre 110 km/h rapidement sur la voie d'insertion.",
+          ex2: "Sortie manquée : il est strictement INTERDIT de faire marche arrière ou de faire demi-tour sur autoroute, sous peine d'amende et de retrait de 4 points."
         },
         voies: {
-          title: "2. Le Bon Usage des Voies",
-          desc: "Une autoroute possède a minima 2 voies. Le placement est crucial.",
-          r1_t: "Repli à Droite", r1_txt: "On DOIT toujours circuler sur la voie la plus à DROITE.",
-          r2_t: "Voies de Gauche", r2_txt: "Uniquement pour DÉPASSER. Se rabattre après la manœuvre.",
-          r3_t: "Vitesse minimale", r3_txt: "Interdit de rouler à moins de 80 km/h sur la voie de gauche extrême.",
-          r4_t: "Aspiration", r4_txt: "Le dépassement d'un Poids Lourd peut déstabiliser la direction.",
-          ex1: "Autoroute déserte à 4h ? Roulez à l'extrême droite.",
-          ex2: "Croix rouge au-dessus d'une voie = voie neutralisée, rabattez-vous."
+          title: "2. Le Bon Usage des Voies — Rester à droite",
+          desc: "Le placement sur l'autoroute est strictement réglementé pour permettre les dépassements en toute sécurité.",
+          r1_t: "La voie de droite obligatoirement",
+          r1_txt: "On doit TOUJOURS circuler sur la voie la plus à droite en marche normale. Rouler sur la voie du milieu ou de gauche sans dépasser est interdit et verbalisé à 35€.",
+          r2_t: "Les voies de gauche et centrale",
+          r2_txt: "Elles sont réservées exclusivement aux dépassements. Une fois le dépassement terminé, le conducteur doit se rabattre sur la voie de droite dès que possible.",
+          r3_t: "Limitations de vitesse sur les voies",
+          r3_txt: "Par temps sec : 130 km/h max (110 km/h pour les jeunes conducteurs). Par temps de pluie : 110 km/h max (100 km/h pour les jeunes). En cas de brouillard (visibilité < 50m) : 50 km/h maximum sur toutes les voies.",
+          r4_t: "Vitesse minimale voie de gauche",
+          r4_txt: "Sur la voie la plus à gauche, lorsque la circulation est fluide et les conditions optimales, la vitesse minimale obligatoire est de 80 km/h.",
+          ex1: "Autoroute vide la nuit : obligation de rouler sur la voie de droite, même si elle comporte 3 ou 4 voies.",
+          ex2: "Dépassement par la droite : interdit sur autoroute (amende de 135€ + retrait de 3 points)."
         },
         securite: {
-          title: "3. Distances de Sécurité et Fatigue",
-          desc: "À 130 km/h, on parcourt 36 mètres par seconde.",
-          r1_t: "Règle des 2 Traits", r1_txt: "Conserver 2 traits de B.A.U d'écart (~90 mètres).",
-          r2_t: "Pluie", r2_txt: "Augmenter la distance car la capacité de freinage diminue (Aquaplaning).",
-          r3_t: "La Fatigue", r3_txt: "Premier facteur mortel. Pause de 15 min toutes les 2 HEURES obligatoire.",
-          r4_t: "Bande d'Arrêt d'Urgence", r4_txt: "Interdit sauf panne, crevaison ou malaise. Passer derrière les glissières.",
-          ex1: "Il pleut = Limite à 110. Antibrouillards arrière interdits.",
-          ex2: "Voyant rouge ? Warnings, B.A.U et passer de l'autre côté de la barrière."
+          title: "3. Distances de Sécurité, Fatigue et Arrêt d'Urgence",
+          desc: "À 130 km/h, la distance d'arrêt totale est d'environ 150 mètres. Conserver ses distances est vital.",
+          r1_t: "Règle de sécurité des 2 traits",
+          r1_txt: "Maintenir en permanence un écart égal à au moins deux lignes blanches de la Bande d'Arrêt d'Urgence (BAU) avec le véhicule devant, soit environ 90 mètres.",
+          r2_t: "La fatigue au volant",
+          r2_txt: "Première cause d'accident mortel sur autoroute. Le conducteur doit effectuer une pause de 15 minutes toutes les 2 heures au minimum. 'Toutes les deux heures, la pause s'impose.'",
+          r3_t: "Bande d'Arrêt d'Urgence (BAU)",
+          r3_txt: "Strictement interdite pour rouler, stationner ou s'arrêter, sauf en cas de force majeure (panne mécanique, incendie, malaise d'un passager).",
+          r4_t: "En cas de panne",
+          r4_txt: "Allumer les warnings, se garer le plus à droite possible sur la BAU, couper le moteur, enfiler les gilets jaunes et faire descendre TOUS les passagers par la DROITE pour se réfugier derrière la glissière de sécurité. Ne jamais poser le triangle sur autoroute.",
+          ex1: "Pluie sur autoroute : réduire sa vitesse à 110 km/h et augmenter les distances de sécurité (4 secondes au lieu de 2).",
+          ex2: "Somnolence : picotements des yeux, bâillements = s'arrêter IMMÉDIATEMENT à la prochaine aire."
+        },
+        quiz_section: {
+          title: "🧪 Quiz Autoroute & Voies Rapides",
+          intro: "Validez vos connaissances sur le réseau de haute vitesse avant de continuer.",
+          questions: [
+            {
+              question: "Quelle est la vitesse minimale obligatoire sur la voie la plus à gauche d'une autoroute en marche normale (trafic fluide) ?",
+              options: ["60 km/h", "80 km/h", "90 km/h", "110 km/h"],
+              answer: 1,
+              explanation: "Sur autoroute, lorsque la circulation est fluide et le temps sec, un conducteur circulant sur la voie la plus à gauche doit rouler à une vitesse minimale de 80 km/h."
+            },
+            {
+              question: "En cas de panne sur autoroute, la première action de sécurité est de :",
+              options: ["Placer le triangle de signalisation à 30 mètres", "Allumer les feux de détresse (warnings)", "Appeler les secours avec son téléphone portable", "Ouvrir le capot pour inspecter le moteur"],
+              answer: 1,
+              explanation: "La première action est de rendre le véhicule visible en allumant les feux de détresse, puis de se garer sur la BAU et mettre le gilet jaune avant de sortir."
+            },
+            {
+              question: "Par temps de brouillard dense (visibilité inférieure à 50 mètres), la vitesse maximale est de :",
+              options: ["50 km/h", "70 km/h", "80 km/h", "110 km/h"],
+              answer: 0,
+              explanation: "Dès que la visibilité descend en dessous de 50 mètres, la vitesse maximale autorisée est de 50 km/h sur l'ensemble des réseaux routiers français, y compris sur autoroute."
+            },
+            {
+              question: "Sur autoroute, la distance de sécurité minimale avec le véhicule devant correspond à :",
+              options: ["1 trait de la Bande d'Arrêt d'Urgence", "2 traits de la Bande d'Arrêt d'Urgence", "3 traits de la Bande d'Arrêt d'Urgence", "La longueur de 3 voitures"],
+              answer: 1,
+              explanation: "Pour respecter les 2 secondes de sécurité à 130 km/h, il faut maintenir un écart d'au moins 2 lignes blanches de la Bande d'Arrêt d'Urgence."
+            }
+          ]
         },
         footer_title: "La règle des 2 traits est acquise ?",
         footer_desc: "Mémorisez bien la règle de décélération pour une sortie fluide !",
@@ -1083,117 +928,141 @@ export const translations: Record<Language | string, any> = {
         sections: [
           {
             id: "position",
-            title: "1. Position sur la chaussée",
-            desc: "En marche normale, le placement est la base de la sécurité et de la fluidité.",
+            title: "1. Placement sur la Chaussée — La règle du bord droit",
+            desc: "En circulation normale, on se tient le plus à droite possible, sans toutefois gêner les usagers vulnérables. Cette règle vaut sur toute voie, en toutes circonstances.",
             rules: [
-              { title: "Règle Générale", text: "On doit circuler le plus près possible du bord droit de la chaussée." },
-              { title: "Virages", text: "Serrer à droite dans les virages à visibilité réduite pour éviter les chocs frontaux." },
-              { title: "Changement de file", text: "Interdit de changer de file sans raison valable (sauf pour tourner ou dépasser)." }
+              { title: "Règle de base (Art. R412-9)", text: "Tout conducteur doit se tenir le plus près possible du bord DROIT de la chaussée. Sur une voie à plusieurs files, rester sur la file la plus à droite sauf pour dépasser." },
+              { title: "En virage à visibilité réduite", text: "Serrer à droite est OBLIGATOIRE. Empiéter sur la gauche dans un virage aveugle peut provoquer un choc frontal mortel." },
+              { title: "Changement de voie", text: "Interdit sans raison valable. La séquence est : rétroviseur intérieur → rétroviseur extérieur → angle mort (tête) → clignotant → action. Dans cet ordre, sans exception." },
+              { title: "Cyclistes et usagers vulnérables", text: "En agglomération, maintenir 1 mètre de dégagement latéral pour les cyclistes. Hors agglomération : 1,5 mètre minimum lors du dépassement." }
             ],
-            factBox: {
-              type: "warning",
-              title: "Attention aux cyclistes",
-              text: "En ville, serrez à droite mais laissez toujours un intervalle suffisant pour les usagers vulnérables."
-            },
-            examples: ["Voie de droite sur autoroute", "Placement en virage"],
+            examples: [
+              "Sur une route à 3 voies dans le même sens : on roule voie de droite, on dépasse par la voie du milieu, on se rabat à droite.",
+              "Route étroite : si un camion arrive en face, se serrer à droite et ralentir fortement, voire s'arrêter."
+            ],
             color: "border-blue-500",
             bgBadge: "bg-blue-500 text-white",
             bgLight: "bg-blue-50"
           },
           {
-            id: "croisement",
-            title: "2. Le Croisement",
-            desc: "Savoir partager la route quand l'espace se réduit.",
+            id: "depassement",
+            title: "2. Le Dépassement — Règles strictes et interdictions",
+            desc: "Le dépassement est la manœuvre la plus risquée du Code de la route. Il obéit à des règles précises dont le non-respect est sévèrement sanctionné.",
             rules: [
-              { title: "Action", text: "Serrer à droite." }
+              { title: "Toujours par la gauche", text: "En France, le dépassement s'effectue systématiquement PAR LA GAUCHE. Dépasser par la droite est interdit sauf cas exceptionnels légaux." },
+              { title: "Exceptions où dépasser à droite est légal", text: "1) Le véhicule devant signale qu'il tourne à gauche et laisse la place à droite. 2) Sur voie à sens unique avec plusieurs files. 3) Embouteillage : file de gauche plus rapide que droite (pas un vrai dépassement)." },
+              { title: "Conditions obligatoires avant de dépasser", text: "Visibilité suffisante (pas de haut de côte, virage, brouillard). Ligne discontinue de votre côté. Largeur suffisante. Vitesse permettant de compléter le dépassement rapidement." },
+              { title: "Interdictions absolues de dépassement", text: "En haut de côte, dans un virage sans visibilité, passage à niveau, intersection, passage piéton, ligne continue de votre côté. Sanction : 135€ + 3 points." },
+              { title: "La séquence RCA obligatoire", text: "R = Rétroviseurs (intérieur + extérieur). C = Contrôle de l'angle mort (tête). A = Avertir (clignotant). Puis dépassement. Puis clignotant droit + rabattement." }
             ],
-            examples: ["Route étroite", "Croisement difficile"],
+            examples: [
+              "Vous êtes derrière un cycliste sur une route à 80 km/h : attendez une ligne discontinue, vérifiez la visibilité sur 200m, 1,5m de marge latérale minimum.",
+              "Dépassement d'un camion sur autoroute : le souffle du poids lourd peut déstabiliser votre véhicule. Tenir le volant fermement, ne pas coller au camion."
+            ],
+            color: "border-orange-500",
+            bgBadge: "bg-orange-500 text-white",
+            bgLight: "bg-orange-50"
+          },
+          {
+            id: "croisement",
+            title: "3. Le Croisement — Partager la route en sens opposé",
+            desc: "Croiser un véhicule en sens inverse semble banal, mais sur route étroite, de nuit ou avec des PL, c'est une manœuvre à anticiper.",
+            rules: [
+              { title: "Règle de base", text: "Réduire la vitesse et serrer à droite pour laisser la place. Si nécessaire, s'arrêter sur l'accotement." },
+              { title: "Croisement difficile : qui recule ?", text: "En montagne ou route très étroite : c'est le véhicule qui monte qui a la priorité (il lui est plus difficile de reculer). Le véhicule qui descend recule vers le refuge le plus proche." },
+              { title: "De nuit : les feux de route", text: "Passer en feux de croisement (codes) dès l'apparition d'un véhicule en sens inverse à ~150m. Ne jamais rester en feux de route : éblouissement = danger mortel." },
+              { title: "Poids lourds", text: "Un PL occupe souvent toute la voie sur étroite. Anticiper, ralentir, se placer sur l'accotement si possible, voire s'arrêter." }
+            ],
+            examples: [
+              "Route de montagne : vous montez, un camion descend → c'est lui qui cherche le refuge. Ralentissez mais ne reculez pas.",
+              "Nuit, croisement de phares : passer immédiatement en codes. Si l'autre ne le fait pas, regarder le bord droit de la chaussée (ne pas regarder les phares)."
+            ],
             color: "border-green-600",
             bgBadge: "bg-green-600 text-white",
             bgLight: "bg-green-50"
           },
           {
-            id: "cas_dangereux",
-            title: "⚠️ Cas dangereux",
-            desc: "Situations à haut risque.",
+            id: "clignotants",
+            title: "4. Les Clignotants et Avertisseurs — Communiquer avec les autres",
+            desc: "Le clignotant est la seule façon légale d'informer les autres de vos intentions. Ne pas l'utiliser est une infraction. Le mettre ne donne AUCUNE priorité.",
             rules: [
-              { title: "Attention", text: "Dépassement sans visibilité, oubli du clignotant." }
+              { title: "Quand clignoter ?", text: "Avant tout changement de direction, changement de voie, dépassement, demi-tour, stationnement. Le clignotant doit s'allumer AVANT la manœuvre, pas pendant." },
+              { title: "Le clignotant ne donne pas la priorité", text: "Mettre son clignotant n'autorise pas à forcer le passage. La manœuvre n'est permise que si la voie est libre." },
+              { title: "Avertisseurs sonores (klaxon)", text: "En agglomération : interdit sauf danger immédiat. Hors agglomération : autorisé pour prévenir d'un dépassement. Les klaxons en ville sans raison = 35€ d'amende." },
+              { title: "Feux de détresse (warnings)", text: "En cas d'arrêt d'urgence, de panne sur route, de signalement d'un danger devant. Sur autoroute : warnings immédiatement si embouteillage brusque devant soi." }
             ],
-            examples: ["Haut de côte", "Virage aveugle"],
-            color: "border-amber-600",
-            bgBadge: "bg-amber-600 text-white",
-            bgLight: "bg-amber-50"
+            examples: [
+              "Sur autoroute, trafic qui s'arrête brutalement devant vous : warnings immédiats pour avertir les véhicules derrière.",
+              "Piège examen : 'clignoter donne-t-il la priorité ?' → Réponse : NON. C'est uniquement un signal d'intention."
+            ],
+            color: "border-yellow-500",
+            bgBadge: "bg-yellow-500 text-gray-900",
+            bgLight: "bg-yellow-50"
           },
           {
-            id: "erreurs",
-            title: "❌ Erreurs fréquentes",
-            desc: "Les fautes à éviter.",
+            id: "distances_securite_circ",
+            title: "5. Distances de Sécurité en Circulation",
+            desc: "La distance de sécurité est la distance minimale à maintenir avec le véhicule précédent pour permettre un arrêt d'urgence sans collision.",
             rules: [
-              { title: "Fautes", text: "Dépasser par la droite, oublier de regarder." }
+              { title: "Règle légale (Art. R412-12)", text: "Distance minimale = 2 secondes de temps de réaction. En pratique, repérer un point fixe (panneau, arbre) et vérifier que vous le passez au moins 2 secondes après le véhicule devant." },
+              { title: "Sur autoroute", text: "Distance symbolisée par 2 traits de la Bande d'Arrêt d'Urgence (BAU), soit environ 90 mètres à 130 km/h. Sanction si non respectée : 135€ + 3 points." },
+              { title: "Par temps de pluie", text: "Doubler la distance car la distance de freinage est doublée sur sol mouillé. Passer à 4 secondes minimum." },
+              { title: "Derrière un poids lourd", text: "Augmenter encore la distance : le PL masque la visibilité devant lui. Si vous ne voyez pas la route au-delà du camion, vous êtes trop proche." }
             ],
-            examples: ["Angle mort ignoré", "Dépassement par la voie lente"],
-            color: "border-rose-600",
-            bgBadge: "bg-rose-600 text-white",
-            bgLight: "bg-rose-50"
+            examples: [
+              "À 90 km/h, 2 secondes = 50 mètres. Si le véhicule devant freine d'urgence à 0,6 G, vous avez 50m pour réagir et freiner sur 80m → TROP COURT. Gardez 3 secondes minimum.",
+              "Derrière un bus en ville : maintenir une distance permettant de voir les pieds des passagers qui descendent."
+            ],
+            color: "border-red-500",
+            bgBadge: "bg-red-500 text-white",
+            bgLight: "bg-red-50"
           },
           {
-            id: "cas_concret",
-            title: "🚗 Cas concret",
-            desc: "Séquence logique :",
+            id: "conduite_speciale",
+            title: "6. Situations de Conduite Particulières",
+            desc: "Certaines situations exigent des comportements spécifiques codifiés par le Code de la route.",
             rules: [
-              { title: "Action", text: "Dépasser = vérifier + signaler + dépasser." }
+              { title: "Demi-tour", text: "Interdit en haut de côte, dans un virage, sur autoroute, sur voie rapide. Sur route normale : s'assurer d'avoir la visibilité sur 200m dans les deux sens." },
+              { title: "Marche arrière", text: "Interdit sur autoroute et voie rapide. Sur route : autorisée sur courte distance si nécessaire, après vérification que la voie est libre." },
+              { title: "Conduite de nuit", text: "Feux de route obligatoires hors agglomération si la route n'est pas éclairée. Feux de croisement en agglomération. Codes dès qu'un véhicule en sens inverse est visible." },
+              { title: "Véhicules prioritaires (gyrophare + sirène)", text: "Se rabattre à droite et s'arrêter si nécessaire pour laisser passer. Ne jamais suivre un véhicule prioritaire de près pour 'profiter' du dégagement." }
             ],
-            examples: ["Dépassement sur nationale"],
-            color: "border-cyan-600",
-            bgBadge: "bg-cyan-600 text-white",
-            bgLight: "bg-cyan-50"
-          },
-          {
-            id: "astuce",
-            title: "🧠 Astuce",
-            desc: "Règle de base.",
-            rules: [
-              { title: "À retenir", text: "\"Regarder → signaler → agir\"." }
+            examples: [
+              "Ambulance derrière vous : mettre le clignotant droit, se serrer à droite, ralentir progressivement et s'arrêter si l'espace le permet.",
+              "Nuit sur route non éclairée : feux de route. Village éclairé : passer en codes automatiquement à l'entrée."
             ],
-            examples: ["Méthode RCA"],
             color: "border-indigo-600",
             bgBadge: "bg-indigo-600 text-white",
             bgLight: "bg-indigo-50"
-          },
-          {
-            id: "conclusion",
-            title: "🎯 Conclusion",
-            desc: "La base d'une conduite collective réussie.",
-            rules: [
-              { title: "La clé", text: "Toujours anticiper les actions des autres." }
-            ],
-            examples: ["Vigilance constante"],
-            color: "border-teal-600",
-            bgBadge: "bg-teal-600 text-white",
-            bgLight: "bg-teal-50"
           }
         ],
         quiz_section: {
-          title: "🧪 Questions",
-          intro: "Testez vos connaissances sur la circulation.",
+          title: "🧪 Questions type examen — Circulation",
+          intro: "Ces questions couvrent les situations de circulation les plus fréquemment testées à l'ETG.",
           questions: [
             {
-              question: "Le dépassement se fait :",
-              options: ["À droite", "À gauche", "Au milieu", "Peu importe"],
+              question: "Le dépassement par la droite est exceptionnellement autorisé si :",
+              options: ["La route est large", "Le véhicule devant tourne à gauche et libère la droite", "On est pressé", "Sur autoroute à 3 voies"],
               answer: 1,
-              explanation: "Le dépassement s'effectue systématiquement par la gauche (sauf rares exceptions)."
+              explanation: "Seul cas légal de dépassement par la droite : le véhicule devant tourne à gauche et a signalé son intention. Sur autoroute à 3 voies, le 'dépassement par la droite' en file est toléré en embouteillage (pas un vrai dépassement)."
             },
             {
-              question: "Avant de tourner :",
-              options: ["Accélérer", "Freiner fort", "Mettre le clignotant", "Rien"],
-              answer: 2,
-              explanation: "Le clignotant prévient les autres usagers de vos intentions bien avant de freiner."
+              question: "La distance de sécurité légale en circulation est d'au moins :",
+              options: ["1 seconde", "2 secondes", "5 secondes", "10 mètres fixes"],
+              answer: 1,
+              explanation: "2 secondes minimum. Sur autoroute cela représente environ 2 traits de BAU (~90 m à 130 km/h). En cas de pluie, doubler à 4 secondes."
             },
             {
-              question: "En croisement :",
-              options: ["Aller vite", "Klaxonner", "Rester à droite", "Doubler"],
+              question: "En croisement de nuit, quand passer en feux de croisement (codes) ?",
+              options: ["Dès que l'on voit des phares", "À l'entrée de l'agglomération seulement", "Uniquement si l'autre le fait d'abord", "Seulement sur autoroute"],
+              answer: 0,
+              explanation: "Dès l'apparition de phares en sens inverse (~150m), on passe en codes pour éviter l'éblouissement de l'autre conducteur. C'est une obligation légale."
+            },
+            {
+              question: "Sur une route de montagne étroite, qui recule pour laisser passer ?",
+              options: ["Le plus vieux véhicule", "Celui qui monte (il a la priorité)", "Celui qui descend, vers le refuge le plus proche", "Toujours le plus grand véhicule"],
               answer: 2,
-              explanation: "Face à un usager en sens inverse, il faut serrer et rester le plus à droite possible."
+              explanation: "Le véhicule qui monte a la priorité car il lui est plus difficile de manœuvrer en montant. C'est le descendant qui cherche le refuge ou l'élargissement le plus proche."
             }
           ]
         }
@@ -1699,16 +1568,17 @@ export const translations: Record<Language | string, any> = {
         sections: [
           {
             id: "pietons",
-            title: "1. Les Piétons",
-            desc: "Priorité juridique ultime face aux machines.",
+            title: "1. Les Piétons — L'usager le plus vulnérable",
+            desc: "Le piéton est protégé par une priorité quasi absolue dans le Code de la route. Face à une machine, il n'a aucune carrosserie pour le protéger.",
             rules: [
-              { title: "Intention", text: "Priorité dès qu'il manifeste l'intention de traverser (-6 points sinon)." },
-              { title: "HORS passage", text: "Même s'il traverse n'importe où, il reste prioritaire." },
-              { title: "Enfants", text: "Imprévisibles. Freiner immédiatement si ballon sur route." },
-              { title: "Zone rencontre", text: "Vitesse 20 km/h, piétons prioritaires PARTOUT." }
+              { title: "Priorité d'intention (Art. R415-11)", text: "Dès qu'un piéton s'engage ou manifeste CLAIREMENT l'intention de s'engager (un regard, un pas vers la chaussée), le conducteur doit lui céder le passage. Sanction : amende de 135€ et retrait direct de 6 points." },
+              { title: "Hors des passages protégés", text: "Si un piéton traverse en dehors des passages piétons (même s'il y en a un à moins de 30 mètres, ce qui est une infraction pour lui), le conducteur a l'obligation absolue de lui céder le passage pour des raisons évidentes de sécurité." },
+              { title: "Les zones de rencontre", text: "Zones bleues limitées à 20 km/h. Les piétons y sont prioritaires sur tous les véhicules (sauf tramway) et peuvent circuler librement sur toute la largeur de la chaussée." },
+              { title: "Les enfants et seniors", text: "Imprévisibles et à temps de réaction lent. Redoubler de vigilance près des écoles (ralentir préventivement) et des maisons de retraite." }
             ],
             examples: [
-              "Laisser un senior finir sa traversée, même si le feu repasse au vert."
+              "Piéton qui fait un pas vers la chaussée au bord d'un passage piéton : arrêt obligatoire immédiat.",
+              "Ballon qui roule sur la chaussée = enfant qui suit. Arrêt préventif immédiat sans attendre de voir l'enfant."
             ],
             color: "border-blue-400",
             bgBadge: "bg-blue-400 text-white",
@@ -1716,16 +1586,17 @@ export const translations: Record<Language | string, any> = {
           },
           {
             id: "cyclistes",
-            title: "2. Les Cyclistes",
-            desc: "Cohabitation entre bitume et pistes dédiées.",
+            title: "2. Les Cyclistes — Cohabitation sur la chaussée",
+            desc: "Les cyclistes partagent la route avec les automobilistes. Ils sont silencieux, étroits et instables. Les respecter évite de graves accidents.",
             rules: [
-              { title: "Écartement", text: "1m en ville, 1,5m hors-ville lors d'un dépassement." },
-              { title: "Sas Vélo", text: "Interdit aux voitures (35€ d'amende)." },
-              { title: "Bandes/Pistes", text: "Stationnement Très Gênant (-135€)." },
-              { title: "Double sens", text: "Vélos peuvent arriver de face en Zone 30." }
+              { title: "Distance de dépassement légale", text: "Lors du dépassement d'un cycliste, laisser au moins 1 mètre d'écart latéral en agglomération, et 1,5 mètre hors agglomération. Chevaucher la ligne continue est toléré pour ce dépassement si la visibilité est bonne." },
+              { title: "Le Sas Vélo au feu rouge", text: "Espace réservé aux cyclistes devant la ligne d'arrêt des voitures. Interdiction absolue d'y arrêter son véhicule (voiture ou moto). Sanction : 135€ d'amende." },
+              { title: "Double sens cyclable", text: "Dans les Zones 30 et Zones de rencontre, les cyclistes peuvent circuler dans les deux sens de circulation, même si la rue est en sens unique pour les voitures." },
+              { title: "Emportiérage", text: "Ouvrir la portière de la main droite (méthode hollandaise) force à tourner le buste et regarder dans le rétroviseur pour éviter de faucher un cycliste arrivant par l'arrière." }
             ],
             examples: [
-              "Rester derrière un vélo si on ne peut pas laisser 1,5m."
+              "Rue étroite en Zone 30 : un vélo peut arriver face à vous en sens inverse. Ralentir et se serrer à droite.",
+              "Feu rouge : s'arrêter avant la première ligne blanche du sas vélo pour laisser la place aux cyclistes."
             ],
             color: "border-emerald-500",
             bgBadge: "bg-emerald-500 text-white",
@@ -1733,48 +1604,72 @@ export const translations: Record<Language | string, any> = {
           },
           {
             id: "deux_roues",
-            title: "3. Les Deux-Roues",
-            desc: "Invisibles et puissants.",
+            title: "3. Les Deux-Roues Motorisés — Vitesse et invisibilité",
+            desc: "Motos et scooters circulent plus vite et s'insèrent facilement, mais ils sont très difficiles à détecter dans les rétroviseurs.",
             rules: [
-              { title: "Angle Mort", text: "Contrôle Direct (tourner la tête) indispensable." },
-              { title: "Remontée", text: "Faciliter la remontée entre les deux voies de gauche." },
-              { title: "Météo", text: "Moto très instable sous la pluie. Doubler la distance." },
-              { title: "Feux Allumés", text: "Obligatoire de jour pour être dissocié du paysage." }
+              { title: "L'Angle Mort — Le piège mortel", text: "Une moto disparaît facilement dans les angles morts des rétroviseurs. Obligation de tourner la tête (contrôle direct) avant tout changement de file ou virage." },
+              { title: "Remontée de file (inter-files)", text: "Autorisée uniquement à titre expérimental dans certains départements, sur autoroutes et voies rapides encombrées, entre les deux voies les plus à gauche, à une vitesse maximale de 50 km/h." },
+              { title: "Instabilité météo", text: "Sous la pluie, le vent ou sur plaques d'égout, la moto perd très facilement l'adhérence. Doubler les distances de sécurité derrière un deux-roues." },
+              { title: "Feux de jour obligatoires", text: "Les motos doivent rouler avec les feux de croisement allumés le jour pour être mieux identifiées par les automobilistes." }
             ],
             examples: [
-              "Ouverture 'à la Hollandaise' pour repérer un scooter."
+              "Avant de tourner à droite dans une rue : regarder le rétro droit ET tourner la tête à droite (angle mort) pour vérifier qu'un scooter ne remonte pas le long du trottoir.",
+              "Chaussée mouillée : laisser au moins 4 secondes d'écart derrière une moto."
             ],
             color: "border-slate-600",
             bgBadge: "bg-slate-600 text-white",
             bgLight: "bg-slate-50"
+          },
+          {
+            id: "poids_lourds",
+            title: "4. Les Poids Lourds et Véhicules Spéciaux",
+            desc: "Les camions, bus et engins agricoles ont des gabarits imposants qui créent d'immenses angles morts et exigent de grandes largeurs pour tourner.",
+            rules: [
+              { title: "Les 4 angles morts des camions", text: "Un camion ne voit pas les véhicules situés juste derrière lui, juste devant sa cabine, et sur les côtés latéraux immédiats. Si vous ne voyez pas les rétroviseurs du chauffeur, il ne vous voit pas." },
+              { title: "Gabarit de virage", text: "Pour tourner, un bus ou un camion doit s'écarter vers la gauche avant de virer à droite. Ne jamais tenter de le dépasser ou de s'insérer par la droite à ce moment." },
+              { title: "Engins agricoles et convois", text: "Vitesse lente (souvent 25 ou 40 km/h). Soyez patient. Un convoi exceptionnel (escorté) impose de lui céder le passage, voire de s'arrêter pour le laisser manœuvrer." }
+            ],
+            examples: [
+              "Derrière un camion : se tenir à au moins 20 ou 30 mètres pour sortir de son angle mort arrière et avoir de la visibilité.",
+              "Camion qui met son clignotant droit mais se déporte à gauche : il va tourner à droite. Surtout ne pas s'engager sur son flanc droit."
+            ],
+            color: "border-amber-600",
+            bgBadge: "bg-amber-600 text-white",
+            bgLight: "bg-amber-50"
           }
         ],
         quiz_section: {
           title: "🧪 Quiz Partage de la Route",
-          intro: "Respectez les plus vulnérables.",
+          intro: "Vérifiez votre comportement et votre sens des priorités envers les autres usagers.",
           questions: [
             {
-              question: "L'écart latéral pour dépasser un cycliste hors agglomération est de :",
+              question: "Si je refuse la priorité à un piéton qui manifeste clairement l'intention de traverser, j'encours :",
+              options: ["Une simple amende de 35€", "Une amende de 135€ et un retrait de 3 points", "Une amende de 135€ et un retrait de 6 points", "Aucune sanction s'il n'y a pas de passage piéton proche"],
+              answer: 2,
+              explanation: "Le refus de priorité à un piéton est une infraction très grave : amende forfaitaire de 135€ et retrait direct de 6 points sur le permis de conduire."
+            },
+            {
+              question: "Quelle distance latérale minimale dois-je laisser pour dépasser un cycliste hors agglomération ?",
               options: ["0,5 mètre", "1 mètre", "1,5 mètre", "2 mètres"],
               answer: 2,
-              explanation: "Pour compenser l'effet de souffle et la vitesse, on laisse 1,5m hors ville (contre 1m en ville)."
+              explanation: "Hors agglomération, la vitesse est plus élevée et l'effet de souffle plus important. Il faut laisser au moins 1,5m d'écart (contre 1m minimum en agglomération)."
             },
             {
-              question: "Un piéton est prioritaire :",
-              options: ["Seulement sur les passages", "Dès qu'il manifeste l'intention", "S'il court", "Jamais hors passage"],
-              answer: 1,
-              explanation: "Dès qu'un piéton montre qu'il veut traverser, le conducteur doit lui céder le passage sous peine de retrait de 6 points."
-            },
-            {
-              question: "Le 'sas vélo' au feu rouge est ouvert aux :",
-              options: ["Voitures", "Motos", "Cyclistes uniquement", "Bus"],
+              question: "En Zone 30, un cycliste peut-il rouler à contre-sens de ma circulation ?",
+              options: ["Non, jamais", "Oui, s'il y a un marquage au sol spécifique uniquement", "Oui, le double sens cyclable est la règle par défaut en Zone 30", "Seulement le dimanche et jours fériés"],
               answer: 2,
-              explanation: "Le sas vélo est une zone réservée permettant aux cyclistes de démarrer en sécurité devant le flux automobile."
+              explanation: "Dans les Zones 30 et Zones de rencontre, le double sens cyclable est autorisé par défaut sur toutes les voies à sens unique pour les voitures, sauf arrêté municipal contraire."
+            },
+            {
+              question: "Si vous roulez juste derrière un gros camion et ne voyez pas ses rétroviseurs latéraux :",
+              options: ["Vous êtes en parfaite sécurité dans son aspiration", "Le chauffeur vous voit parfaitement grâce à ses caméras", "Vous êtes dans son angle mort arrière et il ne vous voit pas", "Vous devez klaxonner pour vous signaler"],
+              answer: 2,
+              explanation: "Règle d'or des angles morts : si vous ne voyez pas les yeux ou les rétroviseurs du chauffeur, il est physiquement impossible pour lui de savoir que vous êtes derrière."
             }
           ]
         },
         footer_title: "Théorie finie !",
-        footer_desc: "Vous avez maintenant validé les 12 modules de cours."
+        footer_desc: "Félicitations ! Vous avez maintenant validé et enrichi l'ensemble des 12 modules de cours."
       },
     },
     exam: {
