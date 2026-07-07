@@ -1,19 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-  AlertTriangle, 
-  Car, 
-  ArrowRight, 
-  ArrowUp, 
-  ArrowDownUp, 
-  Bike, 
-  Truck, 
-  ParkingCircle,
-  HelpCircle,
-  Construction,
-  Train,
-  Wind,
-  Snowflake,
-  Crosshair
+  Search,
+  BookOpen
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -24,98 +12,159 @@ interface SignData {
   category: SignCategory;
   name: string;
   meaning: string;
-  content?: React.ReactNode;
 }
 
 const SIGNS: SignData[] = [
-  // DANGER (Triangles)
-  { id: 'A1a', category: 'danger', name: 'Virage à droite', meaning: 'Annonce un virage dangereux vers la droite à 50m (ville) ou 150m (hors ville). Ralentissez.', content: <ArrowRight className="w-8 h-8 text-black" style={{ transform: 'rotate(45deg)' }} /> },
-  { id: 'A1b', category: 'danger', name: 'Virage à gauche', meaning: 'Annonce un virage dangereux vers la gauche à 50m (ville) ou 150m (hors ville). Ralentissez.', content: <ArrowRight className="w-8 h-8 text-black" style={{ transform: 'rotate(-135deg)' }} /> },
-  { id: 'A1c', category: 'danger', name: 'Succession de virages', meaning: 'Succession de virages dont le premier est à droite. Ralentissez.', content: <div className="text-black font-black text-xl translate-y-1">~</div> },
-  { id: 'A2a', category: 'danger', name: 'Cassis ou dos-d\'âne', meaning: 'Signale une déformation importante de la chaussée ou un ralentisseur.', content: <div className="flex gap-1"><div className="w-3 h-3 rounded-t-full bg-black"></div><div className="w-3 h-3 rounded-t-full bg-black"></div></div> },
-  { id: 'A3', category: 'danger', name: 'Chaussée rétrécie', meaning: 'Rétrécissement de la route. Soyez vigilant quant au croisement des véhicules.', content: <ArrowUp className="w-8 h-8 text-black" style={{ transform: 'scaleX(0.5)' }} /> },
-  { id: 'A4', category: 'danger', name: 'Chaussée glissante', meaning: 'Risque accru de dérapage. Réduisez la vitesse, augmentez la distance de sécurité.', content: <Snowflake className="w-8 h-8 text-black" /> },
-  { id: 'A7', category: 'danger', name: 'Passage à niveau sans barrière', meaning: 'Traversée de voie ferrée non protégée. Ralentissez et regardez bien des deux côtés.', content: <Train className="w-8 h-8 text-black" /> },
-  { id: 'A8', category: 'danger', name: 'Traversée de tramway', meaning: 'Priorité absolue au tramway. Ralentissez et cédez le passage si un tram approche.', content: <span className="text-black font-black text-[10px] leading-none">TRAM</span> },
-  { id: 'A13a', category: 'danger', name: 'Endroit fréquenté par les enfants', meaning: 'Proximité d\'école, park ou terrain de jeux. Ralentissez et soyez prêt à vous arrêter.', content: <span className="text-black font-black text-xl translate-y-1">🚸</span> },
-  { id: 'A13b', category: 'danger', name: 'Passage piéton', meaning: 'Signale la présence d\'un passage piéton à 50m ou 150m. Piétons prioritaires.', content: <span className="text-black font-black text-xl translate-y-1">🚶</span> },
-  { id: 'A14', category: 'danger', name: 'Autre danger', meaning: 'Danger non spécifié par un autre panneau. Redoublez de vigilance.', content: <span className="text-black font-black text-2xl">!</span> },
-  { id: 'A18', category: 'danger', name: 'Circulation à double sens', meaning: 'Prend effet IMMÉDIATEMENT à la hauteur du panneau (contrairement aux autres dangers).', content: <ArrowDownUp className="w-8 h-8 text-black" /> },
-  { id: 'A21', category: 'danger', name: 'Vent latéral', meaning: 'Risque de déportation du véhicule sous l\'effet du vent. Ralentissez.', content: <Wind className="w-8 h-8 text-black" /> },
-  
-  // INTERDICTION (Ronds rouges)
-  { id: 'B0', category: 'interdiction', name: 'Circulation interdite', meaning: 'Circulation interdite dans les deux sens pour tous les véhicules.', content: null },
-  { id: 'B1', category: 'interdiction', name: 'Sens interdit', meaning: 'Interdiction de pénétrer dans cette rue. La circulation peut y être à sens unique de face.', content: <div className="w-12 h-3 bg-white"></div> },
-  { id: 'B2a', category: 'interdiction', name: 'Interdiction de tourner à gauche', meaning: 'Au prochain carrefour, il est interdit de virer à gauche.', content: <div className="relative flex items-center justify-center"><ArrowRight className="w-8 h-8 text-black absolute" style={{ transform: 'rotate(-180deg)' }} /><div className="w-14 h-1 bg-red-600 absolute rotate-45"></div></div> },
-  { id: 'B2b', category: 'interdiction', name: 'Interdiction de tourner à droite', meaning: 'Au prochain carrefour, il est interdit de virer à droite.', content: <div className="relative flex items-center justify-center"><ArrowRight className="w-8 h-8 text-black absolute" /><div className="w-14 h-1 bg-red-600 absolute rotate-[135deg]"></div></div> },
-  { id: 'B2c', category: 'interdiction', name: 'Interdiction de faire demi-tour', meaning: 'Interdit d\'effectuer un demi-tour sur cette route jusqu\'à la prochaine intersection.', content: <span className="text-black font-bold text-xl">↷</span> },
-  { id: 'B3', category: 'interdiction', name: 'Dépassement interdit', meaning: 'Interdiction de dépasser tous les véhicules à moteur (sauf deux-roues sans side-car).', content: <div className="flex gap-1"><Car className="w-6 h-6 text-red-600" /><Car className="w-6 h-6 text-black" /></div> },
-  { id: 'B6a1', category: 'interdiction', name: 'Stationnement interdit', meaning: 'Stationnement interdit à partir du panneau jusqu\'à la prochaine intersection.', content: null },
-  { id: 'B6d', category: 'interdiction', name: 'Arrêt et stationnement interdits', meaning: 'Interdiction absolue d\'arrêter ou de garer son véhicule à partir du panneau.', content: null },
-  { id: 'B14_30', category: 'interdiction', name: 'Vitesse limitée à 30', meaning: 'Vitesse maximale autorisée : 30 km/h.', content: <span className="text-black font-black text-3xl">30</span> },
-  { id: 'B14_50', category: 'interdiction', name: 'Vitesse limitée à 50', meaning: 'Vitesse maximale autorisée : 50 km/h (limitation par défaut en ville).', content: <span className="text-black font-black text-3xl">50</span> },
-  { id: 'B14_80', category: 'interdiction', name: 'Vitesse limitée à 80', meaning: 'Vitesse maximale autorisée : 80 km/h (limitation par défaut hors ville).', content: <span className="text-black font-black text-3xl">80</span> },
-  { id: 'B14_110', category: 'interdiction', name: 'Vitesse limitée à 110', meaning: 'Vitesse maximale autorisée : 110 km/h (sur voie rapide ou pluie autoroute).', content: <span className="text-black font-black text-3xl">110</span> },
-  { id: 'B14_130', category: 'interdiction', name: 'Vitesse limitée à 130', meaning: 'Vitesse maximale autorisée : 130 km/h (sur autoroute).', content: <span className="text-black font-black text-3xl">130</span> },
-  { id: 'B31', category: 'interdiction', name: 'Fin de toutes les interdictions', meaning: 'Fin de toutes les interdictions précédemment signalées pour les véhicules en mouvement.', content: null },
-  { id: 'B33', category: 'interdiction', name: 'Fin d\'interdiction de dépasser', meaning: 'Autorisation de dépasser à nouveau sous réserve de sécurité.', content: <div className="flex gap-1 relative opacity-50"><Car className="w-6 h-6 text-black" /><Car className="w-6 h-6 text-black" /><div className="absolute inset-0 border-t-2 border-black rotate-45"></div></div> },
-  { id: 'B34_50', category: 'interdiction', name: 'Fin de limitation à 50', meaning: 'Fin de la limitation de vitesse à 50 km/h.', content: '50' },
-  { id: 'B34_80', category: 'interdiction', name: 'Fin de limitation à 80', meaning: 'Fin de la limitation de vitesse à 80 km/h.', content: '80' },
+  // ================= DANGER (Triangles) =================
+  { id: 'A1b', category: 'danger', name: 'Virage à gauche', meaning: 'Annonce un virage dangereux vers la gauche. Ralentissez à l\'approche.' },
+  { id: 'A1a', category: 'danger', name: 'Virage à droite', meaning: 'Annonce un virage dangereux vers la droite. Ralentissez à l\'approche.' },
+  { id: 'A1c', category: 'danger', name: 'Succession de virages, 1er à droite', meaning: 'Succession de virages dangereux dont le premier est vers la droite. Réduisez votre vitesse.' },
+  { id: 'A1d', category: 'danger', name: 'Succession de virages, 1er à gauche', meaning: 'Succession de virages dangereux dont le premier est vers la gauche. Réduisez votre vitesse.' },
+  { id: 'A2a', category: 'danger', name: 'Cassis ou dos-d\'âne', meaning: 'Signale une déformation importante de la chaussée ou un cassis (creux/bosse) pouvant déséquilibrer le véhicule.' },
+  { id: 'A2b', category: 'danger', name: 'Ralentisseur', meaning: 'Annonce un ralentisseur de type dos-d\'âne pour forcer la réduction de la vitesse en zone urbaine.' },
+  { id: 'A3', category: 'danger', name: 'Chaussée rétrécie', meaning: 'Rétrécissement de la chaussée des deux côtés. Croisement difficile avec les usagers d\'en face.' },
+  { id: 'A3a', category: 'danger', name: 'Chaussée rétrécie par la droite', meaning: 'Rétrécissement de la chaussée sur le côté droit uniquement.' },
+  { id: 'A3b', category: 'danger', name: 'Chaussée rétrécie par la gauche', meaning: 'Rétrécissement de la chaussée sur le côté gauche uniquement.' },
+  { id: 'A4', category: 'danger', name: 'Chaussée particulièrement glissante', meaning: 'Chaussée glissante (pluie, verglas, boue). Risque élevé de perte d\'adhérence.' },
+  { id: 'A5', category: 'danger', name: 'Pont mobile', meaning: 'Annonce un pont mobile pouvant s\'élever. Arrêt obligatoire si les feux rouges clignotent.' },
+  { id: 'A13b', category: 'danger', name: 'Passage pour piétons', meaning: 'Signale la présence d\'un passage pour piétons. Priorité absolue aux piétons engagés ou ayant l\'intention de s\'engager.' },
+  { id: 'A13b_raised', category: 'danger', name: 'Passage pour piétons surélevé', meaning: 'Signale un passage piéton implanté sur un ralentisseur dos-d\'âne. Vigilance accrue.' },
+  { id: 'A13a', category: 'danger', name: 'Endroit fréquenté par les enfants', meaning: 'Proximité d\'une école, d\'une aire de jeux ou d\'un parc. Ralentissez fortement.' },
+  { id: 'A15b', category: 'danger', name: 'Passage d\'animaux domestiques', meaning: 'Risque de rencontre avec du bétail (vaches, moutons) pouvant traverser la chaussée.' },
+  { id: 'A15a1', category: 'danger', name: 'Passage d\'animaux sauvages', meaning: 'Risque de traversée de grand gibier (cerfs, sangliers) en forêt. Vigilance accrue.' },
+  { id: 'A15c', category: 'danger', name: 'Passage de cavaliers', meaning: 'Présence fréquente de chevaux et cavaliers traversant ou longeant la route.' },
+  { id: 'A16', category: 'danger', name: 'Descente dangereuse', meaning: 'Annonce une descente à forte inclinaison (10%). Utiliser le frein moteur pour ne pas surchauffer les freins.' },
+  { id: 'A17', category: 'danger', name: 'Annonce de feux tricolores', meaning: 'Signale des feux de circulation, souvent isolés ou inattendus (entrée de ville).' },
+  { id: 'A18', category: 'danger', name: 'Circulation dans les deux sens', meaning: 'Règle d\'exception : s\'applique IMMÉDIATEMENT à hauteur du panneau. Fin du sens unique.' },
+  { id: 'A19', category: 'danger', name: 'Chute de pierres', meaning: 'Risque de chutes de pierres ou de présence d\'éboulements sur la chaussée.' },
+  { id: 'A20', category: 'danger', name: 'Débouché sur un quai ou une berge', meaning: 'La route se termine sur un quai ou un cours d\'eau. Risque de chute dans l\'eau.' },
+  { id: 'A21', category: 'danger', name: 'Débouché de cyclistes', meaning: 'Attention aux cyclistes débouchant de pistes cyclables ou traversant la chaussée.' },
+  { id: 'A23', category: 'danger', name: 'Danger aérien', meaning: 'Survol d\'avions à basse altitude (proximité d\'aérodrome). Risque de bruit soudain.' },
+  { id: 'A24', category: 'danger', name: 'Risque de fort vent latéral', meaning: 'Manche à air indiquant un vent violent pouvant déporter la trajectoire du véhicule.' },
+  { id: 'A8', category: 'danger', name: 'Traversée de voies de tramways', meaning: 'Traversée de voies ferrées de tramway. Priorité absolue au tramway.' },
+  { id: 'A9', category: 'danger', name: 'Traversée de voie de bus', meaning: 'Intersection avec une voie réservée aux transports en commun.' },
+  { id: 'A14', category: 'danger', name: 'Danger non spécifié', meaning: 'Danger pour lequel il n\'existe pas de symbole. Précisé parfois par un panonceau explicatif.' },
 
-  // OBLIGATION (Ronds bleus)
-  { id: 'B21-1', category: 'obligation', name: 'Obligation de tourner à droite', meaning: 'Au prochain carrefour, vous devez tourner à droite.', content: <ArrowRight className="w-10 h-10 text-white" /> },
-  { id: 'B21-2', category: 'obligation', name: 'Obligation de tourner à gauche', meaning: 'Au prochain carrefour, vous devez tourner à gauche.', content: <ArrowRight className="w-10 h-10 text-white" style={{ transform: 'rotate(180deg)' }} /> },
-  { id: 'B21b', category: 'obligation', name: 'Contournement obligatoire', meaning: 'Obligation de contourner l\'obstacle par la droite.', content: <ArrowRight className="w-10 h-10 text-white" style={{ transform: 'rotate(45deg)' }} /> },
-  { id: 'B22a', category: 'obligation', name: 'Piste cyclable obligatoire', meaning: 'Voie réservée et obligatoire pour les cyclistes.', content: <Bike className="w-8 h-8 text-white" /> },
-  { id: 'B25', category: 'obligation', name: 'Vitesse minimale obligatoire', meaning: 'Interdiction de rouler à une vitesse inférieure à 30 km/h.', content: <span className="text-white font-black text-3xl">30</span> },
-  { id: 'B27a', category: 'obligation', name: 'Voie réservée aux bus', meaning: 'Voie réservée aux transports en commun. Interdit aux autres véhicules.', content: <span className="text-white font-black text-sm">BUS</span> },
-  { id: 'B29', category: 'obligation', name: 'Fin de piste cyclable', meaning: 'Fin de la piste ou bande cyclable obligatoire.', content: <Bike className="w-8 h-8 text-white" /> },
+  // ================= INTERDICTION (Ronds rouges) =================
+  { id: 'B0', category: 'interdiction', name: 'Circulation interdite', meaning: 'Interdiction d\'accès à tout véhicule dans les deux sens de circulation.' },
+  { id: 'B1', category: 'interdiction', name: 'Sens interdit', meaning: 'Interdiction de s\'engager dans cette rue. Le trafic s\'effectue en sens inverse.' },
+  { id: 'B2a', category: 'interdiction', name: 'Interdiction de tourner à gauche', meaning: 'Au prochain carrefour, interdiction de tourner à gauche pour toutes les voies.' },
+  { id: 'B2b', category: 'interdiction', name: 'Interdiction de tourner à droite', meaning: 'Au prochain carrefour, interdiction de tourner à droite pour toutes les voies.' },
+  { id: 'B2c', category: 'interdiction', name: 'Interdiction de faire demi-tour', meaning: 'Interdiction de faire demi-tour sur la route jusqu\'au prochain carrefour.' },
+  { id: 'B3', category: 'interdiction', name: 'Dépassement interdit', meaning: 'Interdiction de dépasser tous les véhicules à moteur (sauf deux-roues sans side-car).' },
+  { id: 'B3a', category: 'interdiction', name: 'Dépassement interdit aux poids lourds', meaning: 'Interdiction de dépasser pour les véhicules de transport de marchandises > 3,5t.' },
+  { id: 'B4', category: 'interdiction', name: 'Halte Douane', meaning: 'Obligation de marquer l\'arrêt au poste de douane. Ne repartir que sur ordre.' },
+  { id: 'B5a', category: 'interdiction', name: 'Halte Gendarmerie', meaning: 'Obligation de s\'arrêter au poste de contrôle de la Gendarmerie.' },
+  { id: 'B5b', category: 'interdiction', name: 'Halte Police', meaning: 'Obligation de s\'arrêter au poste de contrôle de la Police.' },
+  { id: 'B5c', category: 'interdiction', name: 'Halte Péage', meaning: 'Obligation de s\'arrêter pour s\'acquitter du péage de l\'autoroute.' },
+  { id: 'B6a1', category: 'interdiction', name: 'Stationnement interdit', meaning: 'Stationnement interdit à partir du panneau jusqu\'à la prochaine intersection.' },
+  { id: 'B6a2', category: 'interdiction', name: 'Stationnement alterné (1-15 du mois)', meaning: 'Stationnement interdit du côté du panneau du 1er au 15 du mois.' },
+  { id: 'B6a3', category: 'interdiction', name: 'Stationnement alterné (16-31 du mois)', meaning: 'Stationnement interdit du côté du panneau du 16 au 31 du mois.' },
+  { id: 'B6d', category: 'interdiction', name: 'Arrêt et stationnement interdits', meaning: 'Interdiction absolue d\'arrêter ou de stationner son véhicule sur la chaussée.' },
+  { id: 'B7b', category: 'interdiction', name: 'Accès interdit aux motorisés', meaning: 'Accès interdit à tous les véhicules à moteur (sauf cyclomoteurs).' },
+  { id: 'B8', category: 'interdiction', name: 'Accès interdit aux motocycles', meaning: 'Accès interdit aux motos de toutes cylindrées.' },
+  { id: 'B9a', category: 'interdiction', name: 'Accès interdit aux piétons', meaning: 'Interdiction d\'accès pour tous les piétons sur cette portion de voie.' },
+  { id: 'B9b', category: 'interdiction', name: 'Accès interdit aux cycles', meaning: 'Accès interdit aux bicyclettes et vélos électriques.' },
+  { id: 'B9g', category: 'interdiction', name: 'Accès interdit aux bus', meaning: 'Accès interdit aux autocars et autobus.' },
+  { id: 'B9h', category: 'interdiction', name: 'Accès interdit aux cyclomoteurs', meaning: 'Accès interdit aux deux-roues de moins de 50 cm³.' },
+  { id: 'B11', category: 'interdiction', name: 'Hauteur limitée à 3,5m', meaning: 'Accès interdit aux véhicules dont la hauteur dépasse 3,5 mètres.' },
+  { id: 'B12', category: 'interdiction', name: 'Largeur limitée à 2,5m', meaning: 'Accès interdit aux véhicules dont la largeur dépasse 2,5 mètres.' },
+  { id: 'B13', category: 'interdiction', name: 'Poids limité à 5,5t', meaning: 'Accès interdit aux véhicules dont le P.T.A.C dépasse 5,5 tonnes.' },
+  { id: 'B14_30', category: 'interdiction', name: 'Vitesse limitée à 30', meaning: 'Vitesse maximale autorisée de 30 km/h.' },
+  { id: 'B14_50', category: 'interdiction', name: 'Vitesse limitée à 50', meaning: 'Vitesse maximale autorisée de 50 km/h.' },
+  { id: 'B14_80', category: 'interdiction', name: 'Vitesse limitée à 80', meaning: 'Vitesse maximale autorisée de 80 km/h.' },
+  { id: 'B14_110', category: 'interdiction', name: 'Vitesse limitée à 110', meaning: 'Vitesse maximale autorisée de 110 km/h.' },
+  { id: 'B14_130', category: 'interdiction', name: 'Vitesse limitée à 130', meaning: 'Vitesse maximale autorisée de 130 km/h.' },
+  { id: 'B31', category: 'interdiction', name: 'Fin de toutes les interdictions', meaning: 'Fin de toutes les interdictions précédemment signalées pour les véhicules en mouvement.' },
+  { id: 'B33', category: 'interdiction', name: 'Fin d\'interdiction de dépasser', meaning: 'Autorisation de dépasser à nouveau sous réserve de sécurité.' },
+  { id: 'B34_50', category: 'interdiction', name: 'Fin de limitation à 50', meaning: 'Fin de la limitation de vitesse à 50 km/h.' },
+  { id: 'B34_80', category: 'interdiction', name: 'Fin de limitation à 80', meaning: 'Fin de la limitation de vitesse à 80 km/h.' },
 
-  // INDICATION (Carrés bleus)
-  { id: 'C1a', category: 'indication', name: 'Parking', meaning: 'Indique un espace de stationnement autorisé.', content: <span className="text-white font-black text-4xl">P</span> },
-  { id: 'C4a', category: 'indication', name: 'Vitesse conseillée', meaning: 'Vitesse conseillée pour optimiser le flux de trafic (ici 70 km/h).', content: <span className="text-white font-black text-3xl">70</span> },
-  { id: 'C12', category: 'indication', name: 'Sens unique', meaning: 'Toutes les voies de circulation sont dans le même sens.', content: <ArrowUp className="w-10 h-10 text-white" /> },
-  { id: 'C20a', category: 'indication', name: 'Passage piéton', meaning: 'Indique la position physique d\'un passage pour piétons.', content: <div className="flex flex-col items-center gap-1"><div className="w-6 h-1 bg-white"></div><div className="w-6 h-1 bg-white"></div><div className="w-6 h-1 bg-white"></div></div> },
-  { id: 'C50', category: 'indication', name: 'Zone piétonne', meaning: 'Entrée d\'une zone réservée aux piétons, véhicules autorisés uniquement au pas.', content: <span className="text-white font-black text-xs">ZONE 🚶</span> },
-  { id: 'C107', category: 'indication', name: 'Route à accès réglementé', meaning: 'Début d\'une voie rapide. Vitesse limitée généralement à 110 km/h. Interdit aux vélos et piétons.', content: <Car className="w-10 h-10 text-white" /> },
-  { id: 'C207', category: 'indication', name: 'Autoroute', meaning: 'Début d\'une autoroute. Vitesse limitée à 130 km/h.', content: <div className="flex gap-2"><div className="w-1 h-8 bg-white"></div><div className="w-1 h-8 bg-white"></div></div> },
-  { id: 'C107_end', category: 'indication', name: 'Fin de voie rapide', meaning: 'Fin d\'une route à accès réglementé.', content: <Car className="w-10 h-10 text-white" /> },
-  { id: 'C207_end', category: 'indication', name: 'Fin d\'autoroute', meaning: 'Fin d\'une section d\'autoroute.', content: <div className="flex gap-2"><div className="w-1 h-8 bg-white"></div><div className="w-1 h-8 bg-white"></div></div> },
+  // ================= OBLIGATION (Ronds bleus) =================
+  { id: 'B21-1', category: 'obligation', name: 'Obligation de tourner à droite', meaning: 'Au carrefour, virage à droite obligatoire.' },
+  { id: 'B21-2', category: 'obligation', name: 'Obligation de tourner à gauche', meaning: 'Au carrefour, virage à gauche obligatoire.' },
+  { id: 'B21b', category: 'obligation', name: 'Contournement obligatoire', meaning: 'Obligation de contourner l\'obstacle ou le refuge par le côté droit.' },
+  { id: 'B22a', category: 'obligation', name: 'Piste cyclable', meaning: 'Voie obligatoire pour les cyclistes (interdite aux piétons et motorisés).' },
+  { id: 'B25', category: 'obligation', name: 'Vitesse minimale obligatoire (30)', meaning: 'Interdiction de circuler à une vitesse inférieure à 30 km/h (sauf encombrement).' },
+  { id: 'B27a', category: 'obligation', name: 'Voie réservée aux bus', meaning: 'Voie réservée exclusivement aux transports en commun de passagers.' },
+  { id: 'B29', category: 'obligation', name: 'Fin de piste cyclable', meaning: 'Fin de la bande ou piste cyclable obligatoire.' },
 
-  // PRIORITÉ (Formes spéciales)
-  { id: 'AB1', category: 'priorite', name: 'Priorité à droite', meaning: 'Cédez le passage aux véhicules venant de droite à la prochaine intersection.', content: 'croix' },
-  { id: 'AB2', category: 'priorite', name: 'Priorité ponctuelle', meaning: 'Vous avez la priorité à la prochaine intersection seulement.', content: 'ponctuelle' },
-  { id: 'AB3a', category: 'priorite', name: 'Cédez le passage', meaning: 'Ralentir et céder le passage à gauche et à droite sans obligation de s\'arrêter si la voie est libre.', content: 'cedez' },
-  { id: 'AB4', category: 'priorite', name: 'Stop', meaning: 'Arrêt complet OBLIGATOIRE à la ligne. Cédez le passage à gauche et à droite.', content: 'stop' },
-  { id: 'AB6', category: 'priorite', name: 'Route prioritaire', meaning: 'Vous êtes prioritaire à toutes les intersections de cette route jusqu\'au panneau de fin.', content: 'losange' },
-  { id: 'AB7', category: 'priorite', name: 'Fin de route prioritaire', meaning: 'Fin de la priorité à toutes les intersections.', content: 'losange_end' },
-  { id: 'B15', category: 'priorite', name: 'Priorité au sens inverse', meaning: 'Vous devez céder le passage aux usagers venant en sens inverse dans ce passage étroit.', content: 'sens_inverse' },
-  { id: 'C18', category: 'priorite', name: 'Priorité face au sens inverse', meaning: 'Vous avez la priorité de passage face aux usagers venant en sens inverse.', content: 'priorite_face' },
+  // ================= INDICATION (Carrés bleus) =================
+  { id: 'C1a', category: 'indication', name: 'Parking', meaning: 'Lieu aménagé pour le stationnement des véhicules.' },
+  { id: 'C4a', category: 'indication', name: 'Vitesse conseillée (70)', meaning: 'Il est conseillé de rouler à 70 km/h sous de bonnes conditions.' },
+  { id: 'C12', category: 'indication', name: 'Sens unique', meaning: 'Circulation à sens unique. Interdiction de faire demi-tour ou de rouler à contre-sens.' },
+  { id: 'C20a', category: 'indication', name: 'Passage piéton', meaning: 'Indique l\'emplacement d\'un passage pour piétons.' },
+  { id: 'C50', category: 'indication', name: 'Zone piétonne', meaning: 'Entrée d\'une zone réservée aux piétons. Véhicules exceptionnels admis au pas.' },
+  { id: 'C107', category: 'indication', name: 'Route à accès réglementé', meaning: 'Début d\'une voie rapide (110 km/h). Interdit aux piétons, vélos, et usagers lents.' },
+  { id: 'C207', category: 'indication', name: 'Autoroute', meaning: 'Début d\'une section d\'autoroute (130 km/h). Règles de sécurité strictes.' },
+  { id: 'C107_end', category: 'indication', name: 'Fin de voie rapide', meaning: 'Fin d\'une route à accès réglementé.' },
+  { id: 'C207_end', category: 'indication', name: 'Fin d\'autoroute', meaning: 'Fin de la section d\'autoroute.' },
+
+  // ================= PRIORITÉ (Formes spéciales) =================
+  { id: 'AB1', category: 'priorite', name: 'Priorité à droite', meaning: 'Intersection où s\'applique la règle de priorité à droite par défaut.' },
+  { id: 'AB2', category: 'priorite', name: 'Priorité ponctuelle', meaning: 'Vous avez la priorité de passage à la prochaine intersection seulement.' },
+  { id: 'AB3a', category: 'priorite', name: 'Cédez le passage', meaning: 'Cédez le passage aux usagers à gauche et à droite. Arrêt non requis si la voie est libre.' },
+  { id: 'AB4', category: 'priorite', name: 'Stop', meaning: 'Arrêt absolu OBLIGATOIRE à la ligne. Cédez le passage à tous les usagers de l\'axe rencontré.' },
+  { id: 'AB6', category: 'priorite', name: 'Route prioritaire', meaning: 'Vous êtes prioritaire à toutes les intersections sur cet axe jusqu\'à sa fin.' },
+  { id: 'AB7', category: 'priorite', name: 'Fin de route prioritaire', meaning: 'Fin de la route prioritaire. La priorité à droite redevient la règle par défaut.' },
+  { id: 'B15', category: 'priorite', name: 'Priorité au sens inverse', meaning: 'Vous devez céder le passage aux usagers venant en face dans ce passage étroit.' },
+  { id: 'C18', category: 'priorite', name: 'Priorité face au sens inverse', meaning: 'Vous avez la priorité de passage face aux usagers venant en sens inverse dans le passage étroit.' },
 ];
 
 const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
-  'A1a': { name: 'Опасный поворот направо', meaning: 'Снизьте скорость, опасный поворот направо через 150 м (вне населенного пункта).' },
-  'A1b': { name: 'Опасный поворот налево', meaning: 'Снизьте скорость, опасный поворот налево через 150 м.' },
+  'A1b': { name: 'Опасный поворот налево', meaning: 'Снизьте скорость, опасный поворот налево через 150 м (вне населенного пункта).' },
+  'A1a': { name: 'Опасный поворот направо', meaning: 'Снизьте скорость, опасный поворот направо через 150 м.' },
   'A1c': { name: 'Опасные повороты', meaning: 'Опасные повороты, первый направо. Снизьте скорость.' },
+  'A1d': { name: 'Опасные повороты', meaning: 'Опасные повороты, первый налево. Снизьте скорость.' },
   'A2a': { name: 'Неровная дорога (бугор или впадина)', meaning: 'Деформация дорожного покрытия или искусственная неровность.' },
-  'A3': { name: 'Сужение дороги', meaning: 'Дорога сужается перед вами. Будьте осторожны при разъезде.' },
+  'A2b': { name: 'Искусственная неровность', meaning: 'Предупреждение о лежачем полицейском.' },
+  'A3': { name: 'Сужение дороги', meaning: 'Дорога сужается с обеих сторон. Будьте осторожны при разъезде.' },
+  'A3a': { name: 'Сужение дороги справа', meaning: 'Дорога сужается с правой стороны.' },
+  'A3b': { name: 'Сужение дороги слева', meaning: 'Дорога сужается с левой стороны.' },
   'A4': { name: 'Скользкая дорога', meaning: 'Опасность заноса. Снизьте скорость и увеличьте дистанцию.' },
-  'A7': { name: 'Переезд без шлагбаума', meaning: 'Нерегулируемый железнодорожный переезд. Будьте предельно внимательны.' },
-  'A8': { name: 'Пересечение с трамвайной линией', meaning: 'Абсолютный приоритет трамвая. Уступите дорогу при приближении трамвая.' },
-  'A13a': { name: 'Дети', meaning: 'Близость школы или игровой площадки. Снизьте скорость.' },
+  'A5': { name: 'Разводной мост', meaning: 'Предупреждение о разводном мосте. Остановка при запрещающем сигнале.' },
   'A13b': { name: 'Пешеходный переход', meaning: 'Пешеходный переход через 50/150м. Пешеходы имеют преимущество.' },
-  'A14': { name: 'Прочие опасности', meaning: 'Неуказанная опасность, будьте предельно внимательны.' },
+  'A13b_raised': { name: 'Приподнятый пешеходный переход', meaning: 'Пешеходный переход на искусственной неровности.' },
+  'A13a': { name: 'Дети', meaning: 'Близость школы или игровой площадки. Снизьте скорость.' },
+  'A15b': { name: 'Домашние животные', meaning: 'Возможен выход домашних животных на проезжую часть.' },
+  'A15a1': { name: 'Дикие животные', meaning: 'Предупреждение о возможном появлении крупных диких животных.' },
+  'A15c': { name: 'Всадники', meaning: 'Возможно появление наездников на лошадях.' },
+  'A16': { name: 'Крутой спуск', meaning: 'Предупреждение о крутом спуске (10%). Используйте торможение двигателем.' },
+  'A17': { name: 'Светофорное регулирование', meaning: 'Предупреждение о приближении к светофору.' },
   'A18': { name: 'Двустороннее движение', meaning: 'Внимание, двустороннее движение начинается сразу после знака.' },
-  'A21': { name: 'Боковой ветер', meaning: 'Опасность отклонения от траектории из-за сильного бокового ветра.' },
-  
+  'A19': { name: 'Падение камней', meaning: 'Опасность камнепада или обвалов.' },
+  'A20': { name: 'Выезд на набережную', meaning: 'Дорога ведет к набережной или берегу водоема.' },
+  'A21': { name: 'Велосипедисты', meaning: 'Возможно появление велосипедистов на дороге.' },
+  'A23': { name: 'Низколетящие самолеты', meaning: 'Возможен внезапный шум от низколетящих самолетов.' },
+  'A24': { name: 'Боковой ветер', meaning: 'Опасность отклонения от траектории из-за сильного бокового ветра.' },
+  'A8': { name: 'Трамвайная линия', meaning: 'Пересечение с трамвайными путями. Уступите дорогу трамваю.' },
+  'A9': { name: 'Полоса для автобусов', meaning: 'Пересечение с полосой общественного транспорта.' },
+  'A14': { name: 'Прочие опасности', meaning: 'Неуказанная опасность, будьте предельно внимательны.' },
+
   'B0': { name: 'Движение запрещено', meaning: 'Движение запрещено в обоих направлениях для всех транспортных средств.' },
   'B1': { name: 'Въезд запрещен', meaning: 'Запрещается въезд в этом направлении (Одностороннее движение).' },
   'B2a': { name: 'Поворот налево запрещен', meaning: 'На следующем перекрестке поворот налево запрещен.' },
   'B2b': { name: 'Поворот направо запрещен', meaning: 'На следующем перекрестке поворот направо запрещен.' },
   'B2c': { name: 'Разворот запрещен', meaning: 'Разворот запрещен до следующего перекрестка.' },
   'B3': { name: 'Обгон запрещен', meaning: 'Запрещается обгон всех моторных транспортных средств.' },
+  'B3a': { name: 'Обгон грузовым автомобилям запрещен', meaning: 'Запрещается обгон грузовикам массой более 3,5т.' },
+  'B4': { name: 'Таможня', meaning: 'Обязательная остановка у таможенного поста.' },
+  'B5a': { name: 'Жандармерия', meaning: 'Обязательная остановка у контрольного поста Жандармерии.' },
+  'B5b': { name: 'Полиция', meaning: 'Обязательная остановка у контрольного поста Полиции.' },
+  'B5c': { name: 'Плата за проезд (Пеаж)', meaning: 'Обязательная остановка для оплаты дорожной пошлины на автомагистрали.' },
   'B6a1': { name: 'Стоянка запрещена', meaning: 'Стоянка запрещена от знака до следующего перекрестка.' },
+  'B6a2': { name: 'Стоянка запрещена по нечетным числам (1-15)', meaning: 'Стоянка запрещена с 1 по 15 число каждого месяца.' },
+  'B6a3': { name: 'Стоянка запрещена по четным числам (16-31)', meaning: 'Стоянка запрещена с 16 по 31 число каждого месяца.' },
   'B6d': { name: 'Остановка и стоянка запрещены', meaning: 'Абсолютный запрет на остановку и стоянку автомобиля.' },
+  'B7b': { name: 'Движение моторных ТС запрещено', meaning: 'Запрещено движение всех ТС с двигателем (кроме мопедов).' },
+  'B8': { name: 'Движение мотоциклов запрещено', meaning: 'Запрещено движение мотоциклов.' },
+  'B9a': { name: 'Движение пешеходов запрещено', meaning: 'Движение пешеходов по этому участку запрещено.' },
+  'B9b': { name: 'Движение велосипедов запрещено', meaning: 'Запрещено движение велосипедов.' },
+  'B9g': { name: 'Движение автобусов запрещено', meaning: 'Запрещено движение автобусов.' },
+  'B9h': { name: 'Движение мопедов запрещено', meaning: 'Запрещено движение мопедов и скутеров до 50 куб.см.' },
+  'B11': { name: 'Ограничение высоты 3,5м', meaning: 'Запрещен проезд ТС выше 3,5 метров.' },
+  'B12': { name: 'Ограничение ширины 2,5м', meaning: 'Запрещен проезд ТС шире 2,5 метров.' },
+  'B13': { name: 'Ограничение массы 5,5т', meaning: 'Запрещен проезд ТС массой более 5,5 тонн.' },
   'B14_30': { name: 'Ограничение скорости 30', meaning: 'Максимально разрешенная скорость: 30 км/ч.' },
   'B14_50': { name: 'Ограничение скорости 50', meaning: 'Максимально разрешенная скорость: 50 км/ч.' },
   'B14_80': { name: 'Ограничение скорости 80', meaning: 'Максимально разрешенная скорость: 80 км/ч.' },
@@ -154,250 +203,112 @@ const SIGNS_RU: Record<string, { name: string; meaning: string }> = {
   'C18': { name: 'Преимущество перед встречным движением', meaning: 'Вы имеете преимущество проезда узкого участка.' },
 };
 
+const getSignSvgUrl = (id: string) => {
+  const mapping: Record<string, string> = {
+    // Dangers
+    "A1a": "France_road_sign_A1a.svg",
+    "A1b": "France_road_sign_A1b.svg",
+    "A1c": "France_road_sign_A1c.svg",
+    "A1d": "France_road_sign_A1d.svg",
+    "A2a": "France_road_sign_A2a.svg",
+    "A2b": "France_road_sign_A2b.svg",
+    "A3": "France_road_sign_A3.svg",
+    "A3a": "France_road_sign_A3a.svg",
+    "A3b": "France_road_sign_A3b.svg",
+    "A4": "France_road_sign_A4.svg",
+    "A5": "France_road_sign_A6.svg", // Pont mobile is A6
+    "A13a": "France_road_sign_A13a.svg",
+    "A13b": "France_road_sign_A13b.svg",
+    "A13b_raised": "France_road_sign_A13b.svg",
+    "A15a1": "France_road_sign_A15a1.svg",
+    "A15b": "France_road_sign_A15b.svg",
+    "A15c": "France_road_sign_A15c.svg",
+    "A16": "France_road_sign_A16.svg",
+    "A17": "France_road_sign_A17.svg",
+    "A18": "France_road_sign_A18.svg",
+    "A19": "France_road_sign_A19.svg",
+    "A20": "France_road_sign_A20.svg",
+    "A21": "France_road_sign_A21.svg",
+    "A23": "France_road_sign_A23.svg",
+    "A24": "France_road_sign_A24.svg",
+    "A8": "France_road_sign_A8.svg",
+    "A9": "France_road_sign_A9.svg",
+    "A14": "France_road_sign_A14.svg",
+    
+    // Interdictions
+    "B0": "France_road_sign_B0.svg",
+    "B1": "France_road_sign_B1.svg",
+    "B2a": "France_road_sign_B2a.svg",
+    "B2b": "France_road_sign_B2b.svg",
+    "B2c": "France_road_sign_B2c.svg",
+    "B3": "France_road_sign_B3.svg",
+    "B3a": "France_road_sign_B3a.svg",
+    "B4": "France_road_sign_B4.svg",
+    "B5a": "France_road_sign_B5a.svg",
+    "B5b": "France_road_sign_B5b.svg",
+    "B5c": "France_road_sign_B5c.svg",
+    "B6a1": "France_road_sign_B6a1.svg",
+    "B6a2": "France_road_sign_B6a2.svg",
+    "B6a3": "France_road_sign_B6a3.svg",
+    "B6d": "France_road_sign_B6d.svg",
+    "B7b": "France_road_sign_B7b.svg",
+    "B8": "France_road_sign_B8.svg",
+    "B9a": "France_road_sign_B9a.svg",
+    "B9b": "France_road_sign_B9b.svg",
+    "B9g": "France_road_sign_B9g.svg",
+    "B9h": "France_road_sign_B9h.svg",
+    "B11": "France_road_sign_B11.svg",
+    "B12": "France_road_sign_B12.svg",
+    "B13": "France_road_sign_B13.svg",
+    "B14_30": "France_road_sign_B14_%2830%29.svg",
+    "B14_50": "France_road_sign_B14_%2850%29.svg",
+    "B14_80": "France_road_sign_B14_%2880%29.svg",
+    "B14_110": "France_road_sign_B14_%28110%29.svg",
+    "B14_130": "France_road_sign_B14_%28130%29.svg",
+    "B31": "France_road_sign_B31.svg",
+    "B33": "France_road_sign_B33.svg",
+    "B34_50": "France_road_sign_B34_%2850%29.svg",
+    "B34_80": "France_road_sign_B34_%2880%29.svg",
+    
+    // Obligations
+    "B21-1": "France_road_sign_B21-1.svg",
+    "B21-2": "France_road_sign_B21-2.svg",
+    "B21b": "France_road_sign_B21b.svg",
+    "B22a": "France_road_sign_B22a.svg",
+    "B25": "France_road_sign_B25.svg",
+    "B27a": "France_road_sign_B27a.svg",
+    "B29": "France_road_sign_B29.svg",
+    
+    // Indications
+    "C1a": "France_road_sign_C1a.svg",
+    "C4a": "France_road_sign_C4a.svg",
+    "C12": "France_road_sign_C12.svg",
+    "C20a": "France_road_sign_C20a.svg",
+    "C50": "France_road_sign_C50.svg",
+    "C107": "France_road_sign_C107.svg",
+    "C207": "France_road_sign_C207.svg",
+    "C107_end": "France_road_sign_C108.svg",
+    "C207_end": "France_road_sign_C208.svg",
+    
+    // Priorités
+    "AB1": "France_road_sign_AB1.svg",
+    "AB2": "France_road_sign_AB2.svg",
+    "AB3a": "France_road_sign_AB3a.svg",
+    "AB4": "France_road_sign_AB4.svg",
+    "AB6": "France_road_sign_AB6.svg",
+    "AB7": "France_road_sign_AB7.svg",
+    "B15": "France_road_sign_B15.svg",
+    "C18": "France_road_sign_C18.svg"
+  };
+  
+  const filename = mapping[id] || `France_road_sign_${id}.svg`;
+  return `https://commons.wikimedia.org/wiki/Special:Redirect/file/${filename}`;
+};
+
 export default function SignLexicon() {
   const { language } = useLanguage();
-
-  const renderSignShape = (sign: SignData) => {
-    switch(sign.category) {
-      case 'danger':
-        return (
-          <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-            <polygon 
-              points="40,6 74,70 6,70" 
-              fill="white" 
-              stroke="#dc2626" 
-              strokeWidth="7" 
-              strokeLinejoin="round" 
-            />
-            <foreignObject x="20" y="27" width="40" height="40">
-              <div className="w-full h-full flex items-center justify-center text-gray-900 scale-90">
-                {sign.content}
-              </div>
-            </foreignObject>
-          </svg>
-        );
-      case 'interdiction':
-        if (sign.id === 'B0') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="white" stroke="#dc2626" strokeWidth="8" />
-            </svg>
-          );
-        }
-        if (sign.id === 'B1') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="35" fill="#dc2626" />
-              <rect x="18" y="34" width="44" height="12" fill="white" rx="2" />
-            </svg>
-          );
-        }
-        if (sign.id === 'B6a1') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="#2563eb" stroke="#dc2626" strokeWidth="8" />
-              <line x1="22" y1="22" x2="58" y2="58" stroke="#dc2626" strokeWidth="8" strokeLinecap="round" />
-            </svg>
-          );
-        }
-        if (sign.id === 'B6d') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="#2563eb" stroke="#dc2626" strokeWidth="8" />
-              <line x1="22" y1="22" x2="58" y2="58" stroke="#dc2626" strokeWidth="8" strokeLinecap="round" />
-              <line x1="58" y1="22" x2="22" y2="58" stroke="#dc2626" strokeWidth="8" strokeLinecap="round" />
-            </svg>
-          );
-        }
-        if (sign.id === 'B31') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="white" stroke="#9ca3af" strokeWidth="6" />
-              <line x1="22" y1="22" x2="58" y2="58" stroke="#9ca3af" strokeWidth="5" strokeLinecap="round" />
-            </svg>
-          );
-        }
-        if (sign.id.startsWith('B34')) {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="white" stroke="#9ca3af" strokeWidth="6" />
-              <line x1="22" y1="22" x2="58" y2="58" stroke="#9ca3af" strokeWidth="5" strokeLinecap="round" />
-              <foreignObject x="15" y="15" width="50" height="50">
-                <div className="w-full h-full flex items-center justify-center text-gray-400 font-black text-2xl relative z-10">
-                  {sign.content}
-                </div>
-              </foreignObject>
-            </svg>
-          );
-        }
-        if (sign.id === 'B33') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="white" stroke="#9ca3af" strokeWidth="6" />
-              <line x1="22" y1="22" x2="58" y2="58" stroke="#9ca3af" strokeWidth="5" strokeLinecap="round" />
-              <foreignObject x="15" y="15" width="50" height="50">
-                <div className="w-full h-full flex items-center justify-center text-black opacity-30">
-                  {sign.content}
-                </div>
-              </foreignObject>
-            </svg>
-          );
-        }
-        return (
-          <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-            <circle cx="40" cy="40" r="34" fill="white" stroke="#dc2626" strokeWidth="8" />
-            <foreignObject x="15" y="15" width="50" height="50">
-              <div className="w-full h-full flex items-center justify-center text-gray-900">
-                {sign.content}
-              </div>
-            </foreignObject>
-          </svg>
-        );
-      case 'obligation':
-        if (sign.id === 'B29') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="35" fill="#2563eb" stroke="white" strokeWidth="3" />
-              <line x1="20" y1="20" x2="60" y2="60" stroke="#dc2626" strokeWidth="6" strokeLinecap="round" />
-              <foreignObject x="15" y="15" width="50" height="50">
-                <div className="w-full h-full flex items-center justify-center text-white opacity-70">
-                  {sign.content}
-                </div>
-              </foreignObject>
-            </svg>
-          );
-        }
-        return (
-          <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-            <circle cx="40" cy="40" r="35" fill="#2563eb" stroke="white" strokeWidth="3" />
-            <foreignObject x="15" y="15" width="50" height="50">
-              <div className="w-full h-full flex items-center justify-center text-white">
-                {sign.content}
-              </div>
-            </foreignObject>
-          </svg>
-        );
-      case 'indication':
-        if (sign.id.endsWith('_end')) {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <rect x="5" y="5" width="70" height="70" rx="10" fill="#2563eb" stroke="white" strokeWidth="3" />
-              <line x1="10" y1="10" x2="70" y2="70" stroke="#dc2626" strokeWidth="6" strokeLinecap="round" />
-              <foreignObject x="10" y="10" width="60" height="60">
-                <div className="w-full h-full flex items-center justify-center text-white">
-                  {sign.content}
-                </div>
-              </foreignObject>
-            </svg>
-          );
-        }
-        return (
-          <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-            <rect x="5" y="5" width="70" height="70" rx="10" fill="#2563eb" stroke="white" strokeWidth="3" />
-            <foreignObject x="10" y="10" width="60" height="60">
-              <div className="w-full h-full flex items-center justify-center text-white">
-                {sign.content}
-              </div>
-            </foreignObject>
-          </svg>
-        );
-      case 'priorite':
-        if (sign.content === 'stop') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon 
-                points="24,6 56,6 74,24 74,56 56,74 24,74 6,56 6,24" 
-                fill="#dc2626" 
-                stroke="white" 
-                strokeWidth="3" 
-              />
-              <text x="40" y="47" textAnchor="middle" fill="white" className="font-black text-sm uppercase tracking-wider" style={{ fontFamily: 'sans-serif' }}>STOP</text>
-            </svg>
-          );
-        }
-        if (sign.content === 'cedez') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon 
-                points="6,10 74,10 40,74" 
-                fill="white" 
-                stroke="#dc2626" 
-                strokeWidth="7" 
-                strokeLinejoin="round" 
-              />
-            </svg>
-          );
-        }
-        if (sign.content === 'croix') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon 
-                points="40,6 74,70 6,70" 
-                fill="white" 
-                stroke="#dc2626" 
-                strokeWidth="7" 
-                strokeLinejoin="round" 
-              />
-              <line x1="33" y1="42" x2="47" y2="56" stroke="black" strokeWidth="5" strokeLinecap="round" />
-              <line x1="47" y1="42" x2="33" y2="56" stroke="black" strokeWidth="5" strokeLinecap="round" />
-            </svg>
-          );
-        }
-        if (sign.content === 'ponctuelle') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon 
-                points="40,6 74,70 6,70" 
-                fill="white" 
-                stroke="#dc2626" 
-                strokeWidth="7" 
-                strokeLinejoin="round" 
-              />
-              <line x1="30" y1="48" x2="50" y2="48" stroke="black" strokeWidth="4" strokeLinecap="round" />
-              <path d="M40,32 L46,42 L34,42 Z" fill="black" />
-              <rect x="37" y="42" width="6" height="12" fill="black" />
-            </svg>
-          );
-        }
-        if (sign.content === 'losange') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon points="40,6 74,40 40,74 6,40" fill="#facc15" stroke="white" strokeWidth="6" />
-              <polygon points="40,11 69,40 40,69 11,40" fill="#facc15" stroke="#facc15" strokeWidth="2" />
-            </svg>
-          );
-        }
-        if (sign.content === 'losange_end') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <polygon points="40,6 74,40 40,74 6,40" fill="#facc15" stroke="white" strokeWidth="6" />
-              <line x1="15" y1="65" x2="65" y2="15" stroke="black" strokeWidth="7" strokeLinecap="round" />
-            </svg>
-          );
-        }
-        if (sign.content === 'sens_inverse') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <circle cx="40" cy="40" r="34" fill="white" stroke="#dc2626" strokeWidth="8" />
-              <path d="M30,52 L30,28 M26,35 L30,28 L34,35" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M50,28 L50,52 M46,45 L50,52 L54,45" stroke="#dc2626" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          );
-        }
-        if (sign.content === 'priorite_face') {
-          return (
-            <svg width="80" height="80" viewBox="0 0 80 80" className="group-hover:scale-110 transition-transform duration-300 drop-shadow-md">
-              <rect x="5" y="5" width="70" height="70" rx="10" fill="#2563eb" stroke="white" strokeWidth="3" />
-              <path d="M30,28 L30,52 M26,45 L30,52 L34,45" stroke="#dc2626" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M50,52 L50,28 M46,35 L50,28 L54,35" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          );
-        }
-        return null;
-      default:
-        return null;
-    }
-  }
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<SignCategory | 'all'>('all');
 
   const translatedSigns = SIGNS.map(sign => {
     if (language === 'ru' && SIGNS_RU[sign.id]) {
@@ -410,59 +321,101 @@ export default function SignLexicon() {
     return sign;
   });
 
-  const groupedSigns = translatedSigns.reduce((acc, sign) => {
-    if (!acc[sign.category]) acc[sign.category] = [];
-    acc[sign.category].push(sign);
-    return acc;
-  }, {} as Record<SignCategory, SignData[]>);
-
-  const categoryTitles: Record<SignCategory, string> = {
-    danger: language === 'fr' ? "Panneaux de Danger" : "Предупреждающие знаки",
-    interdiction: language === 'fr' ? "Panneaux de Prescription (Interdiction)" : "Запрещающие знаки",
-    obligation: language === 'fr' ? "Panneaux de Prescription (Obligation)" : "Предписывающие знаки",
-    indication: language === 'fr' ? "Panneaux d'Indication" : "Информационные знаки",
-    priorite: language === 'fr' ? "Panneaux de Priorité" : "Знаки приоритета"
-  };
-
-  const categoryColors: Record<SignCategory, string> = {
-    danger: "text-red-600 border-red-200 bg-red-50",
-    interdiction: "text-rose-600 border-rose-200 bg-rose-50",
-    obligation: "text-blue-600 border-blue-200 bg-blue-50",
-    indication: "text-blue-700 border-blue-200 bg-blue-50",
-    priorite: "text-amber-600 border-amber-200 bg-amber-50"
-  };
+  const filteredSigns = translatedSigns.filter(sign => {
+    const matchesSearch = sign.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          sign.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          sign.id.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === 'all' || sign.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
-    <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border-2 border-gray-100 relative mt-8 mb-8">
-      <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight text-center">
-        {language === 'fr' ? "La Bible des Panneaux" : "Библия дорожных знаков"}
-      </h2>
-      <p className="text-xl text-gray-600 font-medium text-center mb-12 max-w-3xl mx-auto">
-        {language === 'fr' 
-          ? "Découvrez l'intégralité des panneaux officiels à connaître pour le code de la route, classés par famille." 
-          : "Откройте для себя все официальные дорожные знаки, которые необходимо знать для сдачи на права, распределенные по категориям."}
-      </p>
-
-      <div className="space-y-16">
-        {(Object.keys(groupedSigns) as SignCategory[]).map(category => (
-          <div key={category} className="space-y-6">
-            <h3 className={`text-2xl font-black px-6 py-3 rounded-2xl inline-block border ${categoryColors[category]}`}>
-              {categoryTitles[category]}
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {groupedSigns[category].map((sign, index) => (
-                <div key={index} className="flex flex-col items-center text-center group bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-gray-300 transition-colors shadow-sm hover:shadow-md">
-                  <div className="h-24 flex items-center justify-center mb-4">
-                    {renderSignShape(sign)}
-                  </div>
-                  <h4 className="font-bold text-gray-900 mb-2 text-lg">{sign.name}</h4>
-                  <p className="text-sm text-gray-600 font-medium leading-relaxed">{sign.meaning}</p>
-                </div>
-              ))}
+    <div className="bg-gray-950 min-h-screen text-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="flex justify-center mb-4">
+            <div className="bg-red-500/10 p-3 rounded-full border border-red-500/20">
+              <BookOpen className="w-8 h-8 text-red-500" />
             </div>
           </div>
-        ))}
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-white mb-4">
+            {language === 'ru' ? 'Справочник Дорожных Знаков' : 'Répertoire des Panneaux de Signalisation'}
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg text-gray-400">
+            {language === 'ru' 
+              ? 'Полный каталог официальных дорожных знаков Франции с описаниями и требованиями.' 
+              : 'Un inventaire complet et précis de tous les panneaux du code de la route français.'}
+          </p>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="mb-10 flex flex-col md:flex-row gap-4 items-center justify-between bg-gray-900/60 p-6 rounded-2xl border border-gray-800">
+          <div className="relative w-full md:w-80">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-gray-500" />
+            </span>
+            <input
+              type="text"
+              placeholder={language === 'ru' ? 'Поиск знака...' : 'Rechercher un panneau...'}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-xl bg-gray-950 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div className="flex flex-wrap gap-2 justify-center">
+            {(['all', 'danger', 'interdiction', 'obligation', 'indication', 'priorite'] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all border ${
+                  activeCategory === cat
+                    ? 'bg-red-600 text-white border-red-500 shadow-lg shadow-red-600/20'
+                    : 'bg-gray-800/40 text-gray-400 border-gray-700/50 hover:bg-gray-800/80'
+                }`}
+              >
+                {cat === 'all' && (language === 'ru' ? 'Все' : 'Tous')}
+                {cat === 'danger' && (language === 'ru' ? 'Опасность' : 'Danger')}
+                {cat === 'interdiction' && (language === 'ru' ? 'Запрет' : 'Interdiction')}
+                {cat === 'obligation' && (language === 'ru' ? 'Предписание' : 'Obligation')}
+                {cat === 'indication' && (language === 'ru' ? 'Указание' : 'Indication')}
+                {cat === 'priorite' && (language === 'ru' ? 'Приоритет' : 'Priorité')}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Signs Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredSigns.map((sign) => (
+            <div 
+              key={sign.id} 
+              className="bg-gray-900/40 border border-gray-800/60 rounded-2xl p-6 flex flex-col items-center text-center hover:bg-gray-900/80 hover:border-gray-700/60 transition-all duration-300 group"
+            >
+              <div className="mb-4 relative w-24 h-24 flex items-center justify-center bg-gray-950/40 rounded-xl p-2 border border-gray-850">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={getSignSvgUrl(sign.id)} 
+                  alt={sign.name} 
+                  className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-md"
+                />
+                <span className="absolute -top-2 -right-2 bg-gray-950 border border-gray-800 text-[10px] text-gray-500 px-2 py-0.5 rounded-full font-mono">
+                  {sign.id}
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">{sign.name}</h3>
+              <p className="text-sm text-gray-400 leading-relaxed mt-auto">{sign.meaning}</p>
+            </div>
+          ))}
+        </div>
+
+        {filteredSigns.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-500 text-lg">
+              {language === 'ru' ? 'Ничего не найдено' : 'Aucun panneau trouvé pour votre recherche.'}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
