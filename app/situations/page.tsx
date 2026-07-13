@@ -17,6 +17,7 @@ interface ScenarioItem {
   o3: string;
   o4: string;
   exp: string;
+  correctAnswer: number;
 }
 
 export default function MisesEnSituation() {
@@ -33,13 +34,6 @@ export default function MisesEnSituation() {
   const localizedData = t('situations', { returnObjects: true }) as any;
   const list: ScenarioItem[] = localizedData?.list || [];
 
-  // Correct answer indexes mapped to scenarios
-  // 0: Night overtake -> B (Index 1)
-  // 1: Level crossing -> B (Index 1)
-  // 2: Seat/Mirror/Belt -> B (Index 1)
-  // 3: Tunnel safety distance -> C (Index 2)
-  const correctAnswers = [1, 1, 1, 2];
-
   if (!list || list.length === 0) {
     return (
       <div className="min-h-screen bg-[#0A061E] flex items-center justify-center text-white">
@@ -52,7 +46,7 @@ export default function MisesEnSituation() {
   }
 
   const currentScenario = list[currentIdx];
-  const correctAnswerIndex = correctAnswers[currentIdx];
+  const correctAnswerIndex = currentScenario?.correctAnswer ?? 0;
 
   const handleSelectOption = (idx: number) => {
     if (isSubmitted) return;
@@ -162,6 +156,64 @@ export default function MisesEnSituation() {
                 <span className="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_8px_#f59e0b] animate-pulse"></span>
               </div>
               <div className="text-[6px] text-zinc-500 text-center font-mono">PANNE</div>
+            </div>
+          </div>
+        );
+      case 4: // Partage de la route (Cyclist / Pedestrian)
+        return (
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] flex flex-col items-center justify-end overflow-hidden">
+            {/* Street lanes */}
+            <div className="w-full h-24 bg-[#334155] relative flex items-center justify-center border-t border-b border-slate-500">
+              {/* Pedestrian Crosswalk (passage clouté) */}
+              <div className="absolute left-1/4 h-full w-12 flex justify-between">
+                <span className="w-2 h-full bg-white/90"></span>
+                <span className="w-2 h-full bg-white/90"></span>
+                <span className="w-2 h-full bg-white/90"></span>
+                <span className="w-2 h-full bg-white/90"></span>
+              </div>
+              {/* Lane dividing dashed line */}
+              <div className="w-full h-0.5 border-t border-dashed border-white/50 absolute top-1/2"></div>
+              {/* Cyclist container */}
+              <div className="absolute right-1/3 top-1/4 animate-bounce flex flex-col items-center">
+                <div className="w-6 h-6 rounded-full border-2 border-emerald-400 flex items-center justify-center bg-emerald-950/80">
+                  <span className="text-[10px] text-emerald-400 font-bold">🚲</span>
+                </div>
+                {/* 1m safety zone aura */}
+                <div className="absolute -inset-2 rounded-full border border-dashed border-emerald-400/40 animate-ping"></div>
+                <div className="text-[8px] font-mono text-emerald-300 font-bold mt-1 bg-black/60 px-1 rounded border border-emerald-400/30">d &gt; 1m</div>
+              </div>
+              {/* Pedestrian indicator */}
+              <div className="absolute left-1/5 bottom-2 flex flex-col items-center">
+                <span className="text-xl animate-pulse">🚶</span>
+                <span className="text-[7px] text-rose-400 font-black tracking-widest uppercase bg-black/60 px-1 rounded border border-rose-500/30">PRIORITAIRE</span>
+              </div>
+            </div>
+          </div>
+        );
+      case 5: // Eco-Conduite (Highway Deceleration)
+        return (
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-[#1e1b4b] to-black flex items-center justify-center overflow-hidden">
+            {/* Highway lines perspective */}
+            <div className="absolute inset-0 flex justify-between pointer-events-none opacity-30">
+              <div className="w-0.5 h-full bg-zinc-600 rotate-[-30deg] origin-top-left"></div>
+              <div className="w-0.5 h-full bg-zinc-600 rotate-[30deg] origin-top-right"></div>
+            </div>
+            
+            {/* Speed display & Eco indicator */}
+            <div className="flex flex-col items-center gap-2 z-10 bg-black/55 p-4 rounded-2xl border border-indigo-500/20 backdrop-blur-md">
+              <div className="text-2xl font-black text-rose-500 animate-pulse tracking-widest font-mono">
+                110 <span className="text-xs text-rose-400/60">km/h</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/30">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span className="text-[10px] text-emerald-400 font-mono font-bold tracking-wider uppercase">FREIN MOTEUR (0L/100)</span>
+              </div>
+            </div>
+
+            {/* Warning indicator representation in background */}
+            <div className="absolute top-1/4 flex gap-8 z-0">
+              <div className="w-4 h-4 rounded-full bg-amber-500 shadow-[0_0_15px_#f59e0b] animate-ping"></div>
+              <div className="w-4 h-4 rounded-full bg-amber-500 shadow-[0_0_15px_#f59e0b] animate-ping"></div>
             </div>
           </div>
         );

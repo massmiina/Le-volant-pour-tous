@@ -1899,7 +1899,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Je reste en feux de croisement pour ne pas éblouir, et je ne passe en feux de route qu'au moment où je suis à sa hauteur.",
           o3: "Je klaxonne avant d'entamer la manœuvre pour prévenir de mon arrivée.",
           o4: "J'allume mes feux de détresse durant toute la manœuvre de dépassement.",
-          exp: "Les feux de route éblouiraient l'usager dépassé dans son rétroviseur s'ils sont mis trop tôt, et l'usager arrivant en face s'il y en a un. On garde les feux de croisement et on repasse en feux de route à hauteur de sa cabine."
+          exp: "Les feux de route éblouiraient l'usager dépassé dans son rétroviseur s'ils sont mis trop tôt, et l'usager arrivant en face s'il y en a un. On garde les feux de croisement et on repasse en feux de route à hauteur de sa cabine (Code de la route R416-6).",
+          correctAnswer: 1
         },
         {
           situation: "Vous approchez d'un passage à niveau. Le feu rouge clignote et la barrière commence à descendre, mais le train n'est pas encore visible.",
@@ -1908,7 +1909,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Je m'arrête obligatoirement avant le feu rouge clignotant.",
           o3: "Je m'arrête uniquement si la barrière est totalement horizontale.",
           o4: "Je klaxonne pour avertir le train de ma présence.",
-          exp: "Le feu rouge clignotant impose l'arrêt ABSOLU et immédiat. Il est formellement interdit de s'engager dès que le signal lumineux s'active, sous peine de sanctions très lourdes (délit de classe 4)."
+          exp: "Le feu rouge clignotant impose l'arrêt ABSOLU et immédiat. Il est formellement interdit de s'engager dès que le signal lumineux s'active, sous peine de sanctions très lourdes (R412-30 du Code de la route - contravention de classe 4).",
+          correctAnswer: 1
         },
         {
           situation: "Vous montez à bord du véhicule. Vous devez régler votre poste de conduite avant de démarrer.",
@@ -1917,7 +1919,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Siège, rétroviseurs, ceinture de sécurité.",
           o3: "Ceinture de sécurité, siège, rétroviseurs.",
           o4: "Rétroviseurs, ceinture de sécurité, siège.",
-          exp: "La règle d'or mnémotechnique est Siège, Rétroviseurs, Ceinture. On règle d'abord l'assise et le dossier du Siège, ensuite on ajuste les Rétroviseurs (qui dépendent de la position des yeux), et enfin on met la Ceinture (qui bloque certains mouvements)."
+          exp: "La règle d'or mnémotechnique est Siège, Rétroviseurs, Ceinture. On règle d'abord l'assise et le dossier du Siège, ensuite on ajuste les Rétroviseurs (qui dépendent de la position des yeux), et enfin on met la Ceinture (qui bloque certains mouvements) - REMC Compétence 1.",
+          correctAnswer: 1
         },
         {
           situation: "Vous circulez dans un tunnel à double sens de circulation. Le véhicule devant vous s'arrête brusquement à cause d'un incident mécanique.",
@@ -1926,7 +1929,28 @@ export const translations: Record<Language | string, any> = {
           o2: "Je m'arrête à au moins 150 mètres du véhicule.",
           o3: "Je m'arrête en laissant un intervalle de sécurité suffisant (les deux diodes bleues de sécurité visibles au sol) et je coupe mon moteur.",
           o4: "Je fais marche arrière immédiatement pour sortir du tunnel.",
-          exp: "En tunnel, la distance de sécurité minimale doit être maintenue même à l'arrêt pour éviter la propagation d'incendies. Couper le moteur limite la concentration de gaz toxiques."
+          exp: "En tunnel, la distance de sécurité minimale de sécurité (les diodes bleues de balisage latérale ou au sol) doit être maintenue même à l'arrêt pour éviter la propagation d'incendies. Couper le moteur limite la concentration de gaz toxiques (Code de la route R412-11-1).",
+          correctAnswer: 2
+        },
+        {
+          situation: "En agglomération, vous circulez dans une rue étroite. Un cycliste roule devant vous. Un piéton s'apprête à traverser sur un passage clouté plus loin.",
+          question: "Comment gérez-vous cette situation de partage de l'espace routier ?",
+          o1: "Je klaxonne le cycliste pour qu'il serre à droite et je dépasse immédiatement avant le passage piéton.",
+          o2: "Je garde mes distances derrière le cycliste, je m'arrête pour laisser passer le piéton, et je ne dépasserai le cycliste qu'après l'intersection si l'espace latéral d'au moins 1 mètre est respecté.",
+          o3: "Je serre le cycliste pour l'inciter à monter sur le trottoir.",
+          o4: "Je double le cycliste en chevauchant la ligne continue sans ralentir.",
+          exp: "En agglomération, le dépassement d'un cycliste exige un espace latéral minimal de 1 mètre (R414-4). De plus, l'approche d'un piéton engagé ou manifestant l'intention de s'engager impose la priorité absolue au piéton (R415-11).",
+          correctAnswer: 1
+        },
+        {
+          situation: "Vous circulez sur une voie rapide à 110 km/h. Vous apercevez au loin un ralentissement important avec des feux de détresse allumés.",
+          question: "Quelle action favorise à la fois la sécurité active et l'éco-conduite ?",
+          o1: "Je continue à 110 km/h et je freinerai fort au dernier moment pour recharger ma batterie via le freinage régénératif.",
+          o2: "Je relâche immédiatement l'accélérateur pour utiliser le frein moteur et décélérer progressivement, tout en allumant mes feux de détresse pour alerter derrière.",
+          o3: "Je passe au point mort (roue libre) pour laisser le véhicule rouler sans résistance.",
+          o4: "Je rétrograde immédiatement en seconde à haute vitesse pour bloquer les roues arrière.",
+          exp: "L'anticipation active (relâcher l'accélérateur tôt) permet d'utiliser le frein moteur (consommation nulle en coupure d'injection) tout en stabilisant le flux derrière grâce aux feux de détresse (REMC Compétence 4 / Éco-mobilité).",
+          correctAnswer: 1
         }
       ]
     }
@@ -3771,7 +3795,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Я остаюсь с ближним светом, чтобы не слепить водителя, и включаю дальний только когда поравняюсь с ним.",
           o3: "Я сигналю звуковым сигналом перед обгоном, чтобы предупредить о маневре.",
           o4: "Я включаю аварийную световую сигнализацию на протяжении всего обгона.",
-          exp: "Дальний свет ослепит обгоняемого водителя через зеркало заднего вида, если включить его слишком рано. Следует ехать с ближним светом и переключаться на дальний, только когда вы поравняетесь с ним."
+          exp: "Дальний свет ослепит обгоняемого водителя через зеркало заднего вида, если включить его слишком рано. Следует ехать с ближним светом и переключаться на дальний, только когда вы поравняетесь с ним (Правило дорожного движения R416-6).",
+          correctAnswer: 1
         },
         {
           situation: "Вы приближаетесь к железнодорожному переезду. Мигает красный сигнал светофора, шлагбаум начинает опускаться, но поезда еще не видно.",
@@ -3780,7 +3805,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Я обязан остановиться перед мигающим красным сигналом.",
           o3: "Я останавливаюсь только если шлагбаум находится в полностью горизонтальном положении.",
           o4: "Я сигналю, чтобы предупредить поезд о своем присутствии.",
-          exp: "Мигающий красный сигнал светофора требует ОБЯЗАТЕЛЬНОЙ и немедленной остановки. Въезд на переезд после активации сигнала строго запрещен."
+          exp: "Мигающий красный сигнал светофора требует ОБЯЗАТЕЛЬНОЙ и немедленной остановки. Въезд на переезд после активации сигнала строго запрещен (Статья R412-30 Правил дорожного движения Франции - нарушение 4-го класса).",
+          correctAnswer: 1
         },
         {
           situation: "Вы садитесь в автомобиль. Вы должны настроить водительское место перед началом движения.",
@@ -3789,7 +3815,8 @@ export const translations: Record<Language | string, any> = {
           o2: "Сиденье, зеркала, ремень безопасности.",
           o3: "Ремень безопасности, сиденье, зеркала.",
           o4: "Зеркала, ремень безопасности, сиденье.",
-          exp: "Сначала настраивается сиденье (высота, наклон, вылет), затем зеркала заднего вида (так как их положение зависит от положения ваших глаз) и в последнюю очередь пристегивается ремень."
+          exp: "Сначала настраивается сиденье (высота, наклон, вылет), затем зеркала заднего вида (так как их положение зависит от положения ваших глаз) и в последнюю очередь пристегивается ремень (Стандарт REMC, Компетенция 1).",
+          correctAnswer: 1
         },
         {
           situation: "Вы едете в тоннеле с двухсторонним движением. Машина перед вами резко останавливается из-за поломки.",
@@ -3798,7 +3825,28 @@ export const translations: Record<Language | string, any> = {
           o2: "Я останавливаюсь на расстоянии не менее 150 метров от машины.",
           o3: "Я останавливаюсь, соблюдая безопасную дистанцию (ориентируясь по синим диодам на стене или дороге), и глушу двигатель.",
           o4: "Я немедленно еду задним ходом, чтобы выехать из тоннеля.",
-          exp: "В тоннеле минимальная безопасная дистанция должна соблюдаться даже при остановке во избежание распространения огня в случае пожара. Отключение двигателя снижает концентрацию токсичных газов."
+          exp: "В тоннеле минимальная безопасная дистанция должна соблюдаться даже при остановке (по синим диодам разметки) во избежание распространения огня в случае пожара. Отключение двигателя снижает концентрацию токсичных газов (Статья R412-11-1).",
+          correctAnswer: 2
+        },
+        {
+          situation: "В населенном пункте вы едете по узкой улице. Перед вами едет велосипедист. Чуть дальше пешеход собирается перейти дорогу по пешеходному переходу.",
+          question: "Как вы поведете себя в этой ситуации совместного использования дороги?",
+          o1: "Я сигналю велосипедисту, чтобы он прижался вправо, и сразу обгоняю его перед пешеходным переходом.",
+          o2: "Я держу дистанцию за велосипедистом, останавливаюсь, чтобы пропустить пешехода, и обгоню велосипедиста только после перекрестка, если будет соблюден боковой интервал не менее 1 метра.",
+          o3: "Я прижимаю велосипедиста, чтобы заставить его заехать на тротуар.",
+          o4: "Я обгоняю велосипедиста, пересекая сплошную линию разметки без снижения скорости.",
+          exp: "В населенном пункте обгон велосипедиста требует минимального бокового интервала в 1 метр (R414-4). Кроме того, приближение пешехода, переходящего или выражающего намерение перейти дорогу, обязывает предоставить ему приоритет (R415-11).",
+          correctAnswer: 1
+        },
+        {
+          situation: "Вы едете по скоростной дороге со скоростью 110 км/ч. Вдали вы замечаете сильный затор с включенными аварийными сигналами.",
+          question: "Какое действие способствует как активной безопасности, так и экологичному вождению?",
+          o1: "Я продолжаю ехать 110 км/ч и резко заторможу в последний момент, чтобы зарядить аккумулятор за счет рекуперативного торможения.",
+          o2: "Я немедленно отпускаю педаль газа, чтобы использовать торможение двигателем и плавно замедлиться, одновременно включив аварийную световую сигнализацию для предупреждения сзади.",
+          o3: "Я переключаюсь на нейтральную передачу (накатом), чтобы машина катилась без сопротивления.",
+          o4: "Я немедленно переключаюсь на вторую передачу на высокой скорости, чтобы заблокировать задние колеса.",
+          exp: "Активное предвидение (ранний отпуск педали газа) позволяет использовать торможение двигателем (нулевой расход топлива при прекращении подачи топлива) и стабилизировать поток автомобилей сзади благодаря аварийной сигнализации (Стандарт REMC, Компетенция 4).",
+          correctAnswer: 1
         }
       ]
     }
